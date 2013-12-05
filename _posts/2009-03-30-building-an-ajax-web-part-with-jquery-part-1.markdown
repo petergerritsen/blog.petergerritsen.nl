@@ -1,5 +1,5 @@
 ---
-author: admin
+author: Peter Gerritsen
 comments: true
 date: 2009-03-30 10:08:51+00:00
 layout: post
@@ -41,7 +41,7 @@ Dave Ward’s weblog on [encosia.com](http://encosia.com/) provides a vital sou
 
 We’ll start by building the Generic Handler that returns JSON data for categories and products. We’ll differentiate between the two by passing in the type with the query string. I’ve created two classes for data retrieval from the list in SharePoint, one that returns the choices of the categories and one that returns the products based on the category. We’ll then use the DataContractJsonSerializer to generate and return the JSON for this data:
 
-[sourcecode language="csharp"]
+```csharp
 public void ProcessRequest(HttpContext context)
 {
 try
@@ -81,7 +81,7 @@ catch (Exception ex)
 context.Response.Write(string.Format("ERROR: {0}", ex.Message));
 }
 }
-[/sourcecode]
+```
 
 
 #### Building the shopping cart web service
@@ -90,7 +90,7 @@ context.Response.Write(string.Format("ERROR: {0}", ex.Message));
 Next, we need to create a web service that will allows us to modify the shopping cart with add, remove, change and clear methods. This web service will also contain a method to place the order. To make sure this web service will return JSON when requested, we’ll decorate the class with the ScriptService attribute (normally you just have to comment out the automatically included line in the class definition) and we decorate
 the methods with the ScriptMethod attribute in which we specify the ResponseFormat to be JSON. To store the shoppingcart between requests to the service we’ll use the Session. In order for that to work we add the EnableSession=true parameter to the WebMethod attribute of each method. The resulting code looks like this:
 
-[sourcecode language="csharp"]
+```csharp
 [WebService(Namespace = "http://sharepoint.ecabo.nl/200903/")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 [System.ComponentModel.ToolboxItem(false)]
@@ -262,11 +262,11 @@ throw new Exception("Het is niet mogelijk om uw bestelling te verwerken", ex);
 }
 }
 }
-[/sourcecode]
+```
 
 There’s one more thing needed for letting the web service return the data in JSON format. We need to include a httpHandler in the web.config for the asmx extension that routes the request to the ScriptHandlerFactory. An easy way to do this is for your SharePoint webapp by creating a blank web.config and placing it in a subfolder of the layouts directory where you also place the asmx file. The following is all you need in that web.config file:
 
-[sourcecode language="xml"]
+```xml
 
 
 
@@ -275,7 +275,7 @@ There’s one more thing needed for letting the web service return the data in J
 
 
 
-[/sourcecode]
+```
 
 **Next parts**
 

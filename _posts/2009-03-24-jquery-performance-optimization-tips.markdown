@@ -1,5 +1,5 @@
 ---
-author: admin
+author: Peter Gerritsen
 comments: true
 date: 2009-03-24 10:01:32+00:00
 layout: post

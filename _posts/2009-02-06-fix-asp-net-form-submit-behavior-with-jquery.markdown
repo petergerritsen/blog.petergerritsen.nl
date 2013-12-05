@@ -1,5 +1,5 @@
 ---
-author: admin
+author: Peter Gerritsen
 comments: true
 date: 2009-02-06 14:26:49+00:00
 layout: post
@@ -18,26 +18,20 @@ In a standard HTML all forms are contained in their own form tag. When the brows
 Microsoft has included a feature in ASP.Net 2.0 to overcome this problem. In short you add an attribute "DefaultButton", with the ID of the button to trigger, to an ASP Panel control that wraps the form. Unfortunately this solution doesn't work in Firefox.
 
 To fix this, I decided to use jQuery. What we need to have is a way to identify the different forms on a page and connect them with the right submit button. So I added a fieldset tag around the single form:
-[sourcecode language="csharp"]
+```csharp
 writer.WriteLine("<div class=\"regular_forms\">");
 
 writer.WriteLine("", btnSearch.ClientID);
 
 ……… form contents ………
 
-writer.WriteLine("
-
-");
-
-[/sourcecode]
-
-
-
+writer.WriteLine("");
+````
 
 The control “btnSearch” is the one we want to trigger when a user presses the enter button.
 
 To hook up the button to the form we use the following JavaScript/jQuery:
-[sourcecode language="javascript"]
+```javascript
 $(document).ready(function() {
     $("fieldset[defaultsubmitbutton]").each(function() {
         var submitbuttonid = $(this).attr("defaultsubmitbutton");
@@ -59,7 +53,7 @@ $(document).ready(function() {
         });
     });
 });
-[/sourcecode]
+```
 
 This script finds all fieldset elements containing the _defaultsubmitbutton_ attribute, locates all textboxes and password fields within that fieldset and hooks up the keydown event.
 When the enter key is pressed (keycode 13) the default event is canceled and depending on the type of button the right postback method is triggered.

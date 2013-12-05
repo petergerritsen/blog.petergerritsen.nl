@@ -1,5 +1,5 @@
 ---
-author: admin
+author: Peter Gerritsen
 comments: true
 date: 2009-12-01 10:47:57+00:00
 layout: post
@@ -15,7 +15,7 @@ When I was testing to deploy a solution containing some form templates I got an 
 
 The main downside though was one of the templates remained in the installing state. Apparently the easiest way to remove this template is by using some custom code, in this case I just used a console application within my dev box:
 
-[sourcecode language="csharp"]
+```csharp
 
 static void Main(string[] args)
 {
@@ -29,4 +29,4 @@ ft.Delete();
 }
 }
 }
-[/sourcecode]
+```

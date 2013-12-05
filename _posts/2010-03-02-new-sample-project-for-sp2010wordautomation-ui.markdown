@@ -1,5 +1,5 @@
 ---
-author: admin
+author: Peter Gerritsen
 comments: true
 date: 2010-03-02 16:17:52+00:00
 layout: post
@@ -24,9 +24,22 @@ When the Ok button is clicked the selected files will be added to a conversion j
 
 The dialog is launched by some javascript that is specified in the CommandUIHandler section of the ribbon button definition.
 
-[sourcecode language="xml"]
-
-[/sourcecode]
+```xml
+<commandUIHandler
+Command="SP2010WA_Convert_Button"
+CommandAction="javascript:function convertDocument() {
+Sys.loadScripts(['/_layouts/SP2010WordAutomation.UI/SP2010WordAutomation.UI.js'], function() {
+SP2010WordAutomation.UI.ConvertDocument();
+});
+}
+convertDocument();"
+EnabledScript="javascript:function oneOrMoreEnable() {
+var items = SP.ListOperation.Selection.getSelectedItems();
+var ci = CountDictionary(items);
+return (ci > 0);
+}
+oneOrMoreEnable();" />
+```
 
 I’ve decided to use the beta version of the ASP.Net 4.0 AJAX client library to load the required scriptfile when it is actually needed. While this is not completely necessary in this case, because the amount of script in there is quite little, it could provide a speedboost because the browser won’t load and interpret the script when the page loads.
 
@@ -34,7 +47,7 @@ The definition also contains some script to enable the button only when one or m
 
 The following lists the script that is loaded and called when the button is clicked:
 
-[sourcecode language="javascript"]
+```javascript
 Type.registerNamespace("SP2010WordAutomation.UI");
 
 SP2010WordAutomation.UI.ConvertDocument = function () {
@@ -64,7 +77,7 @@ SP.UI.Notify.addNotification(target, false);
 
 SP.UI.ModalDialog.RefreshPage(result);
 }
-[/sourcecode]
+```
 
 First I use the _Type.registerNamespace_ method that is provided by the standard SharePoint scriptlibrary to make sure I don’t override other methods with the same names.
 

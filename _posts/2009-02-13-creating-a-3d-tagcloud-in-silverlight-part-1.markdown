@@ -1,5 +1,5 @@
 ---
-author: admin
+author: Peter Gerritsen
 comments: true
 date: 2009-02-13 23:02:38+00:00
 layout: post
@@ -15,46 +15,25 @@ When I saw the [wp-cumulus plugin by Roy Tanck](http://www.roytanck.com/2008/03
 
 The components behind it are quite simple:
 
-
-
-	
   * Get (or send) the tags from your HTML page to the Silverlight usercontrol
-
-	
   * Render the tags so it looks 3D
-
-	
   * Create a method to rotate the tags based on the position of your mouse
-
-
-
 
 #### Choosing a 3D library
 
-
 The current version of Silverlight doesn’t include 3D functionality like WPF does through the [Media3D namespace](http://msdn.microsoft.com/en-us/library/system.windows.media.media3d.aspx). Fortunately some developers implemented the same functionality in libraries for Silverlight. The main options I found were Kit3D and Axelerate3D. I decided to use the last one because that one mimics the RotateTransform3D class in WPF 3D the best (it contains a TryTransform method).
 
-
 #### Rendering the tags
-
 
 I decided to tackle the second item first, because if I wasn’t able to manage this, the other items wouldn’t be very useful.
 
 To create a tag in 3D you need some basic functionality:
 
-
-
-	
   * A way to store it’s x, y and z coordinates
-
-	
   * A hyperlinkbutton to redirect to a page that shows all the items with that tag
-
-	
   * A textblock to display the tag
 
-
-[sourcecode language="csharp"]
+```csharp
 public class Tag3D
 {
 public Tag3D(double x, double y, double z, string text)
@@ -73,11 +52,11 @@ public TextBlock textBlock { get; set; }
 public Point3D centerPoint { get; set; }
 
 }
-[/sourcecode]
+```
 
 Then we need a way to make it look like it’s rendered in 3D. We do that by changing the fontsize and the opacity of the text. For that I created a method Redraw:
 
-[sourcecode language="csharp"]
+```csharp
 public void Redraw(double xOffset, double yOffset)
 {
 double posZ = centerPoint.Z + 200;
@@ -94,8 +73,7 @@ Canvas.SetLeft(btnLink, centerPoint.X + xOffset – (btnLink.ActualWidth / 2));
 Canvas.SetTop(btnLink, -centerPoint.Y + yOffset – (btnLink.ActualHeight/ 2));
 Canvas.SetZIndex(btnLink, Convert.ToInt32(centerPoint.Z));
 }
-[/sourcecode]
-
+```
 
 ##### Placing the tags
 
@@ -104,7 +82,7 @@ To distribute the tags evenly over the sphere, we need some math. Luckily someon
 
 The following method creates and places the tags in the canvas:
 
-[sourcecode language="csharp"]
+```csharp
 private void FillTags()
 {
 tagBlocks = new List();
@@ -143,7 +121,7 @@ RootCanvas.Children.Add(tag.btnLink);
 tagBlocks.Add(tag);
 }
 }
-[/sourcecode]
+```
 
 At the moment the tags to render are hard-coded but we’ll sort that out in part 2.
 
@@ -153,7 +131,7 @@ To rotate the tags we will use the position of the mouse as a starting point. Wh
 
 First we will set the rotation when the tagcloud loads:
 
-[sourcecode language="csharp"]
+```csharp
 void TagCloud_Loaded(object sender, RoutedEventArgs e)
 {
 FillTags();
@@ -163,11 +141,11 @@ CompositionTarget.Rendering += new EventHandler(CompositionTarget_Rendering);
 LayoutRoot.MouseEnter += new MouseEventHandler(LayoutRoot_MouseEnter);
 LayoutRoot.MouseLeave += new MouseEventHandler(LayoutRoot_MouseLeave);
 }
-[/sourcecode]
+```
 
 Here we set the rotation angle to 0 and the rotationaxis to the x-axis. When the mouse moves, we’ll change those parameters, so the rotation will have an effect:
 
-[sourcecode language="csharp"]
+```csharp
 void LayoutRoot_MouseMove(object sender, MouseEventArgs e)
 {
 Point mouseLocation = e.GetPosition(RootCanvas);
@@ -179,7 +157,7 @@ double speed = Math.Sqrt(Math.Pow(relativeX, 2) + Math.Pow(relativeY, 2)) / 170;
 RotationSpeed.Text = speed.ToString();
 rotateTransform.Rotation = new AxisAngleRotation3D(new Vector3D(relativeY, relativeX, 0), speed);
 }
-[/sourcecode]
+```
 
 To trigger the movement, we have to capture the MouseEnter and MouseLeave events:
 
@@ -195,11 +173,11 @@ void LayoutRoot_MouseEnter(object sender, MouseEventArgs e)
      LayoutRoot.MouseMove += new MouseEventHandler(LayoutRoot_MouseMove);
      runRotation = true;
 }
-[/sourcecode]
+```
 
 Now that the rotationparameters are set we need to rotate the tags, or more precisely the centerpoint of the tag. To accomplish this we’ll make use of the Rendering event of the CompositionTarget object. This is called everytime the Silverlight plugin wants to render a new frame.
 
-[sourcecode language="csharp"]
+```csharp
 void CompositionTarget_Rendering(object sender, EventArgs e)
 {
     if (runRotation)
@@ -221,7 +199,7 @@ textBlock.Redraw(RootCanvas.ActualWidth / 2, RootCanvas.ActualHeight / 2);
 }
 }
 }
-[/sourcecode]
+```
 
 To relieve the CPU a bit, we’ll only rotate the tags if the rotation angle is higher than a threshold value. The actual transformation is accomplished by invoking the TryTransform method and passing it the current centerpoint of each tag.
 

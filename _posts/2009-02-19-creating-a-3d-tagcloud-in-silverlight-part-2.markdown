@@ -1,5 +1,5 @@
 ---
-author: admin
+author: Peter Gerritsen
 comments: true
 date: 2009-02-19 09:49:04+00:00
 layout: post
@@ -51,7 +51,7 @@ The reason I’m going with this technique is the flexibility it provides when y
 
 To change the color based on the weight and set the url of the HyperlinkNutton we need to make some changes to the Tag3D object I showed you in the last post:
 
-[sourcecode language="csharp"]
+```csharp
 public class Tag3D
 {
 public HyperlinkButton btnLink { get; set; }
@@ -83,13 +83,13 @@ Canvas.SetTop(btnLink, -centerPoint.Y + yOffset - (btnLink.ActualHeight/ 2));
 Canvas.SetZIndex(btnLink, Convert.ToInt32(centerPoint.Z));
 }
 }
-[/sourcecode]
+```
 
 In the constructor we now pass in the url and a Color to show when the tag is the most important (I chose to use a scale of 1 to 10, with 10 being the most important).
 The url is simply assigned to the NavigateUrl property of the HyperlinkButton. The Color is used when setting the new Foreground Brush. I also made some modifications in the calculations of the font size and alpha of the Brush to make it look a bit more realistic.
 To let the JavaScript in the page add the tags I’ve created a AddTag method and decorated it with the ScriptableMember attribute:
 
-[sourcecode language="csharp"]
+```csharp
 [ScriptableMember()]
 public void AddTag(string tag, string url, int weight)
 {
@@ -106,13 +106,13 @@ color.B = Convert.ToByte(Math.Round(65.0 * (weight / 10.0)));
 
 tagBlocks.Add(new Tag3D(0.0, 0.0, 0.0, tag, url, color));
 }
-[/sourcecode]
+```
 
 In this method we calculate the Color of the tag based on the weight. Then we add a new tag to the tagBlocks List<Tag3D>.
 
 After calling this method a couple of times we need to place the tags and display them. I’ve changed the FillTags method shown in the previous post and renamed it to ProcessTags to make the name a bit more meaningful:
 
-[sourcecode language="csharp"]
+```csharp
 [ScriptableMember()]
 public void ProcessTags()
 {
@@ -147,18 +147,18 @@ tag.Redraw(RootCanvas.Width / 2, RootCanvas.Height / 2);
 RootCanvas.Children.Add(tag.btnLink);
 }
 }
-[/sourcecode]
+```
 
 We need one more thing to make the methods callable from JavaScript. Register the
 object with the HtmlPage in the constructor:
 
-[sourcecode language="csharp"]
+```csharp
 HtmlPage.RegisterScriptableObject("TagCloud", this);
-[/sourcecode]
+```
 
 No you can call the methods from JavaScript:
 
-[sourcecode language="javascript"]
+```javascript
 function addTags() {
 var control = document.getElementById("Xaml1");
 control.content.TagCloud.AddTag("Silverlight", "http://silverlight.net", 5);
@@ -168,7 +168,7 @@ control.content.TagCloud.AddTag("Axelerate3D", "http://www.codeplex.com", 8);
 control.content.TagCloud.AddTag("WPF", "http://www.microsoft.com", 1);
 control.content.TagCloud.AddTag("SharePoint", "http://www.microsoft.com", 4);
 control.content.TagCloud.ProcessTags(); }
-[/sourcecode]
+```
 
 I’m just attaching some code to the onclick of a button and hard-coding the tags. Normally you would handle the onload of the document (or better yet the $(document).ready in jQuery) and get your tags from the Html to pass them to the Silverlight object.
 

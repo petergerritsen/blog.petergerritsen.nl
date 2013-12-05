@@ -1,5 +1,5 @@
 ---
-author: admin
+author: Peter Gerritsen
 comments: true
 date: 2009-03-13 11:47:50+00:00
 layout: post
@@ -33,15 +33,15 @@ On the first side of the spectrum, there are engines such as [jTemplates](http:/
 
 
 
-[/sourcecode]
-[sourcecode language="javascript"]
+```
+```javascript
 $('#quickdemo').items( [
 		{library:'Prototype'},
 		{library:'jQuery'},
 		{library:'Dojo'},
 		{library:'MooTools'}
 	]).chain();
-[/sourcecode]
+```
 
 In this case the library field in the JSON objects is put into the element with “library” in de classname. The nice thing about Chain.js is the fact that it monitors the items collection for changes. Adding or removing items from script, automatically updates the generated HTML. So filtering and sorting can be very easily accomplished, some very easy to follow examples are available on the companion website.
 
@@ -57,8 +57,8 @@ PURE uses the same classnames based system for the databinding. Consider the fol
 	
 
 
-[/sourcecode]
-[sourcecode language="javascript"]
+```
+```javascript
 var data = {
 	"reference": "3456",
 	"sites": [{
@@ -75,7 +75,7 @@ var data = {
 		}]
 	};
 	$('ol.siteList').autoRender(data);
-[/sourcecode]
+```
 
 The _url@href_ and _reference@id_ classnames provide a way to set attributes of the databound elements.
 
@@ -99,8 +99,8 @@ For this PURE supports directives. You create your directives and pass them into
 
 
 
-[/sourcecode]
-[sourcecode language="javascript"]
+```
+```javascript
 function showProductCategories()
 {
     $.getJSON(bpvweburl + "/_layouts/ecabointranet2009/bpv.ashx", {type: "categories"}, function(data)
@@ -115,7 +115,7 @@ function showProductCategories()
         list.autoRender( data, directive );
     });
 }
-[/sourcecode]
+```
 
 Here we get some JSON from a handler, put the html from the template into a new element, and bind the JSON to that template. When binding the JSON data, we attach a javascript function to the onclick event of the generated anchor tags.
 

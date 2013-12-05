@@ -1,5 +1,5 @@
 ---
-author: admin
+author: Peter Gerritsen
 comments: true
 date: 2009-02-03 16:55:08+00:00
 layout: post
@@ -17,24 +17,11 @@ Just create an Or statement for tasks assigned to the user and loop through all 
 
 The resulting query will look like this:
 
-[sourcecode language="xml"]
-
-
-
-
+```xml
 Piet van Tul
-
-
-
 Region Controllers
-
-
-
 Accounting department
-
-
-
-[/sourcecode]
+```
 
 By using this query in the QueryOverride of a Content Query Web Part you have all the power of a Content Query combined with the power of query generation.
 

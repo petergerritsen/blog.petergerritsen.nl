@@ -1,5 +1,5 @@
 ---
-author: admin
+author: Peter Gerritsen
 comments: true
 date: 2009-03-31 10:29:31+00:00
 layout: post
@@ -20,7 +20,7 @@ In [part 1](http://blog.petergerritsen.nl/2009/03/30/building-an-ajax-web-part-
 jQuery offers various methods to perform asynchronous calls to web resources. To retrieve JSON the most used are jQuery.ajax and jQuery.getJSON. The last one uses a HTTP GET request and is simpler to use, the jQuery.ajax method offers more options/flexibility. For retrieving the product categories and the products, I’ve decided to go with getJSON.
 The code for retreiving the categories looks as follows:
 
-[sourcecode language="javascript"]
+```javascript
 function showProductCategories() {
 $.getJSON(bpvweburl + "/_layouts/intranet2009/bpv.ashx",
 {type: "categories"},
@@ -33,7 +33,7 @@ var directive = {'a.context[onclick]' : '"showProducts(this);return false;"'};
 list.autoRender( data, directive );
 });
 }
-[/sourcecode]
+```
 
 The first line is responsible for calling the handler. It specifies a inline callback method to handle the returned data. The JSON returned is processed by the PURE templating plugin. I’ve blogged about using this [before](http://blog.petergerritsen.nl/2009/03/13/using-a-template-plugin-for-jquery-to-parse-json-data/).
 
@@ -41,7 +41,7 @@ The first line is responsible for calling the handler. It specifies a inline cal
 
 For getting the data from the web service, we’ll use the jQuery.ajax method. That’s because we need to do a HTTP POST request as well as specify some other options for the request. For more information see [this](http://encosia.com/2008/03/27/using-jquery-to-consume-aspnet-json-web-services/) post by Dave Ward. To initially load the shopping cart we use the following code:
 
-[sourcecode language="javascript"]
+```javascript
 function loadShoppingcart()
 {
 $.ajax({
@@ -86,12 +86,12 @@ $("#bpverrordialog span.errormessage").html(err.Message);
 
 $("#bpverrordialog").dialog("open");
 }
-[/sourcecode]
+```
 
 As you can see we post to the GetItems method of the asmx. We need to specify a empty JSON object as data (more information on that in [this](http://encosia.com/2008/06/05/3-mistakes-to-avoid-when-using-jquery-with-aspnet-ajax/) post, again by Dave Ward) and specify the contentType we want returned. When the AJAX call returns an error, we’ll call the showError method (which uses the jQuery UI dialog widget I’ll tell more about in part 3). When the call is successful, the rendershoppingcart method is called. This checks if the cart is empty, so we can display a message in that case, or uses PURE again for rendering the cart contents. To provide visual feedback to the user when the cart is updated, we’ll use the highlight effect on the cart to attract the attention of the user.
 If we want to pass in parameters with an AJAX call (like the productId when we want to delete an item from the cart), we need to construct a parameters object and serialize that as string for usage in the call:
 
-[sourcecode language="javascript"]
+```javascript
 var paramsdata = { "productId" : $("#bpvremoveitemid").val() }
 
 $.ajax({
@@ -103,7 +103,7 @@ dataType: "json",
 success: rendershoppingcart,
 error: showError
 });
-[/sourcecode]
+```
 
 As you can see, we use a JSON.stringify method for serializing the object as a string.
 
@@ -111,7 +111,7 @@ You can [download](http://www.json.org/json2.js) the scriptfile needed for this
 
 All the other methods in the web service are called in the same way, so there’s no need to inundate you with more code on that. The only thing left is to show you parts of the contents of the Render method in the webpart:
 
-[sourcecode language="csharp"]
+```csharp
 // Templates
 // Categorylist template
 writer.WriteLine("
@@ -233,7 +233,7 @@ writer.WriteLine("[Alles verwijderen](\"#\")");
 writer.WriteLine("
 
 ");
-[/sourcecode]
+```
 
 As you can see, all we do is write out HTML. First I write out the HTML needed for the databinding of the categories and products (I removed that because it’s the same as the category one). Then some placeholders and form elements are rendered. There’s a little more HTML off course, but you get the point, NO CODE :-)
 

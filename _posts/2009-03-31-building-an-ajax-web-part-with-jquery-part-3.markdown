@@ -1,5 +1,5 @@
 ---
-author: admin
+author: Peter Gerritsen
 comments: true
 date: 2009-03-31 13:36:35+00:00
 layout: post
@@ -51,7 +51,7 @@ minDate: +1, dateFormat: 'dd/mm/yy',
 buttonImage: '/_layouts/images/calendar.gif',
 buttonImageOnly: true
 });
-[/sourcecode]
+```
 
 In this case, the user has to press a button (in this case an imagebutton) to open the datepicker.
 
@@ -63,7 +63,7 @@ Dialogs are a very useful way to give feedback to the user or asking for confirm
 
 Showing this is very easy. First we create a function that is called when the page is initialized:
 
-[sourcecode language="javascript"]
+```javascript
 function initializeDeleteItemDialog() {
 var doOk= function() {
 var paramsdata = {
@@ -91,11 +91,11 @@ autoOpen: false
 }
 $("#bpvremoveitemdialog").dialog(dialogOpts);
 }
-[/sourcecode]
+```
 
 We first specify the code to execute when the user presses the Ok button. In this case we’ll call the DeleteItem method of the shoppingcart web service and then close the dialog. The Cancel button will close the dialog straight away. In the dialog options we specify the buttons with their callback. Then we hook up the dialog to the html element we want to show. The html is written out in the Render method of the web part:
 
-[sourcecode language="javascript"]
+```javascript
 writer.WriteLine(“
 
 ”);
@@ -104,16 +104,16 @@ writer.WriteLine(“”);
 writer.WriteLine(“
 
 ”);
-[/sourcecode]
+```
 
 To open the dialog we just have to call the dialog method again with “open” as parameter:
 
-[sourcecode language="javascript"]
+```javascript
 function removeProduct(element) {
 $("#bpvremoveitemid").val($(element).attr("productid") );
 $("#bpvremoveitemdialog").dialog("open");
 }
-[/sourcecode]
+```
 
 **Validation**
 
@@ -123,7 +123,7 @@ If you now of a way to assign one validation and remove it again before assignin
 First we hook up all the validations we want on the form and we specify a custom validation
 rule, called dutchDate:
 
-[sourcecode language="javascript"]
+```javascript
 $.validator.addMethod(
 "dutchDate", function(value,element)
 { return value.match(/^\d\d?\/\d\d?\/\d\d\d\d$/);},
@@ -160,22 +160,22 @@ dutchDate: "Bezorg-/ophaaldatum moet in het formaat dd/mm/yyyy zijn"
 }
 }
 });
-[/sourcecode]
+```
 
 I only want the validation to occur when I call it on specific elements from code, so we specify false on every event it normally triggers on. When there are errors,  I want to call a showValidationError function that shows the errors in a dialog box. Then we specify the rules and the messages we want to show when the rule isn’t matched. “bpvproductamount” equals the name attribute of the input element.
 
 To call the validation we use the element method of the validation plugin:
 
-[sourcecode language="javascript"]
+```javascript
 if ($("form").validate().element("#txtbpvproductid") && $("form").validate().element("#txtbpvproductamount"))
 {
 // valid, so perfom actions
 }
-[/sourcecode]
+```
 
 As soon as an element doesn’t pass validation, the method we attached to the showErrors event is called. Unfortunately this means only one error at a time will popup if multiple  elements don’t pass validation. To show the validation messages, we’ll make use of the Dialog widget once again:
 
-[sourcecode language="javascript"]
+```javascript
 function showValidationError(errorMap, errorList)
 {
 var message = "";
@@ -188,7 +188,7 @@ if (message.length > 0) {
 showMessage(message);
 }
 }
-[/sourcecode]
+```
 
 
 #### Conclusion

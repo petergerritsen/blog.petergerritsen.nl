@@ -1,5 +1,5 @@
 ---
-author: admin
+author: Peter Gerritsen
 comments: true
 date: 2010-09-06 11:03:17+00:00
 layout: post
@@ -20,7 +20,7 @@ First of, I started with an empty SharePoint project in Visual Studio 2010. I ch
 
 First of I added an empty element item to the project called Buttons. In this element I included the XML to hide the existing button and inject my own button:
 
-[code]
+```xml
 <CustomAction
 Id="TTSendLinksEmailRemoveRibbonButton"
 Location="CommandUI.Ribbon">
@@ -72,25 +72,25 @@ oneOrMoreEnable();" />
 </CommandUIHandlers>
 </CommandUIExtension>
 </CustomAction>
-[/code]
+```
 
 For my own button, I copied the resourcestrings from the original XML that is in CMDUI.xml (14\TEMPLATE\GLOBAL\XML). This way the button gets the same look and feel and localized labels as the original button. When pressing the button the JavaScript function TamTam_SP2010_SendLinksMail_SendLinksMail is called. The EnabledScript enables the button when 1 or more items are selected.
 
 To make sure the JavaScript is included, we’ll use a CustomAction element with ScriptLink as location (for more information see the previously mentioned blogpost by Jan Tielens):
 
-[code]
+```xml
 <CustomAction
 ScriptSrc="~SiteCollection/SiteAssets/TamTam.SP2010.EmailALinkMultiple.js"
 Location="ScriptLink"
 Sequence="10">
 </CustomAction>
-[/code]
+```
 
 Now all we have to do is create the necessary JavaScript. The out-of-the-box functionality opens the users email client with the link to the selected document in the body of the message.
 
 To create the body of the message we’ll need to retrieve the link for every selected item by use of the Client Object Model. First we’ll get the ClientContext, the SPSite, the list were in and the id’s of the selected items:
 
-[code]
+```javascript
 TamTam_SP2010_SendLinksMail_SendLinksMail = function () {
 this.selectedItems = SP.ListOperation.Selection.getSelectedItems();
 this.selectedListGuid = SP.ListOperation.Selection.getSelectedList();
@@ -105,11 +105,11 @@ this.web = this.context.get_web();
 this.selectedList = this.web.get_lists().getById(this.selectedListGuid);
 
 }
-[/code]
+```
 
 We then need to get the listitem object for every selected item. Because this is an asynchronous operation we’ll create an array, include every selected listitem in there and tell the context to load each item before calling executeQueryAsync:
 
-[code]
+```javascript
 this.selectedFiles = new Array();
 
 var k;
@@ -120,11 +120,11 @@ this.context.load(this.selectedFiles[k]);
 }
 
 this.context.executeQueryAsync(Function.createDelegate(this, TamTam_SP2010_SendLinksMail_onQuerySucceeded), Function.createDelegate(this, TamTam_SP2010_SendLinksMail_onQueryFailed));
-[/code]
+```
 
 The in the onQuerySucceeded callback function we can get the url’s for the items and construct the email:
 
-[code]
+```javascript
 TamTam_SP2010_SendLinksMail_onQuerySucceeded = function () {
 var siteUrl = this.site.get_url();
 
@@ -138,4 +138,4 @@ bodystring += siteUrl + fileUrl + "%0d%0a%0d%0a";
 
 window.open('mailto:?body=' + bodystring);
 }
-[/code]
+```

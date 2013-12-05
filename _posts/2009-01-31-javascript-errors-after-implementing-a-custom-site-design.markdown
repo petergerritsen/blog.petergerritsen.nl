@@ -1,5 +1,5 @@
 ---
-author: admin
+author: Peter Gerritsen
 comments: true
 date: 2009-01-31 11:44:11+00:00
 layout: post
@@ -22,6 +22,8 @@ The reason for this is that the build in JavaScript of MOSS use a property offse
 
 The easiest solution to prevent this, is to absolute-position the body by include the following statement in your css:
 
+```css
 body { position: absolute !important; } 
+```
 
 This can off course lead to some css issues, so positioning a wrapper is also an option.

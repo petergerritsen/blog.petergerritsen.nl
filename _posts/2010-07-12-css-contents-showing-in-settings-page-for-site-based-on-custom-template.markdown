@@ -1,5 +1,5 @@
 ---
-author: admin
+author: Peter Gerritsen
 comments: true
 date: 2010-07-12 08:47:15+00:00
 layout: post
@@ -17,13 +17,15 @@ This [post](http://social.technet.microsoft.com/Forums/en/sharepoint2010customiz
 
 You can off course use powershell to get rid of this problem:
 
-[code]$site = Get-SPSite "http://sitecollectionurl"
+```
+$site = Get-SPSite "http://sitecollectionurl"
 
 $web = $site.OpenWeb("/weburl")
 
 $web.AlternateHeader = ""
 
-$web.Update()[/code]
+$web.Update()
+```
 
 Update: 
 The post on the forums got answered and according to that it has to do with the publishing feature that was activated before saving the site as a template. However in my case that feature wasn't activated, because we're aware that such a scenario isn't officially supported by Microsoft. 

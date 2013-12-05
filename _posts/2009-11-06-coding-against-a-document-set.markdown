@@ -1,5 +1,5 @@
 ---
-author: admin
+author: Peter Gerritsen
 comments: true
 date: 2009-11-06 16:56:31+00:00
 layout: post
@@ -25,7 +25,7 @@ One of the things I was eager to try out is the new Document Sets feature. Docum
 First let me start by giving you some code you can use to show extra information about
 the document set in a web part you can place on the welcome page:
 
-[sourcecode language="csharp"]
+```csharp
 try
 {
      SPListItem item = SPContext.Current.ListItem;
@@ -52,7 +52,7 @@ try
 }
 catch (Exception)
 { }
-[/sourcecode]
+```
 
 First we get a reference to the current List Item through the SPContext. This list item is the main item for the document set that contains the metadata that is pushed into the child documents.
 
