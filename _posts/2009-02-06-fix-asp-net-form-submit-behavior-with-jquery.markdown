@@ -26,3 +26,6 @@ The control _btnSearch_ is the one we want to trigger when a user presses the en
 To hook up the button to the form we use the following JavaScript/jQuery:
 
 Code here
+
+This script finds all fieldset elements containing the _defaultsubmitbutton_ attribute, locates all textboxes and password fields within that fieldset and hooks up the keydown event.
+When the enter key is pressed (keycode 13) the default event is canceled and depending on the type of button the right postback method is triggered.
