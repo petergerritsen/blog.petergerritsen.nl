@@ -28,7 +28,7 @@ writer.WriteLine("", btnSearch.ClientID);
 writer.WriteLine("");
 ```
 
-The control “btnSearch” is the one we want to trigger when a user presses the enter button.
+The control "btnSearch" is the one we want to trigger when a user presses the enter button.
 
 To hook up the button to the form we use the following JavaScript/jQuery:
 ```javascript
