@@ -20,16 +20,14 @@ Microsoft has included a feature in ASP.Net 2.0 to overcome this problem. In sho
 To fix this, I decided to use jQuery. What we need to have is a way to identify the different forms on a page and connect them with the right submit button. So I added a fieldset tag around the single form:
 
 ```csharp
-
+//test
 ```
 
 The control _btnSearch_ is the one we want to trigger when a user presses the enter button.
 
 To hook up the button to the form we use the following JavaScript/jQuery:
 
-```javascript
 
-```
 
 This script finds all fieldset elements containing the _defaultsubmitbutton_ attribute, locates all textboxes and password fields within that fieldset and hooks up the keydown event.
 When the enter key is pressed (keycode 13) the default event is canceled and depending on the type of button the right postback method is triggered.
