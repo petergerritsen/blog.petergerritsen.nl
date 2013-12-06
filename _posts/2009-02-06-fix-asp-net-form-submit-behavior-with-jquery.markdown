@@ -21,11 +21,6 @@ To fix this, I decided to use jQuery. What we need to have is a way to identify 
 
 ```csharp
 
-writer.WriteLine("", btnSearch.ClientID);
-
-// form contents go here
-
-writer.WriteLine("");
 ```
 
 The control _btnSearch_ is the one we want to trigger when a user presses the enter button.
