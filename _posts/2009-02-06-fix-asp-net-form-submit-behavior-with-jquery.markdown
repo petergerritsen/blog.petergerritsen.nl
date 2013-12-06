@@ -23,7 +23,7 @@ writer.WriteLine("<div class=\"regular_forms\">");
 
 writer.WriteLine("", btnSearch.ClientID);
 
-……… form contents ………
+// form contents go here
 
 writer.WriteLine("");
 ````
