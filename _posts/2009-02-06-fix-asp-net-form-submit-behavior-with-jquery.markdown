@@ -15,7 +15,7 @@ In standard ASP.Net web form pages there's only one form tag for the entire page
 
 In a standard HTML all forms are contained in their own form tag. When the browser receives a enter key press for the form the form is submitted. Because of the single form in a ASP.Net web form this behavior will be broken and the first submit button on the page will always be triggered by the browser when pressing enter.
 
-Microsoft has included a feature in ASP.Net 2.0 to overcome this problem. In short you add an attribute "DefaultButton", with the ID of the button to trigger, to an ASP Panel control that wraps the form. Unfortunately this solution doesn't work in Firefox.
+Microsoft has included a feature in ASP.Net 2.0 to overcome this problem. In short you add an attribute _DefaultButton_, with the ID of the button to trigger, to an ASP Panel control that wraps the form. Unfortunately this solution doesn't work in Firefox.
 
 To fix this, I decided to use jQuery. What we need to have is a way to identify the different forms on a page and connect them with the right submit button. So I added a fieldset tag around the single form:
 ```csharp
@@ -28,32 +28,9 @@ writer.WriteLine("", btnSearch.ClientID);
 writer.WriteLine("");
 ```
 
-The control "btnSearch" is the one we want to trigger when a user presses the enter button.
+The control _btnSearch_ is the one we want to trigger when a user presses the enter button.
 
 To hook up the button to the form we use the following JavaScript/jQuery:
-```javascript
-$(document).ready(function() {
-    $("fieldset[defaultsubmitbutton]").each(function() {
-        var submitbuttonid = $(this).attr("defaultsubmitbutton");
-        $("input[type='text'], input[type='password']", this).keydown(function(e) {
-            var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
-            if (key == 13) {
-                e.preventDefault();
-                var button = $("#" + submitbuttonid).eq(0);
-                if (button.length > 0) {
-                    if (typeof (button.get(0).onclick) == 'function') {
-                        button.trigger('click');
-                    }
-                    else if (button.attr('href')) {
-                        window.location = button.attr('href'); } else {
-                        button.trigger('click');
-                    }
-                }
-            }
-        });
-    });
-});
-```
 
 This script finds all fieldset elements containing the _defaultsubmitbutton_ attribute, locates all textboxes and password fields within that fieldset and hooks up the keydown event.
 When the enter key is pressed (keycode 13) the default event is canceled and depending on the type of button the right postback method is triggered.
