@@ -28,27 +28,7 @@ The control _btnSearch_ is the one we want to trigger when a user presses the en
 To hook up the button to the form we use the following JavaScript/jQuery:
 
 ```javascript
-$(document).ready(function() {
-    $("fieldset[defaultsubmitbutton]").each(function() {
-        var submitbuttonid = $(this).attr("defaultsubmitbutton");
-        $("input[type='text'], input[type='password']", this).keydown(function(e) {
-            var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
-            if (key == 13) {
-                e.preventDefault();
-                var button = $("#" + submitbuttonid).eq(0);
-                if (button.length > 0) {
-                    if (typeof (button.get(0).onclick) == 'function') {
-                        button.trigger('click');
-                    }
-                    else if (button.attr('href')) {
-                        window.location = button.attr('href'); } else {
-                        button.trigger('click');
-                    }
-                }
-            }
-        });
-    });
-});
+
 ```
 
 This script finds all fieldset elements containing the _defaultsubmitbutton_ attribute, locates all textboxes and password fields within that fieldset and hooks up the keydown event.
