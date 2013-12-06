@@ -20,7 +20,6 @@ Microsoft has included a feature in ASP.Net 2.0 to overcome this problem. In sho
 To fix this, I decided to use jQuery. What we need to have is a way to identify the different forms on a page and connect them with the right submit button. So I added a fieldset tag around the single form:
 
 ```csharp
-writer.WriteLine("<div class=\"regular_forms\">");
 
 writer.WriteLine("", btnSearch.ClientID);
 
