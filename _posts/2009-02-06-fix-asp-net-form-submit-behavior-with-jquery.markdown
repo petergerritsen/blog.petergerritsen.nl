@@ -26,7 +26,7 @@ writer.WriteLine("", btnSearch.ClientID);
 // form contents go here
 
 writer.WriteLine("");
-````
+```
 
 The control “btnSearch” is the one we want to trigger when a user presses the enter button.
 
