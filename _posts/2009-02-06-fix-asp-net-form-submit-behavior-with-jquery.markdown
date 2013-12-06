@@ -18,15 +18,6 @@ In a standard HTML all forms are contained in their own form tag. When the brows
 Microsoft has included a feature in ASP.Net 2.0 to overcome this problem. In short you add an attribute _DefaultButton_, with the ID of the button to trigger, to an ASP Panel control that wraps the form. Unfortunately this solution doesn't work in Firefox.
 
 To fix this, I decided to use jQuery. What we need to have is a way to identify the different forms on a page and connect them with the right submit button. So I added a fieldset tag around the single form:
-```csharp
-writer.WriteLine("<div class=\"regular_forms\">");
-
-writer.WriteLine("", btnSearch.ClientID);
-
-// form contents go here
-
-writer.WriteLine("");
-```
 
 The control _btnSearch_ is the one we want to trigger when a user presses the enter button.
 
