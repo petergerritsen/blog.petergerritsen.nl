@@ -9,7 +9,6 @@ wordpress_id: 570
 tags:
 - ASP.Net
 - jQuery
-
 ---
 
 In standard ASP.Net web form pages there's only one form tag for the entire page. This unfortunately has some side effects on form submit behavior.
@@ -22,17 +21,38 @@ To fix this, I decided to use jQuery. What we need to have is a way to identify 
 
 ```csharp
 writer.WriteLine("<div class=\"regular_forms\">");
-
 writer.WriteLine("", btnSearch.ClientID);
-
 // form contents go here
+writer.WriteLine("</fieldset></div>");
 ```
 
 The control _btnSearch_ is the one we want to trigger when a user presses the enter button.
 
 To hook up the button to the form we use the following JavaScript/jQuery:
 
-
+```javascript
+$(document).ready(function() {
+    $("fieldset[defaultsubmitbutton]").each(function() {
+        var submitbuttonid = $(this).attr("defaultsubmitbutton");
+        $("input[type='text'], input[type='password']", this).keydown(function(e) {
+            var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
+            if (key == 13) {
+                e.preventDefault();
+                var button = $("#" + submitbuttonid).eq(0);
+                if (button.length > 0) {
+                    if (typeof (button.get(0).onclick) == 'function') {
+                        button.trigger('click');
+                    }
+                    else if (button.attr('href')) {
+                        window.location = button.attr('href'); } else {
+                        button.trigger('click');
+                    }
+                }
+            }
+        });
+    });
+});
+```
 
 This script finds all fieldset elements containing the _defaultsubmitbutton_ attribute, locates all textboxes and password fields within that fieldset and hooks up the keydown event.
 When the enter key is pressed (keycode 13) the default event is canceled and depending on the type of button the right postback method is triggered.

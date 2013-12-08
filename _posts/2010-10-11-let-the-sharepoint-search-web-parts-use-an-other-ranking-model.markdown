@@ -15,9 +15,8 @@ SharePoint 2010 introduces the concept of Ranking Models. These models allow you
 
 But how do you tell the search web parts to use your custom ranking model, once you specified it? As far as I can tell there’s 2 options:
 
-  * Pass in the id of the model through the querystring by appending “&rm=<guid of ranking model>”
+  * Pass in the id of the model through the querystring by appending `&rm=<guid of ranking model>`
   * Use the Shared Query Manager
-
 
 The Shared Query Manager is _the_ option for modifying the query the search web parts are going to use.
 
@@ -33,7 +32,6 @@ public class SetRankingModel : WebPart
             try
             {
                 QueryManager qm = SharedQueryManager.GetInstance(this.Page).QueryManager;
-
                 foreach (LocationList ll in qm)
                 {
                     foreach (Location l in ll)
@@ -45,7 +43,6 @@ public class SetRankingModel : WebPart
                         catch { }
                     }
                 }
-
                 base.OnInit(e);
             }
             catch { }

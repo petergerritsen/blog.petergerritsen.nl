@@ -54,15 +54,12 @@ success: rendershoppingcart,
 error: showError
 });
 }
-
 function rendershoppingcart(msg) {
 var cartcontainer = $("#bpvcartcontent");
 cartcontainer.empty();
-
 if (msg.d.length > 0)
 {
 var cartitemslist = cartcontainer.append($("#bpvcarttemplate").html());
-
 var directives = {
 'a.bpvedit[onclick]' : '"editAmount(this); return false;"',
 'a.bpvremove[onclick]' : '"removeProduct(this); return false;"'
@@ -72,18 +69,13 @@ cartitemslist.autoRender( msg.d, directives );
 else
 {
 cartcontainer.append("U heeft nog geen producten in uw winkelwagen");
-
 }
-
 $("#bpvcartcontent").effect("highlight", {color: "#ffcf57"}, 700, null);
 }
-
 function showError(xhr, status, error)
 {
 var err = eval("(" + xhr.responseText + ")");
-
 $("#bpverrordialog span.errormessage").html(err.Message);
-
 $("#bpverrordialog").dialog("open");
 }
 ```
@@ -93,7 +85,6 @@ If we want to pass in parameters with an AJAX call (like the productId when we w
 
 ```javascript
 var paramsdata = { "productId" : $("#bpvremoveitemid").val() }
-
 $.ajax({
 type: "POST",
 url: "/_layouts/ecabointranet2009/bpvshoppingcart.asmx/DeleteItem",
@@ -112,127 +103,47 @@ You can [download](http://www.json.org/json2.js) the scriptfile needed for this
 All the other methods in the web service are called in the same way, so there’s no need to inundate you with more code on that. The only thing left is to show you parts of the contents of the Render method in the webpart:
 
 ```csharp
-// Templates
-// Categorylist template
-writer.WriteLine("
-
-");
-writer.WriteLine("
-
-### Productcategorie
-
-");
-writer.WriteLine("
-
-  * [laden...](\"#\")
-");
-writer.WriteLine("
-
-");
-// Productlist template
-writer.WriteLine("
-
-");
-writer.WriteLine("
-
-### Product
-
-");
-writer.WriteLine("
-
-  * [geen items](\"#\")
-");
-writer.WriteLine("
-
-");
-// Shoppingcart template
-writer.WriteLine("
-
-");
-writer.WriteLine("
-
-### Informatie en bestellen
-
-");
-writer.WriteLine("
-
-Product
-Aantal
-");
-writer.WriteLine("
-
-naam
-aantal
-[![](\"/_layouts/images/ecabo/2009/page-edit.gif\")](\"#\") [![](\"/_layouts/images/ecabo/2009/bin.gif\")](\"#\")
-");
-writer.WriteLine("");
-writer.WriteLine("
-
-");
-
-// Item selector
-writer.WriteLine("
-
-");
-writer.WriteLine("
-
-## 1. Selecteer uw producten
-
-");
-writer.WriteLine("
-
-");
-writer.WriteLine("
-
-### Productcategorie
-
-");
-writer.WriteLine("
-
-### Product
-
-");
-writer.WriteLine("
-
-");
-writer.WriteLine("
-
-### Informatie en bestellen
-
-");
-writer.WriteLine("![](\"/_layouts/images/blank.gif\")");
-writer.WriteLine("");
-writer.WriteLine("");
-writer.WriteLine("Aantal:");
-writer.WriteLine("");
-writer.WriteLine("");
-writer.WriteLine("");
-writer.WriteLine("
-
-");
-writer.WriteLine("
-
-");
-
-// Shoppingcart
-writer.WriteLine("
-
-");
-writer.WriteLine("
-
-## 2. Lijst met uw bestelling
-
-");
-writer.WriteLine("
-
-U heeft nog geen producten in uw winkelwagen
-
-");
-
-writer.WriteLine("[Alles verwijderen](\"#\")");
-writer.WriteLine("
-
-");
+ // Templates
+ // Categorylist template
+ writer.WriteLine("<div id=\"bpvcategorytemplate\" style=\"display: none;\">");
+ writer.WriteLine("<h3>Productcategorie</h3>");
+ writer.WriteLine("<ul><li class=\"context\"><a href=\"#\" class=\"context context@category\">laden...</a></li></ul>");
+ writer.WriteLine("</div>");
+ // Productlist template
+ writer.WriteLine("<div id=\"bpvproducttemplate\" style=\"display: none;\">");
+ writer.WriteLine("<h3>Product</h3>");
+ writer.WriteLine("<ul><li class=\"context\"><a href=\"#\" class=\"Title ID@productid Description@description Code@productcode AttachmentUrl@imageurl\">geen items</a></li></ul>");
+ writer.WriteLine("</div>");
+ // Shoppingcart template
+ writer.WriteLine("<div id=\"bpvcarttemplate\" style=\"display: none;\">");
+ writer.WriteLine("<h3>Informatie en bestellen</h3>");
+ writer.WriteLine("<table><thead><tr><td class=\"ProductName\">Product</td><td>Aantal</td><td></td></tr></thead><tbody class=\"d\">");
+ writer.WriteLine("<tr class=\"context\"><td class=\"ProductName\">naam</td><td class=\"Amount\">aantal</td><td><a href=\"#\" class=\"bpvedit ProductID@productid Amount@amount\"><img src=\"/_layouts/images/ecabo/2009/page-edit.gif\" /></a> <a href=\"#\" class=\"bpvremove ProductID@productid\"><img src=\"/_layouts/images/ecabo/2009/bin.gif\" /></a></td></tr>");
+ writer.WriteLine("</tbody></table>");
+ writer.WriteLine("</div>");
+ // Item selector
+ writer.WriteLine("<div id=\"bpvitemselector\">");
+ writer.WriteLine("<h2>1. Selecteer uw producten</h2>");
+ writer.WriteLine("<div id=\"selector\">");
+ writer.WriteLine("<div id=\"bpvcategoriescontainer\"><h3>Productcategorie</h3></div>");
+ writer.WriteLine("<div id=\"bpvproductscontainer\"><h3>Product</h3></div>");
+ writer.WriteLine("</div>");
+ writer.WriteLine("<div id=\"bpvproductinfo\"><h3>Informatie en bestellen</h3>");
+ writer.WriteLine("<img src=\"/_layouts/images/blank.gif\" id=\"bpvproductimage\"/>");
+ writer.WriteLine("<span class=\"title\" id=\"bpvproducttitle\"></span>");
+ writer.WriteLine("<span class=\"description\"  id=\"bpvproductdescription\" /></span>");
+ writer.WriteLine("<label class=\"amount\">Aantal:</label><input type=\"text\" id=\"txtbpvproductamount\" name=\"bpvproductamount\"/>");
+ writer.WriteLine("<input type=\"hidden\" id=\"txtbpvproductid\" name=\"bpvproductid\"/>");
+ writer.WriteLine("<input type=\"hidden\" id=\"txtbpvproductcode\" />");
+ writer.WriteLine("<input type=\"button\" id=\"bpvaddproduct\" value=\"Voeg toe\"/>");
+ writer.WriteLine("</div>");
+ writer.WriteLine("</div>");
+ // Shoppingcart
+ writer.WriteLine("<div id=\"bpvshoppingcart\">");
+ writer.WriteLine("<h2>2. Lijst met uw bestelling</h2>");
+ writer.WriteLine("<div id=\"bpvcartcontent\"><span>U heeft nog geen producten in uw winkelwagen</span></div>");
+ writer.WriteLine("<a id=\"clearcart\" href=\"#\" onclick=\"clearCart(); return false;\">Alles verwijderen</a>");
+ writer.WriteLine("</div>");
 ```
 
 As you can see, all we do is write out HTML. First I write out the HTML needed for the databinding of the categories and products (I removed that because it’s the same as the category one). Then some placeholders and form elements are rendered. There’s a little more HTML off course, but you get the point, NO CODE :-)

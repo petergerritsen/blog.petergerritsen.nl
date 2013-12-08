@@ -27,7 +27,6 @@ protected override void OnInit(EventArgs e)
 		if (this.Page.Request.UserLanguages.Length > 0)
 			this.Page.Request.UserLanguages[0] = “en-US”;
 	}
-
 	base.OnInit(e);
 }
 ```

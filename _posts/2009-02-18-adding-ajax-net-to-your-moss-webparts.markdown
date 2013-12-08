@@ -23,21 +23,16 @@ Next you need to add a ScriptManager to the pages with the AJAX enabled webparts
 ```csharp
 protected override void OnInit(EventArgs e)
 {
-base.OnInit(e);
-
-//Register the ScriptManager
-
-ScriptManager scriptManager = ScriptManager.GetCurrent(this.Page);
-
-if (scriptManager == null)
-{
-scriptManager = new ScriptManager();
-scriptManager.ID = “ScriptManager1″;
-
-scriptManager.EnablePartialRendering = true;
-
-this.Page.Form.Controls.AddAt(0, scriptManager);
-}
+    base.OnInit(e);
+    //Register the ScriptManager
+    ScriptManager scriptManager = ScriptManager.GetCurrent(this.Page);
+    if (scriptManager == null)
+    {
+        scriptManager = new ScriptManager();
+        scriptManager.ID = “ScriptManager1″;
+        scriptManager.EnablePartialRendering = true;
+        this.Page.Form.Controls.AddAt(0, scriptManager);
+    }
 }
 ```
 
@@ -46,37 +41,33 @@ Because MOSS needs a lot of JavaScript to function properly, this unfortunately 
 ```csharp
 protected override void CreateChildControls()
 {
-//Add fix according to http://msdn2.microsoft.com/en-us/library/bb861877.aspx
-
-EnsurePanelFix();
+    //Add fix according to http://msdn2.microsoft.com/en-us/library/bb861877.aspx
+    EnsurePanelFix();
 }
-
 private void EnsurePanelFix()
 {
-if (this.Page.Form!= null)
-{
-String fixupScript = @”
-_spBodyOnLoadFunctionNames.push(“”_initFormActionAjax”");
-function _initFormActionAjax()
-{
-if (_spEscapedFormAction == document.forms[0].action)
-{
-document.forms[0]._initialAction = document.forms[0].action;
-}
-}
-
-var RestoreToOriginalFormActionCore = RestoreToOriginalFormAction;
-RestoreToOriginalFormAction = function()
-{
-if (_spOriginalFormAction != null)
-{
-RestoreToOriginalFormActionCore();
-document.forms[0]._initialAction = document.forms[0].action;
-}
-}”;
-
-ScriptManager.RegisterStartupScript(this, typeof(BaseWebPart), “UpdatePanelFixup”, fixupScript, true);
-}
+    if (this.Page.Form!= null)
+    {
+        String fixupScript = @”
+        _spBodyOnLoadFunctionNames.push(“”_initFormActionAjax”");
+        function _initFormActionAjax()
+        {
+            if (_spEscapedFormAction == document.forms[0].action)
+            {
+                document.forms[0]._initialAction = document.forms[0].action;
+            }
+        }
+        var RestoreToOriginalFormActionCore = RestoreToOriginalFormAction;
+        RestoreToOriginalFormAction = function()
+        {
+            if (_spOriginalFormAction != null)
+            {
+                RestoreToOriginalFormActionCore();
+                document.forms[0]._initialAction = document.forms[0].action;
+            }
+        }”;
+        ScriptManager.RegisterStartupScript(this, typeof(BaseWebPart), “UpdatePanelFixup”, fixupScript, true);
+    }
 }
 ```
 
@@ -85,29 +76,18 @@ Because all the content you want to include in an UpdatePanel needs to be added 
 ```csharp
 public static void AddLiteral(this UpdatePanel updatePanel, string html)
 {
-Literal lit = new Literal();
-lit.Text = html + “\r\n”;
-updatePanel.ContentTemplateContainer.Controls.Add(lit);
+    Literal lit = new Literal();
+    lit.Text = html + “\r\n”;
+    updatePanel.ContentTemplateContainer.Controls.Add(lit);
 }
 ```
 
 You can call this method from the CreateChildControls method in your web part like so:
 
 ```csharp
-updatePanel.AddLiteral(“
-
-”);
-updatePanel.AddLiteral(“
-Ma
-Di
-Wo
-Do
-Vr
-
-”);
-updatePanel.AddLiteral(“
-Ochtend
-”);
+updatePanel.AddLiteral(“<table><tr>”);
+updatePanel.AddLiteral(“<td></td><td>Ma</td><td>Di</td><td>Wo</td><td>Do</td><td>Vr</td></tr><tr>”);
+updatePanel.AddLiteral(“<td>Ochtend</td><td>”);
 ```
 
 To indicate progress you need some form of visual feedback to the user. For this you need to set the ProgressTemplate of the UpdatePanel. For this you need to create a class that implements the ITemplate interface.
@@ -117,9 +97,9 @@ Then you implement the InstantiateIn method to create a template:
 ```csharp
 public void ITemplate.InstantiateIn(Control container)
 {
-Label lbl = new Label();
-lbl.Text = “Progress….”;
-container.Controls.Add(lbl);
+    Label lbl = new Label();
+    lbl.Text = “Progress….”;
+    container.Controls.Add(lbl);
 }
 ```
 

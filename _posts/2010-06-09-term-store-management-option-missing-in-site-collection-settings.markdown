@@ -17,6 +17,10 @@ When you don't see the Term Store Management option in your site collection sett
 
 A hidden web application feature is probably not activated. You can activate it through PowerShell or stsadm:
 
+```
 Enable-SPFeature -id "73EF14B1-13A9-416b-A9B5-ECECA2B0604C" -Url <Site-URL>
+```
 
+```
 stsadm -o activatefeature -id 73EF14B1-13A9-416b-A9B5-ECECA2B0604C -url http://<url> -force
+```

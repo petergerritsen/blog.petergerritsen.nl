@@ -16,15 +16,8 @@ In [part 1](http://blog.petergerritsen.nl/2009/02/14/creating-a-3d-tagcloud-in-
 
 There are a few different ways you can pass or get information from the page the Silverlight control is hosted in:
 
-
-
-	
   * Set the initParams parameter in the Silverlight object definition
-
-	
   * Read the HtmlDocument in your Silverlight code
-
-	
   * Use JavaScript to call methods in your Silverlight code
 
 
@@ -34,16 +27,9 @@ For the second option you can use the HtmlPage object in your code to traverse t
 
 The last option is the one I’ll be using in this post. To accomplish this you need to follow a few steps:
 
-	
   * Decorate your page class with a "ScriptableType” attribute
-
-	
   * Decorate the method you want to call with the “ScriptableMember” attribute and make sure it’s public
-
-	
   * Register your object in the HtmlPage
-
-	
   * Give your Silverlight object definition an id, so you can easily reference it from your JavaScript
 
 
@@ -54,34 +40,31 @@ To change the color based on the weight and set the url of the HyperlinkNutton w
 ```csharp
 public class Tag3D
 {
-public HyperlinkButton btnLink { get; set; }
-private TextBlock textBlock { get; set; }
-public Point3D centerPoint { get; set; }
-private Color TagColor { get; set; }
-
-public Tag3D(double x, double y, double z, string text, string url, Color tagColor, int weight)
-{
-centerPoint = new Point3D(x, y, z);
-textBlock = new TextBlock();
-textBlock.Text = string.Format("{0} ({1})", text, weight);
-btnLink = new HyperlinkButton();
-btnLink.Content = textBlock;
-btnLink.NavigateUri = new Uri(url);
-this.TagColor = tagColor;
-}
-
-public void Redraw(double xOffset, double yOffset)
-{
-double zFactor = ((centerPoint.Z + 300) / 450.0);
-btnLink.FontSize = 30.0 * zFactor;
-double alpha = zFactor * 255;
-//Debug.WriteLine("Z: {0}; zFactor: {1}; alpha: {2}", centerPoint.Z, zFactor, alpha);
-btnLink.Foreground = new SolidColorBrush(Color.FromArgb(Convert.ToByte(alpha), TagColor.R, TagColor.G, TagColor.B));
-
-Canvas.SetLeft(btnLink, centerPoint.X + xOffset - (btnLink.ActualWidth / 2));
-Canvas.SetTop(btnLink, -centerPoint.Y + yOffset - (btnLink.ActualHeight/ 2));
-Canvas.SetZIndex(btnLink, Convert.ToInt32(centerPoint.Z));
-}
+    public HyperlinkButton btnLink { get; set; }
+    private TextBlock textBlock { get; set; }
+    public Point3D centerPoint { get; set; }
+    private Color TagColor { get; set; }
+    public Tag3D(double x, double y, double z, string text, string url, Color tagColor, int weight)
+    {
+        centerPoint = new Point3D(x, y, z);
+        textBlock = new TextBlock();
+        textBlock.Text = string.Format("{0} ({1})", text, weight);
+        btnLink = new HyperlinkButton();
+        btnLink.Content = textBlock;
+        btnLink.NavigateUri = new Uri(url);
+        this.TagColor = tagColor;
+    }
+    public void Redraw(double xOffset, double yOffset)
+    {
+        double zFactor = ((centerPoint.Z + 300) / 450.0);
+        btnLink.FontSize = 30.0 * zFactor;
+        double alpha = zFactor * 255;
+        //Debug.WriteLine("Z: {0}; zFactor: {1}; alpha: {2}", centerPoint.Z, zFactor, alpha);
+        btnLink.Foreground = new SolidColorBrush(Color.FromArgb(Convert.ToByte(alpha), TagColor.R, TagColor.G, TagColor.B));
+        Canvas.SetLeft(btnLink, centerPoint.X + xOffset - (btnLink.ActualWidth / 2));
+        Canvas.SetTop(btnLink, -centerPoint.Y + yOffset - (btnLink.ActualHeight/ 2));
+        Canvas.SetZIndex(btnLink, Convert.ToInt32(centerPoint.Z));
+    }
 }
 ```
 
@@ -93,22 +76,17 @@ To let the JavaScript in the page add the tags I’ve created a AddTag method an
 [ScriptableMember()]
 public void AddTag(string tag, string url, int weight)
 {
-if (weight > 10)
-weight = 10;
-
-Color color = new Color();
-
-color.R = Convert.ToByte(Math.Round(209.0 * ( weight / 10.0)));
-
-color.G = Convert.ToByte(Math.Round(18.0 * (weight / 10.0)));
-
-color.B = Convert.ToByte(Math.Round(65.0 * (weight / 10.0)));
-
-tagBlocks.Add(new Tag3D(0.0, 0.0, 0.0, tag, url, color));
+    if (weight > 10)
+    weight = 10;
+    Color color = new Color();
+    color.R = Convert.ToByte(Math.Round(209.0 * ( weight / 10.0)));
+    color.G = Convert.ToByte(Math.Round(18.0 * (weight / 10.0)));
+    color.B = Convert.ToByte(Math.Round(65.0 * (weight / 10.0)));
+    tagBlocks.Add(new Tag3D(0.0, 0.0, 0.0, tag, url, color));
 }
 ```
 
-In this method we calculate the Color of the tag based on the weight. Then we add a new tag to the tagBlocks List<Tag3D>.
+In this method we calculate the Color of the tag based on the weight. Then we add a new tag to the tagBlocks list.
 
 After calling this method a couple of times we need to place the tags and display them. I’ve changed the FillTags method shown in the previous post and renamed it to ProcessTags to make the name a bit more meaningful:
 
@@ -116,36 +94,22 @@ After calling this method a couple of times we need to place the tags and displa
 [ScriptableMember()]
 public void ProcessTags()
 {
-
-double radius = RootCanvas.Width / 3;
-
-int max = tagBlocks.Count;
-
-double phi = 0;
-
-double theta = 0;
-
-for (int i = 1; i < max + 1; i++)
-
-{
-
-phi = Math.Acos(-1.0 + (2.0 * i – 1.0) / max);
-
-theta = Math.Sqrt(max * Math.PI) * phi;
-
-double x = radius * Math.Cos(theta) * Math.Sin(phi);
-
-double y = radius * Math.Sin(theta) * Math.Sin(phi);
-
-double z = radius * Math.Cos(phi);
-Tag3D tag = tagBlocks[i -1];
-
-tag.centerPoint = new Point3D(x, y, z);
-
-tag.Redraw(RootCanvas.Width / 2, RootCanvas.Height / 2);
-
-RootCanvas.Children.Add(tag.btnLink);
-}
+    double radius = RootCanvas.Width / 3;
+    int max = tagBlocks.Count;
+    double phi = 0;
+    double theta = 0;
+    for (int i = 1; i < max + 1; i++)
+    {
+        phi = Math.Acos(-1.0 + (2.0 * i – 1.0) / max);
+        theta = Math.Sqrt(max * Math.PI) * phi;
+        double x = radius * Math.Cos(theta) * Math.Sin(phi);
+        double y = radius * Math.Sin(theta) * Math.Sin(phi);
+        double z = radius * Math.Cos(phi);
+        Tag3D tag = tagBlocks[i -1];
+        tag.centerPoint = new Point3D(x, y, z);
+        tag.Redraw(RootCanvas.Width / 2, RootCanvas.Height / 2);
+        RootCanvas.Children.Add(tag.btnLink);
+    }
 }
 ```
 
@@ -160,14 +124,15 @@ No you can call the methods from JavaScript:
 
 ```javascript
 function addTags() {
-var control = document.getElementById("Xaml1");
-control.content.TagCloud.AddTag("Silverlight", "http://silverlight.net", 5);
-control.content.TagCloud.AddTag("Tagcloud", "http://blogs.tamtam.nl", 2);
-control.content.TagCloud.AddTag("Tam Tam", "http://www.tamtam.nl", 10);
-control.content.TagCloud.AddTag("Axelerate3D", "http://www.codeplex.com", 8);
-control.content.TagCloud.AddTag("WPF", "http://www.microsoft.com", 1);
-control.content.TagCloud.AddTag("SharePoint", "http://www.microsoft.com", 4);
-control.content.TagCloud.ProcessTags(); }
+    var control = document.getElementById("Xaml1");
+    control.content.TagCloud.AddTag("Silverlight", "http://silverlight.net", 5);
+    control.content.TagCloud.AddTag("Tagcloud", "http://blogs.tamtam.nl", 2);
+    control.content.TagCloud.AddTag("Tam Tam", "http://www.tamtam.nl", 10);
+    control.content.TagCloud.AddTag("Axelerate3D", "http://www.codeplex.com", 8);
+    control.content.TagCloud.AddTag("WPF", "http://www.microsoft.com", 1);
+    control.content.TagCloud.AddTag("SharePoint", "http://www.microsoft.com", 4);
+    control.content.TagCloud.ProcessTags();
+}
 ```
 
 I’m just attaching some code to the onclick of a button and hard-coding the tags. Normally you would handle the onload of the document (or better yet the $(document).ready in jQuery) and get your tags from the Html to pass them to the Silverlight object.

@@ -19,11 +19,8 @@ You can off course use powershell to get rid of this problem:
 
 ```
 $site = Get-SPSite "http://sitecollectionurl"
-
 $web = $site.OpenWeb("/weburl")
-
 $web.AlternateHeader = ""
-
 $web.Update()
 ```
 

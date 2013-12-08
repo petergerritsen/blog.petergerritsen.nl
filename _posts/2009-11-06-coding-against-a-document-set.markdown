@@ -29,25 +29,17 @@ the document set in a web part you can place on the welcome page:
 try
 {
      SPListItem item = SPContext.Current.ListItem;
-
      DocumentSet set = DocumentSet.GetDocumentSet(item.Folder);
-
-     writer.WriteLine("ContentType: {0}  
-", item.ContentType.Name);
-     writer.WriteLine("Title: {0}  
-", item.Title);
-     writer.WriteLine("WelcomePageUrl: {0}  
-", set.WelcomePageUrl);
-     writer.WriteLine("ItemCount: {0}  
-", set.Folder.ItemCount);
-     writer.WriteLine("Welcomepage Fields:  
-");
+     writer.WriteLine("ContentType: {0}<br/>", item.ContentType.Name);
+     writer.WriteLine("Title: {0}<br/>", item.Title);
+     writer.WriteLine("WelcomePageUrl: {0}<br/>", set.WelcomePageUrl);
+     writer.WriteLine("ItemCount: {0}<br/>", set.Folder.ItemCount);
+     writer.WriteLine("Welcomepage Fields:<br/>");
      DocumentSetTemplate template = set.ContentTypeTemplate;
      WelcomePageFieldCollection fields = template.WelcomePageFields;
      foreach (SPField field in fields)
      {
-         writer.WriteLine("{0}  
-", field.Title);
+         writer.WriteLine("{0}<br/>", field.Title);
      }
 }
 catch (Exception)

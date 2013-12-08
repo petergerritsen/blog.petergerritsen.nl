@@ -28,7 +28,7 @@ xmlns:ddwrt="http://schemas.microsoft.com/WebParts/v2/DataView/runtime"
 
 And finally here’s the itemstyle:
 
-'''xml
+```xml
 <xsl:template name="CalendarEvent" match="Row[@Style='CalendarEvent']" mode="itemstyle">
      <xsl:variable name="SafeImageUrl">
         <xsl:call-template name="OuterTemplate.GetSafeStaticUrl">

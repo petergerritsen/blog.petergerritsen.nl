@@ -20,6 +20,7 @@ A Document Set is basically a content type just like all the others you can find
 We’ll start out by creating an empty SharePoint project in Visual Studio 2010 and work from there.
 
 First we’ll add a Content Type item to the project. In the elements.xml file we place the following content:
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <elements xmlns="http://schemas.microsoft.com/sharepoint/">
@@ -91,6 +92,7 @@ First we’ll add a Content Type item to the project. In the elements.xml file w
 </contentType>
 </elements>
 ```
+
 As you can see, the basics are the same as for any content type. The main difference is in all the XmlDocument elements in there:
 
   * Some event handlers are hooked up to make sure the metadata gets pushed down into the child documents (plus some other stuff)
@@ -123,13 +125,13 @@ After we’ve created the basic plumbing for the Document Set content type, we�
 </elements>
 ```
 
-We see that the page layout for the document set homepage is created in the _cts folder for the content type. The web parts that are placed on the page are configured here as well, so any modifications and additions will be used on the welcome page of all document sets based in this content type. Also the two documents for the default content are placed in the corresponding _cts folder in the site collection.
+We see that the page layout for the document set homepage is created in the \_cts folder for the content type. The web parts that are placed on the page are configured here as well, so any modifications and additions will be used on the welcome page of all document sets based in this content type. Also the two documents for the default content are placed in the corresponding \_cts folder in the site collection.
 
 The final Visual Studio solution will look like this:
 
 [![image](http://blog.petergerritsen.nl/wp-content/uploads/snipping11.png)](http://blog.petergerritsen.nl/wp-content/uploads/snipping10.png)
 
-After deploying the solution and activating the feature, which is very easy to do with the new SharePoint stuff in Visual Studio (just press ctrl + f5), we can see that the _cts folder will be created in the site collection:
+After deploying the solution and activating the feature, which is very easy to do with the new SharePoint stuff in Visual Studio (just press ctrl + f5), we can see that the \_cts folder will be created in the site collection:
 
 [![image](http://blog.petergerritsen.nl/wp-content/uploads/snipping13.png)](http://blog.petergerritsen.nl/wp-content/uploads/snipping12.png)
 
@@ -139,4 +141,4 @@ After we add the content type to a document library and create a new item based 
 
 You can download the sample solution here: [DocSetProvisioning.zip (62,88 KB)](http://blog.petergerritsen.nl/wp-content/uploads/DocSetProvisioning.zip)
 
-DISCLAIMER: This hasn't been properly tested, so there's is no guarantee it will work. If it f***s up your farm, the most you can expect as support from me, is an email wishing you good luck with restoring it.
+DISCLAIMER: This hasn't been properly tested, so there's is no guarantee it will work. If it f@#@s up your farm, the most you can expect as support from me, is an email wishing you good luck with restoring it.

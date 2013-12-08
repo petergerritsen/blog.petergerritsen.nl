@@ -49,16 +49,13 @@ The following lists the script that is loaded and called when the button is clic
 
 ```javascript
 Type.registerNamespace("SP2010WordAutomation.UI");
-
 SP2010WordAutomation.UI.ConvertDocument = function () {
 var items = SP.ListOperation.Selection.getSelectedItems();
 var selectedItems = '';
 var k;
-
 for (k in items) {
 selectedItems += '|' + items[k].id;
 }
-
 var options = {
 url: '/_layouts/SP2010WordAutomation.UI/ConvertDocument.aspx?items=' + selectedItems + '&source;=' + SP.ListOperation.Selection.getSelectedList(),
 title: 'Convert Documents',
@@ -68,13 +65,10 @@ width: 600,
 height: 480,
 dialogReturnValueCallback: SP2010WordAutomation.UI.ConvertCallback
 };
-
 SP.UI.ModalDialog.showModalDialog(options);
 }
-
 SP2010WordAutomation.UI.ConvertCallback = function(result, target) {
 SP.UI.Notify.addNotification(target, false);
-
 SP.UI.ModalDialog.RefreshPage(result);
 }
 ```

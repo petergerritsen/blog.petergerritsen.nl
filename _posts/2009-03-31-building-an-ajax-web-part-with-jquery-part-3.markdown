@@ -24,15 +24,8 @@ The [jQuery UI](http://jqueryui.com/home) plugin provides some useful widgets a
 
 I’ve decided to use the UI plugin for tree things in my web part:
 
-
-
-	
   * Datepicker widget to specify the orderdate
-
-	
   * Dialog widget to show confirmation dialogs, edit forms and validation messages
-
-	
   * Highlighting effect to focus the users attention to changing data, such as the shoppingcart
 
 
@@ -44,7 +37,7 @@ The datepicker enhances a standard text input box with a datapicker that slides 
 
 Linking it to your input box is very simple. I use the following code:
 
-[sourcecode="javascript"]
+```javascript
 $("#bpvorderdate").datepicker({
 showOn: 'button',
 minDate: +1, dateFormat: 'dd/mm/yy',
@@ -77,7 +70,6 @@ dataType: "json",
 success:rendershoppingcart,
 error: showError
 });
-
 $("#bpvremoveitemdialog").dialog("close");
 }
 var doCancel = function()
@@ -96,14 +88,10 @@ $("#bpvremoveitemdialog").dialog(dialogOpts);
 We first specify the code to execute when the user presses the Ok button. In this case we’ll call the DeleteItem method of the shoppingcart web service and then close the dialog. The Cancel button will close the dialog straight away. In the dialog options we specify the buttons with their callback. Then we hook up the dialog to the html element we want to show. The html is written out in the Render method of the web part:
 
 ```javascript
-writer.WriteLine(“
-
-”);
+writer.WriteLine(“<div id=\”bpvremoveitemdialog\” title=\”Product verwijderen?\”>”);
 writer.WriteLine(“Weet u zeker dat u dit product uit uw winkelwagen wilt verwijderen?”);
-writer.WriteLine(“”);
-writer.WriteLine(“
-
-”);
+writer.WriteLine(“<input type=\”hidden\” id=\”bpvremoveitemid\”/>”);
+writer.WriteLine(“</div>”);
 ```
 
 To open the dialog we just have to call the dialog method again with “open” as parameter:

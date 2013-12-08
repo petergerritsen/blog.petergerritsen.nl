@@ -13,10 +13,10 @@ tags:
 
 In some situations, such as metadata inheritance from web properties, you'll want to set the default value of a field from code. 
 Because the DefaultValue property of a SPField is a string, you will need to know the correct format to set the value of a Managed Metadata column. The easiest way to retreive this value is to create an item with the correct value and read it with the following code: 
+
 ```csharp
 SPList list = SPContext.Current.List;
 SPField field = list.Fields["Thema"];
-
 string value = field.GetValidatedString(SPContext.Current.ListItem[field.Id]);
 ```
 

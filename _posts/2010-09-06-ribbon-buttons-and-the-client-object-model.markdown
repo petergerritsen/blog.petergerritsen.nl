@@ -94,16 +94,11 @@ To create the body of the message we’ll need to retrieve the link for every se
 TamTam_SP2010_SendLinksMail_SendLinksMail = function () {
 this.selectedItems = SP.ListOperation.Selection.getSelectedItems();
 this.selectedListGuid = SP.ListOperation.Selection.getSelectedList();
-
 this.context = SP.ClientContext.get_current();
-
 this.site = this.context.get_site();
 this.context.load(this.site);
-
-this.web = this.context.get_web();
-
+this.web = this.context.get_web()
 this.selectedList = this.web.get_lists().getById(this.selectedListGuid);
-
 }
 ```
 
@@ -111,31 +106,25 @@ We then need to get the listitem object for every selected item. Because this is
 
 ```javascript
 this.selectedFiles = new Array();
-
 var k;
-
 for (k in this.selectedItems) {
 this.selectedFiles.push(this.selectedList.getItemById(this.selectedItems[k].id).get_file());
 this.context.load(this.selectedFiles[k]);
 }
-
 this.context.executeQueryAsync(Function.createDelegate(this, TamTam_SP2010_SendLinksMail_onQuerySucceeded), Function.createDelegate(this, TamTam_SP2010_SendLinksMail_onQueryFailed));
 ```
 
-The in the onQuerySucceeded callback function we can get the url’s for the items and construct the email:
+Then in the onQuerySucceeded callback function we can get the url’s for the items and construct the email:
 
 ```javascript
 TamTam_SP2010_SendLinksMail_onQuerySucceeded = function () {
 var siteUrl = this.site.get_url();
-
 var k;
 var bodystring = "";
 for (k in this.selectedFiles) {
 var fileUrl = this.selectedFiles[k].get_serverRelativeUrl();
-
 bodystring += siteUrl + fileUrl + "%0d%0a%0d%0a";
 }
-
 window.open('mailto:?body=' + bodystring);
 }
 ```

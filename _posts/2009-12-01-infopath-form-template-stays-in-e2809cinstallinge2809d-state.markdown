@@ -16,17 +16,15 @@ When I was testing to deploy a solution containing some form templates I got an 
 The main downside though was one of the templates remained in the installing state. Apparently the easiest way to remove this template is by using some custom code, in this case I just used a console application within my dev box:
 
 ```csharp
-
 static void Main(string[] args)
 {
-FormsService fs = SPFarm.Local.Services.GetValue("");
-
-foreach (FormTemplate ft in fs.FormTemplates)
-{
-if (ft.Name.Contains("Blackberry"))
-{
-ft.Delete();
-}
-}
+    FormsService fs = SPFarm.Local.Services.GetValue("");
+    foreach (FormTemplate ft in fs.FormTemplates)
+    {
+        if (ft.Name.Contains("Blackberry"))
+        {
+            ft.Delete();
+        }
+    }
 }
 ```

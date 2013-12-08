@@ -19,20 +19,12 @@ Fortunately some javascript template engines are developed to make this easier. 
 
 On the first side of the spectrum, there are engines such as [jTemplates](http://jtemplates.tpython.com/), this one uses python like syntax to create the instructions. On the other end engines like [Chain.js](http://wiki.github.com/raid-ox/chain.js) and [PURE](http://beebole.com/pure/) live, these can be considered more a databinding egines. The last ones make use of classnames for the databinding, like in the following Chain.js example:
 
-[sourcecode language="html"]
-
-
-
-	
-
-
-		Library Name
-	
-
-
-
-
-
+```html
+<div id="quickdemo">
+	<div class="item">
+		<span class="library">Library Name</span>
+	</div>
+</div>
 ```
 ```javascript
 $('#quickdemo').items( [
@@ -47,16 +39,12 @@ In this case the library field in the JSON objects is put into the element with 
 
 PURE uses the same classnames based system for the databinding. Consider the following example:
 
-[sourcecode language="html"]
-
-
-
-	
-  1. 
-		[Beebole](http://beebole.com)
-	
-
-
+```html
+<ol class="siteList reference@id">
+	<li class="sites">
+		<a class="name url@href" href="http://beebole.com">Beebole</a>
+	</li>
+</ol>
 ```
 ```javascript
 var data = {
@@ -74,7 +62,7 @@ var data = {
 			"url": http://beebole.com/pure
 		}]
 	};
-	$('ol.siteList').autoRender(data);
+$('ol.siteList').autoRender(data);
 ```
 
 The _url@href_ and _reference@id_ classnames provide a way to set attributes of the databound elements.
@@ -83,22 +71,14 @@ But what if you don’t want to decorate your HTML elements with extra classname
 
 For this PURE supports directives. You create your directives and pass them into the autoRender or render functions. Consider the following example:
 
-[sourcecode language="html"]
-
-
-
-	
-
-
-		
-  * 
-			laden...
-		
-
-	
-
-
-
+```html
+<div style="display: none;" id="bpvcategorytemplate">
+	<ul>
+		<li class="context">
+			<a category="" class="context context@category" href="#">laden...</a>
+		</li>
+	</ul>
+</div>
 ```
 ```javascript
 function showProductCategories()
@@ -107,11 +87,8 @@ function showProductCategories()
     {
         var categoriescontainer = $("#bpvcategoriescontainer");
         categoriescontainer.empty();
-
         var list = categoriescontainer.append($("#bpvcategorytemplate").html());
-
         var directive = {'a.context[onclick]' : '"showProducts(this); return false;"'}
-
         list.autoRender( data, directive );
     });
 }
