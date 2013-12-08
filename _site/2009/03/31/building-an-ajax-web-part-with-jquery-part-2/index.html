@@ -1,0 +1,332 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Building an AJAX web part with jQuery (Part 2)</title>
+    
+    <meta name="author" content="Peter Gerritsen">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+
+    <!-- atom & rss feed -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  </head>
+
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container-narrow">
+          <a class="brand" href="/">Peter Gerritsen’s blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        
+<div class="page-header">
+  <h1>Building an AJAX web part with jQuery (Part 2) </h1>
+</div>
+
+<div class="row-fluid post-full">
+  <div class="span12">
+    <div class="date">
+      <span>31 March 2009</span>
+    </div>
+    <div class="content">
+      <p>In <a href='http://blog.petergerritsen.nl/2009/03/30/building-an-ajax-web-part-with-jquery-part-1/'>part 1</a> of this series I explained a bit about the context and goal of creating an AJAX web part without using ASP.Net AJAX. I also showed the steps necessary for creating services that return data in the JSON format. In this post I’ll show you how to call these services from JavaScript and insert the data in the HTML placeholders rendered by the web part.</p>
+
+<p><strong>Calling the generic handler for products and categories</strong></p>
+
+<p>jQuery offers various methods to perform asynchronous calls to web resources. To retrieve JSON the most used are jQuery.ajax and jQuery.getJSON. The last one uses a HTTP GET request and is simpler to use, the jQuery.ajax method offers more options/flexibility. For retrieving the product categories and the products, I’ve decided to go with getJSON. The code for retreiving the categories looks as follows:</p>
+
+<p><code>javascript
+function showProductCategories() {
+$.getJSON(bpvweburl + &quot;/_layouts/intranet2009/bpv.ashx&quot;,
+{type: &quot;categories&quot;},
+function(data)
+{
+var categoriescontainer = $(&quot;#bpvcategoriescontainer&quot;);
+categoriescontainer.empty();
+var list = categoriescontainer.append($(&quot;#bpvcategorytemplate&quot;).html());
+var directive = {&#39;a.context[onclick]&#39; : &#39;&quot;showProducts(this);return false;&quot;&#39;};
+list.autoRender( data, directive );
+});
+}
+</code></p>
+
+<p>The first line is responsible for calling the handler. It specifies a inline callback method to handle the returned data. The JSON returned is processed by the PURE templating plugin. I’ve blogged about using this <a href='http://blog.petergerritsen.nl/2009/03/13/using-a-template-plugin-for-jquery-to-parse-json-data/'>before</a>.</p>
+
+<p><strong>Calling the shopping cart web service</strong></p>
+
+<p>For getting the data from the web service, we’ll use the jQuery.ajax method. That’s because we need to do a HTTP POST request as well as specify some other options for the request. For more information see <a href='http://encosia.com/2008/03/27/using-jquery-to-consume-aspnet-json-web-services/'>this</a> post by Dave Ward. To initially load the shopping cart we use the following code:</p>
+
+<p><code>javascript
+function loadShoppingcart()
+{
+$.ajax({
+type: &quot;POST&quot;,
+url: &quot;/_layouts/ecabointranet2009/bpvshoppingcart.asmx/GetItems&quot;,
+data: &quot;{}&quot;,
+contentType: &quot;application/json; charset=utf-8&quot;,
+dataType: &quot;json&quot;,
+success: rendershoppingcart,
+error: showError
+});
+}
+function rendershoppingcart(msg) {
+var cartcontainer = $(&quot;#bpvcartcontent&quot;);
+cartcontainer.empty();
+if (msg.d.length &gt; 0)
+{
+var cartitemslist = cartcontainer.append($(&quot;#bpvcarttemplate&quot;).html());
+var directives = {
+&#39;a.bpvedit[onclick]&#39; : &#39;&quot;editAmount(this); return false;&quot;&#39;,
+&#39;a.bpvremove[onclick]&#39; : &#39;&quot;removeProduct(this); return false;&quot;&#39;
+}
+cartitemslist.autoRender( msg.d, directives );
+}
+else
+{
+cartcontainer.append(&quot;U heeft nog geen producten in uw winkelwagen&quot;);
+}
+$(&quot;#bpvcartcontent&quot;).effect(&quot;highlight&quot;, {color: &quot;#ffcf57&quot;}, 700, null);
+}
+function showError(xhr, status, error)
+{
+var err = eval(&quot;(&quot; + xhr.responseText + &quot;)&quot;);
+$(&quot;#bpverrordialog span.errormessage&quot;).html(err.Message);
+$(&quot;#bpverrordialog&quot;).dialog(&quot;open&quot;);
+}
+</code></p>
+
+<p>As you can see we post to the GetItems method of the asmx. We need to specify a empty JSON object as data (more information on that in <a href='http://encosia.com/2008/06/05/3-mistakes-to-avoid-when-using-jquery-with-aspnet-ajax/'>this</a> post, again by Dave Ward) and specify the contentType we want returned. When the AJAX call returns an error, we’ll call the showError method (which uses the jQuery UI dialog widget I’ll tell more about in part 3). When the call is successful, the rendershoppingcart method is called. This checks if the cart is empty, so we can display a message in that case, or uses PURE again for rendering the cart contents. To provide visual feedback to the user when the cart is updated, we’ll use the highlight effect on the cart to attract the attention of the user. If we want to pass in parameters with an AJAX call (like the productId when we want to delete an item from the cart), we need to construct a parameters object and serialize that as string for usage in the call:</p>
+
+<p><code>javascript
+var paramsdata = { &quot;productId&quot; : $(&quot;#bpvremoveitemid&quot;).val() }
+$.ajax({
+type: &quot;POST&quot;,
+url: &quot;/_layouts/ecabointranet2009/bpvshoppingcart.asmx/DeleteItem&quot;,
+data: JSON.stringify(paramsdata),
+contentType: &quot;application/json; charset=utf-8&quot;,
+dataType: &quot;json&quot;,
+success: rendershoppingcart,
+error: showError
+});
+</code></p>
+
+<p>As you can see, we use a JSON.stringify method for serializing the object as a string.</p>
+
+<p>You can <a href='http://www.json.org/json2.js'>download</a> the scriptfile needed for this from JSON.org.</p>
+
+<p>All the other methods in the web service are called in the same way, so there’s no need to inundate you with more code on that. The only thing left is to show you parts of the contents of the Render method in the webpart:</p>
+
+<p><code>csharp
+ // Templates
+ // Categorylist template
+ writer.WriteLine(&quot;&lt;div id=\&quot;bpvcategorytemplate\&quot; style=\&quot;display: none;\&quot;&gt;&quot;);
+ writer.WriteLine(&quot;&lt;h3&gt;Productcategorie&lt;/h3&gt;&quot;);
+ writer.WriteLine(&quot;&lt;ul&gt;&lt;li class=\&quot;context\&quot;&gt;&lt;a href=\&quot;#\&quot; class=\&quot;context context@category\&quot;&gt;laden...&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&quot;);
+ writer.WriteLine(&quot;&lt;/div&gt;&quot;);
+ // Productlist template
+ writer.WriteLine(&quot;&lt;div id=\&quot;bpvproducttemplate\&quot; style=\&quot;display: none;\&quot;&gt;&quot;);
+ writer.WriteLine(&quot;&lt;h3&gt;Product&lt;/h3&gt;&quot;);
+ writer.WriteLine(&quot;&lt;ul&gt;&lt;li class=\&quot;context\&quot;&gt;&lt;a href=\&quot;#\&quot; class=\&quot;Title ID@productid Description@description Code@productcode AttachmentUrl@imageurl\&quot;&gt;geen items&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&quot;);
+ writer.WriteLine(&quot;&lt;/div&gt;&quot;);
+ // Shoppingcart template
+ writer.WriteLine(&quot;&lt;div id=\&quot;bpvcarttemplate\&quot; style=\&quot;display: none;\&quot;&gt;&quot;);
+ writer.WriteLine(&quot;&lt;h3&gt;Informatie en bestellen&lt;/h3&gt;&quot;);
+ writer.WriteLine(&quot;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;td class=\&quot;ProductName\&quot;&gt;Product&lt;/td&gt;&lt;td&gt;Aantal&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody class=\&quot;d\&quot;&gt;&quot;);
+ writer.WriteLine(&quot;&lt;tr class=\&quot;context\&quot;&gt;&lt;td class=\&quot;ProductName\&quot;&gt;naam&lt;/td&gt;&lt;td class=\&quot;Amount\&quot;&gt;aantal&lt;/td&gt;&lt;td&gt;&lt;a href=\&quot;#\&quot; class=\&quot;bpvedit ProductID@productid Amount@amount\&quot;&gt;&lt;img src=\&quot;/_layouts/images/ecabo/2009/page-edit.gif\&quot; /&gt;&lt;/a&gt; &lt;a href=\&quot;#\&quot; class=\&quot;bpvremove ProductID@productid\&quot;&gt;&lt;img src=\&quot;/_layouts/images/ecabo/2009/bin.gif\&quot; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&quot;);
+ writer.WriteLine(&quot;&lt;/tbody&gt;&lt;/table&gt;&quot;);
+ writer.WriteLine(&quot;&lt;/div&gt;&quot;);
+ // Item selector
+ writer.WriteLine(&quot;&lt;div id=\&quot;bpvitemselector\&quot;&gt;&quot;);
+ writer.WriteLine(&quot;&lt;h2&gt;1. Selecteer uw producten&lt;/h2&gt;&quot;);
+ writer.WriteLine(&quot;&lt;div id=\&quot;selector\&quot;&gt;&quot;);
+ writer.WriteLine(&quot;&lt;div id=\&quot;bpvcategoriescontainer\&quot;&gt;&lt;h3&gt;Productcategorie&lt;/h3&gt;&lt;/div&gt;&quot;);
+ writer.WriteLine(&quot;&lt;div id=\&quot;bpvproductscontainer\&quot;&gt;&lt;h3&gt;Product&lt;/h3&gt;&lt;/div&gt;&quot;);
+ writer.WriteLine(&quot;&lt;/div&gt;&quot;);
+ writer.WriteLine(&quot;&lt;div id=\&quot;bpvproductinfo\&quot;&gt;&lt;h3&gt;Informatie en bestellen&lt;/h3&gt;&quot;);
+ writer.WriteLine(&quot;&lt;img src=\&quot;/_layouts/images/blank.gif\&quot; id=\&quot;bpvproductimage\&quot;/&gt;&quot;);
+ writer.WriteLine(&quot;&lt;span class=\&quot;title\&quot; id=\&quot;bpvproducttitle\&quot;&gt;&lt;/span&gt;&quot;);
+ writer.WriteLine(&quot;&lt;span class=\&quot;description\&quot;  id=\&quot;bpvproductdescription\&quot; /&gt;&lt;/span&gt;&quot;);
+ writer.WriteLine(&quot;&lt;label class=\&quot;amount\&quot;&gt;Aantal:&lt;/label&gt;&lt;input type=\&quot;text\&quot; id=\&quot;txtbpvproductamount\&quot; name=\&quot;bpvproductamount\&quot;/&gt;&quot;);
+ writer.WriteLine(&quot;&lt;input type=\&quot;hidden\&quot; id=\&quot;txtbpvproductid\&quot; name=\&quot;bpvproductid\&quot;/&gt;&quot;);
+ writer.WriteLine(&quot;&lt;input type=\&quot;hidden\&quot; id=\&quot;txtbpvproductcode\&quot; /&gt;&quot;);
+ writer.WriteLine(&quot;&lt;input type=\&quot;button\&quot; id=\&quot;bpvaddproduct\&quot; value=\&quot;Voeg toe\&quot;/&gt;&quot;);
+ writer.WriteLine(&quot;&lt;/div&gt;&quot;);
+ writer.WriteLine(&quot;&lt;/div&gt;&quot;);
+ // Shoppingcart
+ writer.WriteLine(&quot;&lt;div id=\&quot;bpvshoppingcart\&quot;&gt;&quot;);
+ writer.WriteLine(&quot;&lt;h2&gt;2. Lijst met uw bestelling&lt;/h2&gt;&quot;);
+ writer.WriteLine(&quot;&lt;div id=\&quot;bpvcartcontent\&quot;&gt;&lt;span&gt;U heeft nog geen producten in uw winkelwagen&lt;/span&gt;&lt;/div&gt;&quot;);
+ writer.WriteLine(&quot;&lt;a id=\&quot;clearcart\&quot; href=\&quot;#\&quot; onclick=\&quot;clearCart(); return false;\&quot;&gt;Alles verwijderen&lt;/a&gt;&quot;);
+ writer.WriteLine(&quot;&lt;/div&gt;&quot;);
+</code></p>
+
+<p>As you can see, all we do is write out HTML. First I write out the HTML needed for the databinding of the categories and products (I removed that because it’s the same as the category one). Then some placeholders and form elements are rendered. There’s a little more HTML off course, but you get the point, NO CODE :-)</p>
+
+<p>In the <a href='http://blog.petergerritsen.nl/2009/03/31/building-an-ajax-web-part-with-jquery-part-3/'>next part</a> I’ll show you how to use some jQuery plugins to enhance the experience of the user and validation of the input.</p>
+    </div>
+
+    
+
+  
+    <ul class="tag_box inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/tags.html#AJAX-ref">AJAX <span>5</span></a></li>
+     
+    	<li><a href="/tags.html#ASP.Net-ref">ASP.Net <span>6</span></a></li>
+     
+    	<li><a href="/tags.html#jQuery-ref">jQuery <span>7</span></a></li>
+     
+    	<li><a href="/tags.html#MOSS-ref">MOSS <span>12</span></a></li>
+    
+  
+
+
+
+    </ul>
+    
+
+    <hr>
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/2009/03/30/building-an-ajax-web-part-with-jquery-part-1" title="Building an AJAX web part with jQuery (Part 1)">&larr; Previous</a></li>
+      
+        <li><a href="/archive.html">Archive</a></li>
+      
+        <li class="next"><a href="/2009/03/31/building-an-ajax-web-part-with-jquery-part-3" title="Building an AJAX web part with jQuery (Part 3)">Next &rarr;</a></li>
+      
+      </ul>
+    </div>
+    <hr>
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    var disqus_identifier = '559 http://username.github.io/?p=559';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+</div>
+
+
+      </div>
+      <hr>
+      <footer>
+        <p>&copy; 2013 Peter Gerritsen
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
+

@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Silverlight: Multiple animations on one property through Transforms</title>
+    
+    <meta name="author" content="Peter Gerritsen">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+
+    <!-- atom & rss feed -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  </head>
+
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container-narrow">
+          <a class="brand" href="/">Peter Gerritsen’s blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        
+<div class="page-header">
+  <h1>Silverlight: Multiple animations on one property through Transforms </h1>
+</div>
+
+<div class="row-fluid post-full">
+  <div class="span12">
+    <div class="date">
+      <span>03 September 2009</span>
+    </div>
+    <div class="content">
+      <p>When you create two or more animations that work on the same property of an object, Silverlight will only use the last of the defined animations.</p>
+
+<p>By using transforms you’re able to achieve the same effect anyway. For instance, I’ve got a rectangle that slides up and down by using an animation that works on the Canvas.Top property:</p>
+
+<p><code>xml
+&lt;userControl x:Class=&quot;TestAnimationTransform.MainPage&quot;
+xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot; xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+mc:Ignorable=&quot;d&quot; d:DesignWidth=&quot;640&quot; d:DesignHeight=&quot;480&quot;&gt;
+&lt;userControl.Resources&gt;
+&lt;storyboard x:Name=&quot;WaveTop&quot; AutoReverse=&quot;True&quot; RepeatBehavior=&quot;Forever&quot;&gt;
+&lt;doubleAnimationUsingKeyFrames x:Name=&quot;WaveAnimationTop&quot; BeginTime=&quot;00:00:00&quot; Storyboard.TargetName=&quot;Rectangle&quot; Storyboard.TargetProperty=&quot;(canvas.top)&quot;&gt;
+&lt;easingDoubleKeyFrame KeyTime=&quot;00:00:00&quot; Value=&quot;50&quot;&gt;
+&lt;easingDoubleKeyFrame.EasingFunction&gt;
+&lt;sineEase EasingMode=&quot;EaseInOut&quot;/&gt;
+&lt;/easingDoubleKeyFrame.EasingFunction&gt;
+&lt;/easingDoubleKeyFrame&gt;
+&lt;easingDoubleKeyFrame KeyTime=&quot;00:00:10&quot; Value=&quot;400&quot;&gt;
+&lt;easingDoubleKeyFrame.EasingFunction&gt;
+&lt;sineEase EasingMode=&quot;EaseInOut&quot;/&gt;
+&lt;/easingDoubleKeyFrame.EasingFunction&gt;
+&lt;/easingDoubleKeyFrame&gt;
+&lt;/doubleAnimationUsingKeyFrames&gt;
+&lt;/storyboard&gt;
+&lt;/userControl.Resources&gt;
+&lt;canvas x:Name=&quot;LayoutRoot&quot;&gt;
+&lt;rectangle x:Name=&quot;Rectangle&quot; Fill=&quot;Blue&quot; Width=&quot;50&quot; Height=&quot;50&quot; Canvas.Top=&quot;240&quot; Canvas.Left=&quot;200&quot;&gt;
+&lt;/rectangle&gt;
+&lt;/canvas&gt;
+&lt;userControl&gt;
+</code></p>
+
+<p>This will create an effect like this:</p>
+
+<p><a href='http://go.microsoft.com/fwlink/?LinkID=149156'><img alt='Install Microsoft Silverlight' src='/wp-content/uploads/sl4wp-ph.png' /></a></p>
+
+<p>If I want to apply an animation that jiggles the rectangle back and forth over the X- and Y-axis, I can’t use the Canvas.Top property anymore. So instead, we’ll add a Transform to the object and animate the properties of the Transform:</p>
+
+<p><code>xml
+&lt;storyboard x:Name=&quot;WaveJiggle&quot; AutoReverse=&quot;True&quot; RepeatBehavior=&quot;Forever&quot;&gt;
+&lt;doubleAnimationUsingKeyFrames x:Name=&quot;XAnimation&quot; BeginTime=&quot;00:00:00&quot; Storyboard.TargetName=&quot;TranslateTransform&quot; Storyboard.TargetProperty=&quot;X&quot;&gt;
+&lt;easingDoubleKeyFrame KeyTime=&quot;00:00:00&quot; Value=&quot;20&quot;&gt;
+&lt;easingDoubleKeyFrame.EasingFunction&gt;
+&lt;sineEase EasingMode=&quot;EaseInOut&quot;/&gt;
+&lt;/easingDoubleKeyFrame.EasingFunction&gt;
+&lt;/easingDoubleKeyFrame&gt;
+&lt;easingDoubleKeyFrame KeyTime=&quot;00:00:01&quot; Value=&quot;80&quot;&gt;
+&lt;easingDoubleKeyFrame.EasingFunction&gt;
+&lt;sineEase EasingMode=&quot;EaseInOut&quot;/&gt;
+&lt;/easingDoubleKeyFrame.EasingFunction&gt;
+&lt;/easingDoubleKeyFrame&gt;
+&lt;/doubleAnimationUsingKeyFrames&gt;
+&lt;doubleAnimationUsingKeyFrames x:Name=&quot;YAnimation&quot; BeginTime=&quot;00:00:00&quot; Storyboard.TargetName=&quot;TranslateTransform&quot; Storyboard.TargetProperty=&quot;Y&quot;&gt;
+&lt;easingDoubleKeyFrame KeyTime=&quot;00:00:00&quot; Value=&quot;20&quot;&gt;
+&lt;easingDoubleKeyFrame.EasingFunction&gt;
+&lt;sineEase EasingMode=&quot;EaseInOut&quot;/&gt;
+&lt;/easingDoubleKeyFrame.EasingFunction&gt;
+&lt;/easingDoubleKeyFrame&gt;
+&lt;easingDoubleKeyFrame KeyTime=&quot;00:00:01&quot; Value=&quot;80&quot;&gt;
+&lt;easingDoubleKeyFrame.EasingFunction&gt;
+&lt;sineEase EasingMode=&quot;EaseInOut&quot;/&gt;
+&lt;/easingDoubleKeyFrame.EasingFunction&gt;
+&lt;/easingDoubleKeyFrame&gt;
+&lt;/doubleAnimationUsingKeyFrames&gt;
+&lt;/storyboard&gt;
+&lt;rectangle x:Name=&quot;Rectangle&quot; Fill=&quot;Blue&quot; Width=&quot;50&quot; Height=&quot;50&quot; Canvas.Top=&quot;240&quot; Canvas.Left=&quot;200&quot;&gt;
+&lt;rectangle.RenderTransform&gt;
+&lt;translateTransform X=&quot;50&quot; Y=&quot;50&quot; x:Name=&quot;TranslateTransform&quot;/&gt;
+&lt;/rectangle.RenderTransform&gt;
+&lt;/rectangle&gt;
+</code></p>
+
+<p>The result of this will look like the following:</p>
+
+<p><a href='http://go.microsoft.com/fwlink/?LinkID=149156'><img alt='Install Microsoft Silverlight' src='/wp-content/uploads/sl4wp-ph.png' /></a></p>
+    </div>
+
+    
+
+  
+    <ul class="tag_box inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/tags.html#Silverlight-ref">Silverlight <span>3</span></a></li>
+    
+  
+
+
+
+    </ul>
+    
+
+    <hr>
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/2009/07/29/displaying-calendar-items-in-an-itemstyle" title="Displaying calendar items in an ItemStyle">&larr; Previous</a></li>
+      
+        <li><a href="/archive.html">Archive</a></li>
+      
+        <li class="next"><a href="/2009/09/29/badimageformatexception-when-updating-a-dynamics-crm-plug-in" title="BadImageFormatException when updating a Dynamics CRM Plug-in">Next &rarr;</a></li>
+      
+      </ul>
+    </div>
+    <hr>
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    var disqus_identifier = '544 http://username.github.io/?p=544';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+</div>
+
+
+      </div>
+      <hr>
+      <footer>
+        <p>&copy; 2013 Peter Gerritsen
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
+

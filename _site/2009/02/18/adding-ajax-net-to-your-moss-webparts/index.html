@@ -1,0 +1,292 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Adding AJAX.Net to your MOSS WebParts</title>
+    
+    <meta name="author" content="Peter Gerritsen">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+
+    <!-- atom & rss feed -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  </head>
+
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container-narrow">
+          <a class="brand" href="/">Peter Gerritsen’s blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        
+<div class="page-header">
+  <h1>Adding AJAX.Net to your MOSS WebParts </h1>
+</div>
+
+<div class="row-fluid post-full">
+  <div class="span12">
+    <div class="date">
+      <span>18 February 2009</span>
+    </div>
+    <div class="content">
+      <p>I know there are loads of posts on this subject already, but in this one I’ll try to give some useful tips on this subject.</p>
+
+<p>First, you need to add AJAX.Net entries to your web.config of the MOSS site. A very easy way to do this is by using the <a href='http://www.codeplex.com/ajaxifymoss'>Ajaxify</a> <a href='http://www.codeplex.com/ajaxifymoss'>stsadm extensions</a>.</p>
+
+<p>Simply add the included wsp to your solutions and deploy. After that you can easily add the entries by running the <em>stsadm –addajaxmoss</em> command. Unfortunately you need to add one entry manually, but that is given as part of the output when you run the command.</p>
+
+<p>Next you need to add a ScriptManager to the pages with the AJAX enabled webparts. You can off course modify the masterpage. I chose to create a base web part that checks if a ScriptManager has been added to the page and adds it if necessary:</p>
+
+<p><code>csharp
+protected override void OnInit(EventArgs e)
+{
+    base.OnInit(e);
+    //Register the ScriptManager
+    ScriptManager scriptManager = ScriptManager.GetCurrent(this.Page);
+    if (scriptManager == null)
+    {
+        scriptManager = new ScriptManager();
+        scriptManager.ID = “ScriptManager1″;
+        scriptManager.EnablePartialRendering = true;
+        this.Page.Form.Controls.AddAt(0, scriptManager);
+    }
+}
+</code></p>
+
+<p>Because MOSS needs a lot of JavaScript to function properly, this unfortunately requires another fix. You can read more about it <a href='http://msdn.microsoft.com/en-us/library/bb861877.aspx'>here</a>. I added the fix to the base webpart with the following code:</p>
+
+<p><code>csharp
+protected override void CreateChildControls()
+{
+    //Add fix according to http://msdn2.microsoft.com/en-us/library/bb861877.aspx
+    EnsurePanelFix();
+}
+private void EnsurePanelFix()
+{
+    if (this.Page.Form!= null)
+    {
+        String fixupScript = @”
+        _spBodyOnLoadFunctionNames.push(“”_initFormActionAjax”&quot;);
+        function _initFormActionAjax()
+        {
+            if (_spEscapedFormAction == document.forms[0].action)
+            {
+                document.forms[0]._initialAction = document.forms[0].action;
+            }
+        }
+        var RestoreToOriginalFormActionCore = RestoreToOriginalFormAction;
+        RestoreToOriginalFormAction = function()
+        {
+            if (_spOriginalFormAction != null)
+            {
+                RestoreToOriginalFormActionCore();
+                document.forms[0]._initialAction = document.forms[0].action;
+            }
+        }”;
+        ScriptManager.RegisterStartupScript(this, typeof(BaseWebPart), “UpdatePanelFixup”, fixupScript, true);
+    }
+}
+</code></p>
+
+<p>Because all the content you want to include in an UpdatePanel needs to be added to the ControlTemplateContainer.Controls collection, it’s not possible to write out any html you need between controls in the UpdatePanel by using the standard HtmlTextWriter.WriteLine method in the Render method. The easiest way is to add LiteralControls to the controlcollection of the UpdatePanel (with thanks to my collegue Wouter Lemaire for giving me the tip). To make this even easier, I’ve added the following extension method to my project:</p>
+
+<p><code>csharp
+public static void AddLiteral(this UpdatePanel updatePanel, string html)
+{
+    Literal lit = new Literal();
+    lit.Text = html + “\r\n”;
+    updatePanel.ContentTemplateContainer.Controls.Add(lit);
+}
+</code></p>
+
+<p>You can call this method from the CreateChildControls method in your web part like so:</p>
+
+<p><code>csharp
+updatePanel.AddLiteral(“&lt;table&gt;&lt;tr&gt;”);
+updatePanel.AddLiteral(“&lt;td&gt;&lt;/td&gt;&lt;td&gt;Ma&lt;/td&gt;&lt;td&gt;Di&lt;/td&gt;&lt;td&gt;Wo&lt;/td&gt;&lt;td&gt;Do&lt;/td&gt;&lt;td&gt;Vr&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;”);
+updatePanel.AddLiteral(“&lt;td&gt;Ochtend&lt;/td&gt;&lt;td&gt;”);
+</code></p>
+
+<p>To indicate progress you need some form of visual feedback to the user. For this you need to set the ProgressTemplate of the UpdatePanel. For this you need to create a class that implements the ITemplate interface.</p>
+
+<p>Then you implement the InstantiateIn method to create a template:</p>
+
+<p><code>csharp
+public void ITemplate.InstantiateIn(Control container)
+{
+    Label lbl = new Label();
+    lbl.Text = “Progress….”;
+    container.Controls.Add(lbl);
+}
+</code></p>
+
+<p>Then add an object of this class to the ProgressTemplate property of the UpdatePanel:</p>
+
+<p><code>csharp
+updateProgress.ProgressTemplate = new ProgressTemplate();
+</code></p>
+    </div>
+
+    
+
+  
+    <ul class="tag_box inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/tags.html#AJAX-ref">AJAX <span>5</span></a></li>
+     
+    	<li><a href="/tags.html#ASP.Net-ref">ASP.Net <span>6</span></a></li>
+     
+    	<li><a href="/tags.html#MOSS-ref">MOSS <span>12</span></a></li>
+    
+  
+
+
+
+    </ul>
+    
+
+    <hr>
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/2009/02/13/creating-a-3d-tagcloud-in-silverlight-part-1" title="Creating a 3D tagcloud in Silverlight (part 1)">&larr; Previous</a></li>
+      
+        <li><a href="/archive.html">Archive</a></li>
+      
+        <li class="next"><a href="/2009/02/19/creating-a-3d-tagcloud-in-silverlight-part-2" title="Creating a 3D tagcloud in Silverlight (part 2)">Next &rarr;</a></li>
+      
+      </ul>
+    </div>
+    <hr>
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    var disqus_identifier = '567 http://username.github.io/?p=567';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+</div>
+
+
+      </div>
+      <hr>
+      <footer>
+        <p>&copy; 2013 Peter Gerritsen
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
+

@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>MOSS Search and browser languages</title>
+    
+    <meta name="author" content="Peter Gerritsen">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+
+    <!-- atom & rss feed -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  </head>
+
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container-narrow">
+          <a class="brand" href="/">Peter Gerritsen’s blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        
+<div class="page-header">
+  <h1>MOSS Search and browser languages </h1>
+</div>
+
+<div class="row-fluid post-full">
+  <div class="span12">
+    <div class="date">
+      <span>26 February 2009</span>
+    </div>
+    <div class="content">
+      <p>We had a very strange issue with some search functionality we developed for a portal. We created an option to search for documents in a library by specifying the path to a specific folder.</p>
+
+<p>This is done by specifying a keyword query like <em>9:”folder/subfolder”</em>. In this case the searchproperty <em>9</em> contains the path of the item.</p>
+
+<p>While this worked well on our development environments and most of the browsers we tested on, a some browsers it failed. My colleague Arthur discovered it had something to do with the language setting of the browser. When we used Dutch (nl-NL) as preferred language the standard core search results web part didn’t return any items when using a query with a “/” in the conditions.</p>
+
+<p>If you execute a KeyWordQuery or FullTextSqlQuery in your own code you have the possibility to specify a culture to use in the search. Unfortunately the core search results web part doesn’t provide you with an option to do this easily. In the end I came up with a “hack” to make this work. Just change the preferred languages the browser sends with each request in the OnInit of a webpart that inherits from the standards core results web part like so:</p>
+
+<p><code>csharp
+protected override void OnInit(EventArgs e)
+{
+	if (!string.IsNullOrEmpty(CultureOverrideTo))
+	{
+		if (this.Page.Request.UserLanguages.Length &gt; 0)
+			this.Page.Request.UserLanguages[0] = “en-US”;
+	}
+	base.OnInit(e);
+}
+</code></p>
+
+<p>Note: Because this modifies the current request this can have some consequences on other web parts on your page. So use it with care.</p>
+
+<p>UPDATE:</p>
+
+<p>This same behavior can also occur in custom search code. To fix this, simply specify the Culture of your KeyWordQuery or FullTextSqlQuery.</p>
+    </div>
+
+    
+
+  
+    <ul class="tag_box inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/tags.html#MOSS-ref">MOSS <span>12</span></a></li>
+     
+    	<li><a href="/tags.html#Search-ref">Search <span>5</span></a></li>
+    
+  
+
+
+
+    </ul>
+    
+
+    <hr>
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/2009/02/19/creating-a-3d-tagcloud-in-silverlight-part-2" title="Creating a 3D tagcloud in Silverlight (part 2)">&larr; Previous</a></li>
+      
+        <li><a href="/archive.html">Archive</a></li>
+      
+        <li class="next"><a href="/2009/03/13/using-a-template-plugin-for-jquery-to-parse-json-data" title="Using a template plugin for jQuery to parse JSON data">Next &rarr;</a></li>
+      
+      </ul>
+    </div>
+    <hr>
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    var disqus_identifier = '565 http://username.github.io/?p=565';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+</div>
+
+
+      </div>
+      <hr>
+      <footer>
+        <p>&copy; 2013 Peter Gerritsen
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
+
