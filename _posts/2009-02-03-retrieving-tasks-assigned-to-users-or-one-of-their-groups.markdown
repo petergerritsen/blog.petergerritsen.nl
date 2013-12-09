@@ -18,9 +18,9 @@ Just create an Or statement for tasks assigned to the user and loop through all 
 The resulting query will look like this:
 
 ```xml
-Piet van Tul
-Region Controllers
-Accounting department
+Piet van Tul  
+Region Controllers  
+Accounting department  
 ```
 
 By using this query in the QueryOverride of a Content Query Web Part you have all the power of a Content Query combined with the power of query generation.
