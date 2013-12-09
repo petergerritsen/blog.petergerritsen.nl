@@ -23,7 +23,7 @@ Fortunately the package designer allows you to modify the template file it uses 
 
  
 
-[![image](/images/oldimage_thumb9.png)](/images/oldimage_2.png)
+[![image](/images/old/image_thumb9.png)](/images/old/image_2.png)
 
  
 
@@ -31,4 +31,4 @@ You can safely use the SharePoint project tokens in there as well, but only for 
 
  
 
-[![image](/images/oldimage_thumb_1.png)](/images/oldimage_4.png)
+[![image](/images/old/image_thumb_1.png)](/images/old/image_4.png)

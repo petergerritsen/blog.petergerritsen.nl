@@ -23,7 +23,7 @@ You can specify sub-types for profiles. For each profile property you can config
 
  
 
-[![image](/images/oldimage_thumb.png)](/images/oldimage.png)
+[![image](/images/old/image_thumb.png)](/images/old/image.png)
 
  
 
@@ -31,7 +31,7 @@ In the Profile list or Profile property list you can filter the list by profile 
 
  
 
-[![image](/images/oldimage_thumb1.png)](/images/oldimage1.png)
+[![image](/images/old/image_thumb1.png)](/images/old/image1.png)
 
  
 
@@ -49,7 +49,7 @@ You can now import organizations from your profile store. This includes options 
 
  
 
-[![image](/images/oldimage_thumb2.png)](/images/oldimage2.png)
+[![image](/images/old/image_thumb2.png)](/images/old/image2.png)
 
  
 
@@ -63,7 +63,7 @@ The hierarchy is specified by selecting a parent organization in an organization
 
  
 
-[![image](/images/oldimage_thumb3.png)](/images/oldimage3.png)
+[![image](/images/old/image_thumb3.png)](/images/old/image3.png)
 
  
 
@@ -75,7 +75,7 @@ Profile properties can now be exported as well. This allows for users to edit a 
 
  
 
-[![image](/images/oldimage_thumb4.png)](/images/oldimage4.png)
+[![image](/images/old/image_thumb4.png)](/images/old/image4.png)
 
  
 
@@ -91,7 +91,7 @@ Properties that are defined with choices are linked to the Term store. So thereâ
 
  
 
-[![image](/images/oldimage_thumb5.png)](/images/oldimage5.png)
+[![image](/images/old/image_thumb5.png)](/images/old/image5.png)
 
  
 
@@ -115,7 +115,7 @@ You can specify exclusion filters for your import connections. This will allow y
 
  
 
-[![image](/images/oldimage_thumb6.png)](/images/oldimage6.png)
+[![image](/images/old/image_thumb6.png)](/images/old/image6.png)
 
  
 

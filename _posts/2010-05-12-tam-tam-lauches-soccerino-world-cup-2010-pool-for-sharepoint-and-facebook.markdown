@@ -32,5 +32,5 @@ We have a resource file available if you want to the application in you own lang
   * Portugese
 
 
-[en.zip](/images/old2010/05/en.zip)
+[en.zip](/images/old/2010/05/en.zip)
 

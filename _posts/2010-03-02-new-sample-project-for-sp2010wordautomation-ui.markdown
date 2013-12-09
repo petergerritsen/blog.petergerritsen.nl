@@ -14,11 +14,11 @@ tags:
 
 I’ve just published a [second sample solution](http://sp2010wordautomation.codeplex.com/releases/view/41267) for the SP2010 Word Automation project on CodePlex. This solution will add a button to the Ribbon when browsing document libraries:
 
-[![Ribbon button](/images/oldimage_thumb10.png)](/images/oldimage9.png)
+[![Ribbon button](/images/old/image_thumb10.png)](/images/old/image9.png)
 
 When the button is clicked a modal Dialog is shown that will allow the user to specify the options used for conversion:
 
-[![Modal Dialog](/images/oldimage_thumb11.png)](/images/oldimage10.png)
+[![Modal Dialog](/images/old/image_thumb11.png)](/images/old/image10.png)
 
 When the Ok button is clicked the selected files will be added to a conversion job and the job will be started.
 
