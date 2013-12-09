@@ -191,6 +191,7 @@ To relieve the CPU a bit, we’ll only rotate the tags if the rotation angle is 
 
 At the moment the Silverlight control looks like this:
 
-
+<div id="silverlightControlHost">
+<object data="data:application/x-silverlight-2," type="application/x-silverlight-2" width="500px" height="500px"><param name="source" value="/images/old/3DTagCloudStep1.xap" /><param name="background" value="white" /><param name="minRuntimeVersion" value="2.0.40115.0" /><param name="autoupgrade" value="true" /><param name="enableHtmlAccess" value="true" /><param name="src" value="data:application/x-silverlight-2," /></object></div>
 
 In the [next part](http://blog.petergerritsen.nl/2009/02/19/creating-a-3d-tagcloud-in-silverlight-part-2/) I’ll show you a way to dynamically set the tags, base their fontsize on the actual weight of the tag and actually use the hyperlink button.
