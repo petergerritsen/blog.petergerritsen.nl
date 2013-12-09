@@ -13,7 +13,7 @@ tags:
 
 When you don't see the Term Store Management option in your site collection settings:
 
-[![](http://blog.petergerritsen.nl/wp-content/uploads/2010/06/Term-Store-Management-option-300x224.png)](http://blog.petergerritsen.nl/wp-content/uploads/2010/06/Term-Store-Management-option.png)
+[![](/images/old2010/06/Term-Store-Management-option-300x224.png)](/images/old2010/06/Term-Store-Management-option.png)
 
 A hidden web application feature is probably not activated. You can activate it through PowerShell or stsadm:
 

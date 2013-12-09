@@ -23,7 +23,7 @@ You can specify sub-types for profiles. For each profile property you can config
 
  
 
-[![image](http://blog.petergerritsen.nl/wp-content/uploads/image_thumb.png)](http://blog.petergerritsen.nl/wp-content/uploads/image.png)
+[![image](/images/oldimage_thumb.png)](/images/oldimage.png)
 
  
 
@@ -31,7 +31,7 @@ In the Profile list or Profile property list you can filter the list by profile 
 
  
 
-[![image](http://blog.petergerritsen.nl/wp-content/uploads/image_thumb1.png)](http://blog.petergerritsen.nl/wp-content/uploads/image1.png)
+[![image](/images/oldimage_thumb1.png)](/images/oldimage1.png)
 
  
 
@@ -49,7 +49,7 @@ You can now import organizations from your profile store. This includes options 
 
  
 
-[![image](http://blog.petergerritsen.nl/wp-content/uploads/image_thumb2.png)](http://blog.petergerritsen.nl/wp-content/uploads/image2.png)
+[![image](/images/oldimage_thumb2.png)](/images/oldimage2.png)
 
  
 
@@ -63,7 +63,7 @@ The hierarchy is specified by selecting a parent organization in an organization
 
  
 
-[![image](http://blog.petergerritsen.nl/wp-content/uploads/image_thumb3.png)](http://blog.petergerritsen.nl/wp-content/uploads/image3.png)
+[![image](/images/oldimage_thumb3.png)](/images/oldimage3.png)
 
  
 
@@ -75,7 +75,7 @@ Profile properties can now be exported as well. This allows for users to edit a 
 
  
 
-[![image](http://blog.petergerritsen.nl/wp-content/uploads/image_thumb4.png)](http://blog.petergerritsen.nl/wp-content/uploads/image4.png)
+[![image](/images/oldimage_thumb4.png)](/images/oldimage4.png)
 
  
 
@@ -91,7 +91,7 @@ Properties that are defined with choices are linked to the Term store. So thereâ
 
  
 
-[![image](http://blog.petergerritsen.nl/wp-content/uploads/image_thumb5.png)](http://blog.petergerritsen.nl/wp-content/uploads/image5.png)
+[![image](/images/oldimage_thumb5.png)](/images/oldimage5.png)
 
  
 
@@ -115,7 +115,7 @@ You can specify exclusion filters for your import connections. This will allow y
 
  
 
-[![image](http://blog.petergerritsen.nl/wp-content/uploads/image_thumb6.png)](http://blog.petergerritsen.nl/wp-content/uploads/image6.png)
+[![image](/images/oldimage_thumb6.png)](/images/oldimage6.png)
 
  
 

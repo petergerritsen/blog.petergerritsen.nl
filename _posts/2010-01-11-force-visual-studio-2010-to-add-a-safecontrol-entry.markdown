@@ -23,7 +23,7 @@ Fortunately the package designer allows you to modify the template file it uses 
 
  
 
-[![image](http://blog.petergerritsen.nl/wp-content/uploads/image_thumb9.png)](http://blog.petergerritsen.nl/wp-content/uploads/image_2.png)
+[![image](/images/oldimage_thumb9.png)](/images/oldimage_2.png)
 
  
 
@@ -31,4 +31,4 @@ You can safely use the SharePoint project tokens in there as well, but only for 
 
  
 
-[![image](http://blog.petergerritsen.nl/wp-content/uploads/image_thumb_1.png)](http://blog.petergerritsen.nl/wp-content/uploads/image_4.png)
+[![image](/images/oldimage_thumb_1.png)](/images/oldimage_4.png)

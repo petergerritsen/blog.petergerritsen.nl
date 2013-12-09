@@ -16,7 +16,7 @@ Recently Steve Peschka of the SharePoint Team blogged about improvements in Offi
 
 After installing an update for the Office Clients you are now prompted with a login box when you edit an Office document on a SharePoint site that uses FBA:
 
-[![image](http://blog.petergerritsen.nl/wp-content/uploads/snipping19.png)](http://blog.petergerritsen.nl/wp-content/uploads/snipping18.png)
+[![image](/images/oldsnipping19.png)](/images/oldsnipping18.png)
 
 When you have a customized login page this will be shown instead, so users won’t be (or will be less) confused when they get a login form with your company’s branding applied.
 

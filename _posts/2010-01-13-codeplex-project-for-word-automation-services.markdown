@@ -69,21 +69,21 @@ formats.
 
 In the workflow designer you can add the “Convert Document” action:
 
-[![Workflow Actions](http://blog.petergerritsen.nl/wp-content/uploads/snipping1.png)](http://blog.petergerritsen.nl/wp-content/uploads/snipping.png)
+[![Workflow Actions](/images/oldsnipping1.png)](/images/oldsnipping.png)
 
 The action is inserted into the workflow step where you can specify the url of the output file, select the output format and save options and select a variable for storing the conversion job id (which you can use later to retrieve the status, as the job runs asynchronous):
 
-[![Convert document action](http://blog.petergerritsen.nl/wp-content/uploads/snipping3.png)](http://blog.petergerritsen.nl/wp-content/uploads/snipping2.png)
+[![Convert document action](/images/oldsnipping3.png)](/images/oldsnipping2.png)
 
-[![Save Behaviour](http://blog.petergerritsen.nl/wp-content/uploads/snipping5.png)](http://blog.petergerritsen.nl/wp-content/uploads/snipping4.png)
+[![Save Behaviour](/images/oldsnipping5.png)](/images/oldsnipping4.png)
 
 The job id is also logged into the Workflow History Log (the second entry is from a second workflow action that logs the returned conversion job id variable):
 
-[![image](http://blog.petergerritsen.nl/wp-content/uploads/snipping7.png)](http://blog.petergerritsen.nl/wp-content/uploads/snipping6.png)
+[![image](/images/oldsnipping7.png)](/images/oldsnipping6.png)
 
 After the job has run, which can take up to a few minutes (depending on the word automation services settings), the converted  document appears in the library:
 
-[![image](http://blog.petergerritsen.nl/wp-content/uploads/snipping9.png)](http://blog.petergerritsen.nl/wp-content/uploads/snipping8.png)
+[![image](/images/oldsnipping9.png)](/images/oldsnipping8.png)
 
 The custom workflow action is one of the first features for Word Automation in SharePoint 2010 I’ve planned to release. Other  features will be a Ribbon and Item context menu extension and more Workflow actions.
 

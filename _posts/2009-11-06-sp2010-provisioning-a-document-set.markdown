@@ -129,16 +129,16 @@ We see that the page layout for the document set homepage is created in the \_ct
 
 The final Visual Studio solution will look like this:
 
-[![image](http://blog.petergerritsen.nl/wp-content/uploads/snipping11.png)](http://blog.petergerritsen.nl/wp-content/uploads/snipping10.png)
+[![image](/images/oldsnipping11.png)](/images/oldsnipping10.png)
 
 After deploying the solution and activating the feature, which is very easy to do with the new SharePoint stuff in Visual Studio (just press ctrl + f5), we can see that the \_cts folder will be created in the site collection:
 
-[![image](http://blog.petergerritsen.nl/wp-content/uploads/snipping13.png)](http://blog.petergerritsen.nl/wp-content/uploads/snipping12.png)
+[![image](/images/oldsnipping13.png)](/images/oldsnipping12.png)
 
 After we add the content type to a document library and create a new item based on the content type we’ll be presented with the following:
 
-[![image](http://blog.petergerritsen.nl/wp-content/uploads/snipping15.png)](http://blog.petergerritsen.nl/wp-content/uploads/snipping14.png)
+[![image](/images/oldsnipping15.png)](/images/oldsnipping14.png)
 
-You can download the sample solution here: [DocSetProvisioning.zip (62,88 KB)](http://blog.petergerritsen.nl/wp-content/uploads/DocSetProvisioning.zip)
+You can download the sample solution here: [DocSetProvisioning.zip (62,88 KB)](/images/oldDocSetProvisioning.zip)
 
 DISCLAIMER: This hasn't been properly tested, so there's is no guarantee it will work. If it f@#@s up your farm, the most you can expect as support from me, is an email wishing you good luck with restoring it.

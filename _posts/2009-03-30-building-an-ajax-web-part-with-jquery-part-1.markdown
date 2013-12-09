@@ -25,7 +25,7 @@ ASP.Net AJAX is quite hard to implement using only code. Besides that, having mu
 
 The web part of choice was one that would allow visitors of the portal to order a bunch of products from different categories. Products are stored in a list and have a choice sitecolumn to specify the category of the item. Products can be selected and added to a shopping cart. After the wanted items are added to the shopping cart, the user can specify some comments, a handling method (Pick-up or deliver) and a delivery-/pickup date and send in the order. The order information is saved in a list, the user gets a confirmation email and the shopping cart is cleared. The resulting web part look like this (sorry for the dutch interface):
 
-[![image](http://blog.petergerritsen.nl/wp-content/uploads/snipping25.png)](http://blog.petergerritsen.nl/wp-content/uploads/snipping24.png)
+[![image](/images/oldsnipping25.png)](/images/oldsnipping24.png)
 
 **How?**
 

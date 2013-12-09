@@ -33,7 +33,7 @@ I’ve decided to use the UI plugin for tree things in my web part:
 
 The datepicker enhances a standard text input box with a datapicker that slides out when the textbox receives focus. It contains different options for specifying the allowed dates, year/month selection and more. When it’s shown it will look like this:
 
-[![image](http://blog.petergerritsen.nl/wp-content/uploads/snipping21.png)](http://blog.petergerritsen.nl/wp-content/uploads/snipping20.png)
+[![image](/images/oldsnipping21.png)](/images/oldsnipping20.png)
 
 Linking it to your input box is very simple. I use the following code:
 
@@ -52,7 +52,7 @@ In this case, the user has to press a button (in this case an imagebutton) to op
 
 Dialogs are a very useful way to give feedback to the user or asking for confirmation. In my web part I want to show a confirmation dialog when a user presses the delete icon next to a product in the shoppingcart or the “clear shoppingcart” button. The user will be presented with the following dialog:
 
-[![image](http://blog.petergerritsen.nl/wp-content/uploads/snipping23.png)](http://blog.petergerritsen.nl/wp-content/uploads/snipping22.png)
+[![image](/images/oldsnipping23.png)](/images/oldsnipping22.png)
 
 Showing this is very easy. First we create a function that is called when the page is initialized:
 
