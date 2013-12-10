@@ -45,10 +45,19 @@ mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480">
 
 This will create an effect like this:
 
-
-[![Install Microsoft Silverlight](/wp-content/uploads/sl4wp-ph.png)](http://go.microsoft.com/fwlink/?LinkID=149156)
-
-
+<div id="silverlightControlHost">
+  <object data="data:application/x-silverlight-2," type="application/x-silverlight-2" width="500" height="550">
+    <param name="source" value="/images/old/TestAnimationTransformSimple.xap"/>
+    <param name="background" value="white" />
+    <param name="minRuntimeVersion" value="2.0.40115.0" />
+    <param name="autoupgrade" value="true" />
+    <param name="enableHtmlAccess" value="true" />
+    <a href="http://go.microsoft.com/fwlink/?LinkID=149156" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://go.microsoft.com']);" style="text-decoration: none;">
+      <img src="/wp-content/uploads/sl4wp-ph.png" alt="Install Microsoft Silverlight" style="border-style: none; width:400px; height:200px"/>
+    </a>
+  </object>
+  <iframe style="visibility:hidden;height:0;width:0;border:0px" id="_sl_historyFrame"></iframe>
+</div>
 
 If I want to apply an animation that jiggles the rectangle back and forth over the X- and Y-axis, I can’t use the Canvas.Top property anymore. So instead, we’ll add a Transform to the object and animate the properties of the Transform:
 
@@ -88,5 +97,16 @@ If I want to apply an animation that jiggles the rectangle back and forth over t
 
 The result of this will look like the following:
 
-
-[![Install Microsoft Silverlight](/wp-content/uploads/sl4wp-ph.png)](http://go.microsoft.com/fwlink/?LinkID=149156)
+<div id="silverlightControlHost">
+  <object data="data:application/x-silverlight-2," type="application/x-silverlight-2" width="500" height="550">
+    <param name="source" value="/images/old/TestAnimationTransform.xap"/>
+    <param name="background" value="white" />
+    <param name="minRuntimeVersion" value="2.0.40115.0" />
+    <param name="autoupgrade" value="true" />
+    <param name="enableHtmlAccess" value="true" />
+    <a href="http://go.microsoft.com/fwlink/?LinkID=149156" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://go.microsoft.com']);" style="text-decoration: none;">
+      <img src="/wp-content/uploads/sl4wp-ph.png" alt="Install Microsoft Silverlight" style="border-style: none; width:400px; height:200px"/>
+    </a>
+  </object>
+  <iframe style="visibility:hidden;height:0;width:0;border:0px" id="_sl_historyFrame"></iframe>
+</div>
