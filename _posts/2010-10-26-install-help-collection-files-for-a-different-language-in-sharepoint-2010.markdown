@@ -6,6 +6,7 @@ layout: post
 slug: install-help-collection-files-for-a-different-language-in-sharepoint-2010
 title: Install Help Collection files for a different language in SharePoint 2010
 wordpress_id: 871
+disqus_identifier: 871 http://blog.petergerritsen.nl/?p=871
 tags:
 - Language Packs
 - SP2010
