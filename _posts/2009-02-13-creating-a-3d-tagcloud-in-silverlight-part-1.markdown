@@ -6,6 +6,7 @@ layout: post
 slug: creating-a-3d-tagcloud-in-silverlight-part-1
 title: Creating a 3D tagcloud in Silverlight (part 1)
 wordpress_id: 568
+disqus_identifier: 568 http://blog.petergerritsen.nl/2009/02/14/creating-a-3d-tagcloud-in-silverlight-part-1/
 tags:
 - 3D
 - Silverlight

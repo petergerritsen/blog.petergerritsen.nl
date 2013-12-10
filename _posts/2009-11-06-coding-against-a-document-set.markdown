@@ -6,6 +6,7 @@ layout: post
 slug: coding-against-a-document-set
 title: Coding against a Document Set
 wordpress_id: 541
+disqus_identifier: 541 http://blog.petergerritsen.nl/2009/11/06/sp2010-coding-against-a-document-set/
 tags:
 - Document Sets
 - Object Model

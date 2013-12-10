@@ -6,6 +6,7 @@ layout: post
 slug: people-search-use-a-custom-ranking-model-to-search-in-added-profile-properties
 title: 'People Search: Use a custom Ranking Model to search in added Profile Properties'
 wordpress_id: 855
+disqus_identifier: 855 http://blog.petergerritsen.nl/?p=855
 tags:
 - Search
 - SharePoint Profile System

@@ -6,6 +6,7 @@ layout: post
 slug: tam-tam-lauches-soccerino-world-cup-2010-pool-for-sharepoint-and-facebook
 title: Tam Tam Lauches Soccerino - World Cup 2010 Pool for SharePoint AND Facebook
 wordpress_id: 788
+disqus_identifier: 788 http://blog.petergerritsen.nl/?p=788
 tags:
 - soccerino
 ---

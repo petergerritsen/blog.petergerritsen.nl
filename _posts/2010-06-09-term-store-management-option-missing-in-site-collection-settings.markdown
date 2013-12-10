@@ -6,6 +6,7 @@ layout: post
 slug: term-store-management-option-missing-in-site-collection-settings
 title: Term Store management option missing in Site Collection settings
 wordpress_id: 800
+disqus_identifier: 800 http://blog.petergerritsen.nl/?p=800
 tags:
 - Managed Metadata
 - SP2010

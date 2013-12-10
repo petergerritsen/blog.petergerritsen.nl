@@ -6,6 +6,7 @@ layout: post
 slug: set-default-value-on-a-managed-metadata-field-through-code
 title: Set default value on a Managed Metadata field through code
 wordpress_id: 806
+disqus_identifier: 806 http://blog.petergerritsen.nl/?p=806
 tags:
 - Managed Metadata
 - SP2010
