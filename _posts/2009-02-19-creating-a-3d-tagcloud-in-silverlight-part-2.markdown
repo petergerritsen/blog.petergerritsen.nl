@@ -10,6 +10,7 @@ tags:
 - 3D
 - JavaScript
 - Silverlight
+categories: Silverlight
 ---
 
 In [part 1](http://blog.petergerritsen.nl/2009/02/14/creating-a-3d-tagcloud-in-silverlight-part-1/) I showed you how to create the basics for a 3D tagcloud in Silverlight. In this part I’ll show how to get the tags from your html for inserting it into a blog template, we’ll change the color of the tag based on the weight of the tag and let the hyperlink button actually function as a hyperlink (until now it does nothing when you click on it).

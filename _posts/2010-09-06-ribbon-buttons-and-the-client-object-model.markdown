@@ -10,6 +10,7 @@ tags:
 - Ribbon buttons
 - Sandboxed
 - SP2010
+categories: SharePoint
 ---
 
 One of the standard Ribbon buttons in SharePoint 2010 allows you to mail a link to a document. Unfortunately the dev team at Microsoft didn’t update the functionality of this button to use one of the enhanced UI features: multiple selection. When you select 2 or more items, the button is automatically disabled.

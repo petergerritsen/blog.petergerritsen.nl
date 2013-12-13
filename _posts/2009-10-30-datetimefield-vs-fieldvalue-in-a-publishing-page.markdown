@@ -8,6 +8,7 @@ title: DateTimeField vs. FieldValue in a publishing page
 wordpress_id: 542
 tags:
 - MOSS
+categories: SharePoint
 ---
 
 In one of our projects we needed to show the Modified date and time value in publishing page.

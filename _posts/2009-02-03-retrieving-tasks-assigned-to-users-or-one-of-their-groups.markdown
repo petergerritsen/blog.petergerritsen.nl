@@ -9,6 +9,7 @@ wordpress_id: 571
 tags:
 - CAML
 - MOSS
+categories: SharePoint
 ---
 
 Sometimes you want to retrieve all tasks that are assigned to a user or to one of the SharePoint groups the user is a member of. This quite easy to accomplish through generation of a CAML query.

@@ -9,6 +9,7 @@ wordpress_id: 533
 tags:
 - InfoPath
 - MOSS
+categories: SharePoint
 ---
 
 When I was testing to deploy a solution containing some form templates I got an error. Not very strange, because I was testing it.

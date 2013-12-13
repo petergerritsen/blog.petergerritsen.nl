@@ -10,6 +10,7 @@ disqus_identifier: 800 http://blog.petergerritsen.nl/?p=800
 tags:
 - Managed Metadata
 - SP2010
+categories: SharePoint
 ---
 
 When you don't see the Term Store Management option in your site collection settings:

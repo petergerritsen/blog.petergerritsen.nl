@@ -11,6 +11,7 @@ tags:
 - ASP.Net
 - jQuery
 - MOSS
+categories: [SharePoint, Javascript]
 ---
 
 In [part 1](http://blog.petergerritsen.nl/2009/03/30/building-an-ajax-web-part-with-jquery-part-1/) of this series I explained a bit about the context and goal of creating an AJAX web part without using ASP.Net AJAX. I also showed the steps necessary for creating services that return data in the JSON format. In this post I’ll show you how to call these services from JavaScript and insert the data in the HTML placeholders rendered by the web part.

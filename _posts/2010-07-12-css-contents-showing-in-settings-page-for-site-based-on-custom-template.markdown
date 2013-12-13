@@ -8,6 +8,7 @@ title: CSS contents showing in settings page for site based on custom template
 wordpress_id: 816
 tags:
 - SP2010
+categories: SharePoint
 ---
 
 At a customer we created a few custom site templates by configuring them and then saving them as template. When creating new sites based on this template, we had the strange issue that the contents of the Alternate CSS (AlternateCSSUrl) were included and showing in the header on layouts pages in the sites.

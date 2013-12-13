@@ -8,6 +8,7 @@ title: jQuery performance optimization tips
 wordpress_id: 563
 tags:
 - jQuery
+categories: Javascript
 ---
 
 Sometimes all the cool effects and functionality you’ve build on top of jQuery turn out to be a bit sluggish. Here are a few tips to optimize performance.

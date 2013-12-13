@@ -9,6 +9,7 @@ wordpress_id: 850
 tags:
 - Search
 - SP2010
+categories: SharePoint
 ---
 
 SharePoint 2010 introduces the concept of Ranking Models. These models allow you to control the ranking of search results.

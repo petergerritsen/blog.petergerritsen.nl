@@ -9,6 +9,7 @@ wordpress_id: 540
 tags:
 - Document Sets
 - SP2010
+categories: SharePoint
 ---
 
 In this post I’ll show you how to create a project in Visual Studio 2010 with the new SharePoint project and item templates to provision a Document Set from a feature.

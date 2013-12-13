@@ -10,6 +10,7 @@ disqus_identifier: 568 http://blog.petergerritsen.nl/2009/02/14/creating-a-3d-ta
 tags:
 - 3D
 - Silverlight
+categories: Silverlight
 ---
 
 When I saw the [wp-cumulus plugin by Roy Tanck](http://www.roytanck.com/2008/03/15/wp-cumulus-released/), I thought it would be a great idea to implement the same sort of functionality in Silverlight. It’s hardly original but allows me to learn some parts of the Silverlight framework.

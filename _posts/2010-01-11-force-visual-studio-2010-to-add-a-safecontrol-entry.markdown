@@ -9,6 +9,7 @@ wordpress_id: 650
 tags:
 - SP2010
 - Visual Studio 2010
+categories: SharePoint
 ---
 
 When you create a project in Visual Studio 2010 on one of the SharePoint project templates it will take care of all the packaging for you. 

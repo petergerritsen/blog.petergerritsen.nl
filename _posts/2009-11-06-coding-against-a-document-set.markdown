@@ -11,6 +11,7 @@ tags:
 - Document Sets
 - Object Model
 - SP2010
+categories: SharePoint
 ---
 
 I’ve just had a 5 day training on development for SharePoint 2010. We’ve seen some cool stuff, were able to do some Hands on Labs and talk to other SharePoint experts about the new stuff that is coming up.

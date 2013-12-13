@@ -8,6 +8,7 @@ title: Useful SharePoint classes
 wordpress_id: 553
 tags:
 - MOSS
+categories: SharePoint
 ---
 
 I just found out that the object model includes some very useful classes to speed up your coding efforts.

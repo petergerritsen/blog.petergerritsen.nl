@@ -11,6 +11,7 @@ tags:
 - ASP.Net
 - jQuery
 - MOSS
+categories: [SharePoint, Javascript]
 ---
 
 In this series of posts I will describe how I build a web part full of AJAX functionality using jQuery and some plugins for jQuery.

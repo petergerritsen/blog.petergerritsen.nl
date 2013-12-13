@@ -9,6 +9,7 @@ wordpress_id: 798
 tags:
 - SharePoint Designer 2010
 - SP2010
+categories: SharePoint
 ---
 
 When you've got Office 2010 64-bit installed you can only install the 64-bit version of SharePoint Designer.

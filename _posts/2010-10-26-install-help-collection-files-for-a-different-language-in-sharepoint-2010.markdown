@@ -10,6 +10,7 @@ disqus_identifier: 871 http://blog.petergerritsen.nl/?p=871
 tags:
 - Language Packs
 - SP2010
+categories: SharePoint
 ---
 
 After installing a languagepack help contents should be available when you create a site collection in that language. 

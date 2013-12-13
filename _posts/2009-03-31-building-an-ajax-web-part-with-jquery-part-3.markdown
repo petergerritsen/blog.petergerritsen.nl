@@ -12,6 +12,7 @@ tags:
 - JavaScript
 - jQuery
 - MOSS
+categories: [SharePoint, JavaScript]
 ---
 
 In [part 1](http://blog.petergerritsen.nl/2009/03/30/building-an-ajax-web-part-with-jquery-part-1/) of this series I explained a bit about the context and goal of creating an AJAX web part without using ASP.Net AJAX. I also showed the steps necessary for creating services that return data in the JSON format. In [part 2](http://blogs.tamtam.nl/peterg/2009/03/31/BuildingAnAJAXWebPartWithJQueryPart2.aspx) I showed you how to call these services from JavaScript and render the HTML for the data. In this last part I’ll show you how to use the jQuery UI and validation plugins.

@@ -9,6 +9,7 @@ wordpress_id: 667
 tags:
 - SharePoint Profile System
 - SP2010
+categories: SharePoint
 ---
 
 In SharePoint 2010 there are quite a few interesting changes to the User Profile System. In this post I will outline some of them. 

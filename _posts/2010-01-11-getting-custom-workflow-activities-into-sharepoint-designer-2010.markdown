@@ -10,6 +10,7 @@ tags:
 - SharePoint Designer 2010
 - SP2010
 - Workflow
+categories: SharePoint
 ---
 
 Developing a custom workflow activity for SharePoint 2010 doesn’t differ that much from developing one for the MOSS 2007 platform. So by following the different articles on that you will be able to create one with ease. 

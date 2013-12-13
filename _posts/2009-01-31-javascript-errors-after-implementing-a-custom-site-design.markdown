@@ -10,6 +10,7 @@ tags:
 - CSS
 - JavaScript
 - MOSS
+categories: SharePoint
 ---
 
 Most of the times we create and develop a custom design for the portals and websites we build.

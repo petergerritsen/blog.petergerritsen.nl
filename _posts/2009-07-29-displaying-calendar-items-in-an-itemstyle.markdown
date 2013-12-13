@@ -9,6 +9,7 @@ wordpress_id: 547
 tags:
 - MOSS
 - XSLT
+categories: SharePoint
 ---
 
 

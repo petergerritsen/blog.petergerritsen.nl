@@ -9,6 +9,7 @@ wordpress_id: 841
 tags:
 - Search
 - SP2010
+categories: SharePoint
 ---
 
 Today I was trying to fix an error in a custom webpart that performs a query on the SharePoint farm. The goal was to retreive the records within a site though the search system.

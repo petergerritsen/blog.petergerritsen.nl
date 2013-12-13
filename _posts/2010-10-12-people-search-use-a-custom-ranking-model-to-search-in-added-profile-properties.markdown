@@ -11,6 +11,7 @@ tags:
 - Search
 - SharePoint Profile System
 - SP2010
+categories: SharePoint
 ---
 
 When you use the out-of-the box components for searching for people, a generic search with a keyword that is included in an added Profile property will not give the results you might expect. 

@@ -10,6 +10,7 @@ tags:
 - CodePlex
 - SP2010
 - Word Automation
+categories: SharePoint
 ---
 
 I’ve added two new worfklow activities, Convert Folder and Convert Library, to the [SP2010 Word Automation project on CodePlex](http://sp2010wordautomation.codeplex.com).

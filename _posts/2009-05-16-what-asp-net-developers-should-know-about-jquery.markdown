@@ -9,6 +9,7 @@ wordpress_id: 549
 tags:
 - ASP.Net
 - jQuery
+categories: [.Net, JavaScript]
 ---
 
 Dave Ward has published a very good [article](http://visitmix.com/Opinions/What-ASPNET-Developers-Should-Know-About-jQuery) about jQuery for ASP.Net developers on the MIX site. I found the part about unobtrusive JavaScript particularly useful.

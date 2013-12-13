@@ -10,6 +10,7 @@ tags:
 - CodePlex
 - SP2010
 - Word Automation
+categories: SharePoint
 ---
 
 

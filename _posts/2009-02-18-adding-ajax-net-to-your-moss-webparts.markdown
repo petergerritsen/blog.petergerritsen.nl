@@ -10,6 +10,7 @@ tags:
 - AJAX
 - ASP.Net
 - MOSS
+categories: SharePoint
 ---
 
 I know there are loads of posts on this subject already, but in this one I’ll try to give some useful tips on this subject.

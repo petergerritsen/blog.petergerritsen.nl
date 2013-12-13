@@ -9,6 +9,7 @@ wordpress_id: 808
 tags:
 - Search
 - SP2010
+categories: SharePoint
 ---
 
 The new version of SharePoint offers more capabilities in the keyword syntax to enhance the search experience.

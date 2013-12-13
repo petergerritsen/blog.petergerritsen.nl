@@ -10,6 +10,7 @@ wordpress_id: 552
 tags:
 - Forms Based Authentication
 - MOSS
+categories: SharePoint
 ---
 
 Recently Steve Peschka of the SharePoint Team blogged about improvements in Office client integration when you’re using Forms Based Authentication.

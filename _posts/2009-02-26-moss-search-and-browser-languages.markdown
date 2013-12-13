@@ -9,6 +9,7 @@ wordpress_id: 565
 tags:
 - MOSS
 - Search
+categories: SharePoint
 ---
 
 We had a very strange issue with some search functionality we developed for a portal. We created an option to search for documents in a library by specifying the path to a specific folder.

@@ -8,6 +8,7 @@ title: 'Silverlight: Multiple animations on one property through Transforms'
 wordpress_id: 544
 tags:
 - Silverlight
+categories: Silverlight
 ---
 
 When you create two or more animations that work on the same property of an object, Silverlight will only use the last of the defined animations.

@@ -10,6 +10,7 @@ tags:
 - CodePlex
 - SP2010
 - Word Automation
+categories: SharePoint
 ---
 
 I’ve just published a [second sample solution](http://sp2010wordautomation.codeplex.com/releases/view/41267) for the SP2010 Word Automation project on CodePlex. This solution will add a button to the Ribbon when browsing document libraries:

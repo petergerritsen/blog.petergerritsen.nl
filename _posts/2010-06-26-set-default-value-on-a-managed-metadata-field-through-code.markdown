@@ -10,6 +10,7 @@ disqus_identifier: 806 http://blog.petergerritsen.nl/?p=806
 tags:
 - Managed Metadata
 - SP2010
+categories: SharePoint
 ---
 
 In some situations, such as metadata inheritance from web properties, you'll want to set the default value of a field from code. 

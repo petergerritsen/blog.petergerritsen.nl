@@ -9,6 +9,7 @@ wordpress_id: 570
 tags:
 - ASP.Net
 - jQuery
+categories: [.Net, JavaScript]
 ---
 
 In standard ASP.Net web form pages there's only one form tag for the entire page. This unfortunately has some side effects on form submit behavior.

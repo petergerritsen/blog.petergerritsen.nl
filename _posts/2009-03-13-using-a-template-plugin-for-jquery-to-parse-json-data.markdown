@@ -10,6 +10,7 @@ tags:
 - AJAX
 - JavaScript
 - jQuery
+categories: Javascript
 ---
 
 When you’re building an AJAX control in .Net there a a few possibilities. One of them is using AJAX.Net updatepanels. This saves you from writing tedious javascript code to refresh parts of you page. With the arrival of javascript libraries such as jQuery it’s much easier to create the AJAX functionality you want with javascript. However, you still have to write quite a lot of DOM manipulation code and use string concatenation
