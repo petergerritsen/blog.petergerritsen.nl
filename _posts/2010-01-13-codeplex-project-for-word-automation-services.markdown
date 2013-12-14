@@ -16,51 +16,27 @@ categories: SharePoint
 
 I’ve just published the first release for a [CodePlex project](http://sp2010wordautomation.codeplex.com)  I started to provide sample projects / solutions for using the Word Automation Services in SharePoint 2010.
 
-
-
-
-
-
 Word Automation Services allow you to convert document to and from different formats.
-
-
-
-
-
 
 _File formats the service can read:_
 
-  * 
-_Office Open XML (DOCX, DOCM, DOTX, DOTM) _
-  *
-_Word 97-2003 Document (DOC) and Word 97-2003 Template (DOT)_
-  *
-_Rich Text Format (RTF) _
-  *
-_Single File Web Page (MHTML) _
-  *
-_HTML _
-  *
-_Word 2003 XML _
-  *
-_Word 2007/2010 XML_
+  * _Office Open XML (DOCX, DOCM, DOTX, DOTM)_
+  * _Word 97-2003 Document (DOC) and Word 97-2003 Template (DOT)_
+  * _Rich Text Format (RTF)_
+  * _Single File Web Page (MHTML)_
+  * _HTML_
+  * _Word 2003 XML_
+  * _Word 2007/2010 XML_
 
 _File formats the service can write:_
 
-  *
-_PDF _
-  *
-_XPS _
-  *
-_Office Open XML (DOCX, DOCM) _
-  *
-_Word 97-2003 Document (DOC) _
-  *
-_Rich Text Format (RTF) _
-  *
-_Single File Web Page (MHTML) _
-  *
-_Word 2007/2010 XML_
+  * _PDF_
+  * _XPS_
+  * _Office Open XML (DOCX, DOCM)_
+  * _Word 97-2003 Document (DOC)_
+  * _Rich Text Format (RTF)_
+  * _Single File Web Page (MHTML)_
+  * _Word 2007/2010 XML_
 
 ([source](http://blogs.msdn.com/microsoft_office_word/archive/2009/12/16/Word-Automation-Services_3A00_-What-It-Does.aspx))
 

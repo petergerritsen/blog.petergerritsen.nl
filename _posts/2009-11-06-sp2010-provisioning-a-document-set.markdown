@@ -25,68 +25,68 @@ First we’ll add a Content Type item to the project. In the elements.xml file w
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <elements xmlns="http://schemas.microsoft.com/sharepoint/">
-<contentType ID="0x0120D520002228EBDE71841343B23171CE351F7D39" Name="Test Doc Set" Group="Document Set Content Types" Version="2" ProgId="SharePoint.DocumentSet">
-<folder TargetName="_cts/Test Doc Set" />
-<fieldRefs>
-<fieldRef ID="{038d1503-4629-40f6-adaf-b47d1ab2d4fe}" Name="Company" />
-</fieldRefs>
-<xmlDocuments>
-<xmlDocument NamespaceURI="http://schemas.microsoft.com/sharepoint/events">
-<spe:Receivers xmlns:spe="http://schemas.microsoft.com/sharepoint/events">
-<receiver>
-<name>DocumentSet ItemUpdated</name>
-<synchronization>Synchronous</synchronization>
-<type>10002</type>
-<sequenceNumber>100</sequenceNumber>
-<assembly>Microsoft.Office.DocumentManagement, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</assembly>
-<class>Microsoft.Office.DocumentManagement.DocumentSets.DocumentSetEventReceiver</class>
-<data />
-<filter />
-</receiver>
-<receiver>
-<name>DocumentSet ItemAdded</name>
-<synchronization>Synchronous</synchronization>
-<type>10001</type>
-<sequenceNumber>100</sequenceNumber>
-<assembly>Microsoft.Office.DocumentManagement, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</assembly>
-<class>Microsoft.Office.DocumentManagement.DocumentSets.DocumentSetItemsEventReceiver</class>
-<data />
-<filter />
-</receiver>
-</spe:Receivers>
-</xmlDocument>
-<xmlDocument NamespaceURI="http://schemas.microsoft.com/office/documentsets/allowedcontenttypes">
-<act:AllowedContentTypes xmlns:act="http://schemas.microsoft.com/office/documentsets/allowedcontenttypes" LastModified="11/4/2009 3:30:17 PM">
-<allowedContentType id="0x0101" />
-</act:AllowedContentTypes>
-</xmlDocument>
-<xmlDocument NamespaceURI="http://schemas.microsoft.com/office/documentsets/sharedfields">
-<sf:SharedFields xmlns:sf="http://schemas.microsoft.com/office/documentsets/sharedfields" LastModified="11/4/2009 3:31:50 PM">
-<sharedField id="cbb92da4-fd46-4c7d-af6c-3128c2a5576e" />
-<sharedField id="038d1503-4629-40f6-adaf-b47d1ab2d4fe" />
-</sf:SharedFields>
+	<contentType ID="0x0120D520002228EBDE71841343B23171CE351F7D39" Name="Test Doc Set" Group="Document Set Content Types" Version="2" ProgId="SharePoint.DocumentSet">
+		<folder TargetName="_cts/Test Doc Set" />
+		<fieldRefs>
+			<fieldRef ID="{038d1503-4629-40f6-adaf-b47d1ab2d4fe}" Name="Company" />
+		</fieldRefs>
+		<xmlDocuments>
+			<xmlDocument NamespaceURI="http://schemas.microsoft.com/sharepoint/events">
+				<spe:Receivers xmlns:spe="http://schemas.microsoft.com/sharepoint/events">
+				<receiver>
+					<name>DocumentSet ItemUpdated</name>
+					<synchronization>Synchronous</synchronization>
+					<type>10002</type>
+					<sequenceNumber>100</sequenceNumber>
+					<assembly>Microsoft.Office.DocumentManagement, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</assembly>
+					<class>Microsoft.Office.DocumentManagement.DocumentSets.DocumentSetEventReceiver</class>
+					<data />
+					<filter />
+				</receiver>
+				<receiver>
+					<name>DocumentSet ItemAdded</name>
+					<synchronization>Synchronous</synchronization>
+					<type>10001</type>
+					<sequenceNumber>100</sequenceNumber>
+					<assembly>Microsoft.Office.DocumentManagement, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</assembly>
+					<class>Microsoft.Office.DocumentManagement.DocumentSets.DocumentSetItemsEventReceiver</class>
+					<data />
+					<filter />
+				</receiver>
+			</spe:Receivers>
+		</xmlDocument>
+		<xmlDocument NamespaceURI="http://schemas.microsoft.com/office/documentsets/allowedcontenttypes">
+			<act:AllowedContentTypes xmlns:act="http://schemas.microsoft.com/office/documentsets/allowedcontenttypes" LastModified="11/4/2009 3:30:17 PM">
+			<allowedContentType id="0x0101" />
+		</act:AllowedContentTypes>
+	</xmlDocument>
+	<xmlDocument NamespaceURI="http://schemas.microsoft.com/office/documentsets/sharedfields">
+		<sf:SharedFields xmlns:sf="http://schemas.microsoft.com/office/documentsets/sharedfields" LastModified="11/4/2009 3:31:50 PM">
+		<sharedField id="cbb92da4-fd46-4c7d-af6c-3128c2a5576e" />
+		<sharedField id="038d1503-4629-40f6-adaf-b47d1ab2d4fe" />
+	</sf:SharedFields>
 </xmlDocument>
 <xmlDocument NamespaceURI="http://schemas.microsoft.com/office/documentsets/welcomepagefields">
-<wpf:AllowedContentTypes xmlns:wpf="http://schemas.microsoft.com/office/documentsets/welcomepagefields" LastModified="11/4/2009 3:31:50 PM">
-<welcomePageField id="038d1503-4629-40f6-adaf-b47d1ab2d4fe" />
+	<wpf:AllowedContentTypes xmlns:wpf="http://schemas.microsoft.com/office/documentsets/welcomepagefields" LastModified="11/4/2009 3:31:50 PM">
+	<welcomePageField id="038d1503-4629-40f6-adaf-b47d1ab2d4fe" />
 </wpf:AllowedContentTypes>
 </xmlDocument>
 <xmlDocument NamespaceURI="http://schemas.microsoft.com/office/documentsets/defaultdocuments">
-<dd:DefaultDocuments xmlns:dd="http://schemas.microsoft.com/office/documentsets/defaultdocuments" LastModified="11/5/2009 8:39:24 AM" AddSetName="True">
-<defaultDocument name="Enterprise Content Management.docx" idContentType="0x0101" />
-<defaultDocument name="Extending Search.docx" idContentType="0x0101" />
+	<dd:DefaultDocuments xmlns:dd="http://schemas.microsoft.com/office/documentsets/defaultdocuments" LastModified="11/5/2009 8:39:24 AM" AddSetName="True">
+	<defaultDocument name="Enterprise Content Management.docx" idContentType="0x0101" />
+	<defaultDocument name="Extending Search.docx" idContentType="0x0101" />
 </dd:DefaultDocuments>
 </xmlDocument>
 <xmlDocument NamespaceURI="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms">
 <formTemplates xmlns="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms">
-<display>DocSetDisplayForm</display>
-<edit>ListForm</edit>
-<new>DocSetDisplayForm</new>
+	<display>DocSetDisplayForm</display>
+	<edit>ListForm</edit>
+	<new>DocSetDisplayForm</new>
 </formTemplates>
 </xmlDocument>
 <xmlDocument NamespaceURI="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
 <formUrls xmlns="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms/url">
-<new>_layouts/NewDocSet.aspx</new>
+	<new>_layouts/NewDocSet.aspx</new>
 </formUrls>
 </xmlDocument>
 </xmlDocuments>
@@ -108,21 +108,21 @@ After we’ve created the basic plumbing for the Document Set content type, we�
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <elements xmlns="http://schemas.microsoft.com/sharepoint/">
-<module Name="_ctsTest Doc Set_" HyperlinkBaseUrl="http://moss.contoso.com/sites/docsettest" Path="WelcomePages\Files\_cts\Test Doc Set" Url="_cts/Test Doc Set">
-<file Url="docsethomepage.aspx" Path="docsethomepage.aspx">
-<allUsersWebPart WebPartOrder="0" WebPartZoneID="WebPartZone_TopLeft" ID="g_ae6da3d4_9233_45d6_b9fd_6300815e16c6">
-<![CDATA[Content omitted]]>
-</allUsersWebPart>
-<allUsersWebPart WebPartOrder="0" WebPartZoneID="WebPartZone_CenterMain" ID="g_d8062545_cc87_4e82_9c55_cae80486ffea">
-<![CDATA[Content omitted]]>
-</allUsersWebPart>
-<allUsersWebPart WebPartOrder="0" WebPartZoneID="WebPartZone_Top" ID="g_651be1ba_c8bb_4d29_87b0_87c769cd5179">
-<![CDATA[Content omitted]]>
-</allUsersWebPart>
-</file>
-<file Path="Enterprise Content Management.docx" Url="Enterprise Content Management.docx" />
-<file Path="Extending Search.docx" Url="Extending Search.docx" />
-</module>
+	<module Name="_ctsTest Doc Set_" HyperlinkBaseUrl="http://moss.contoso.com/sites/docsettest" Path="WelcomePages\Files\_cts\Test Doc Set" Url="_cts/Test Doc Set">
+		<file Url="docsethomepage.aspx" Path="docsethomepage.aspx">
+			<allUsersWebPart WebPartOrder="0" WebPartZoneID="WebPartZone_TopLeft" ID="g_ae6da3d4_9233_45d6_b9fd_6300815e16c6">
+				<![CDATA[Content omitted]]>
+			</allUsersWebPart>
+			<allUsersWebPart WebPartOrder="0" WebPartZoneID="WebPartZone_CenterMain" ID="g_d8062545_cc87_4e82_9c55_cae80486ffea">
+				<![CDATA[Content omitted]]>
+			</allUsersWebPart>
+			<allUsersWebPart WebPartOrder="0" WebPartZoneID="WebPartZone_Top" ID="g_651be1ba_c8bb_4d29_87b0_87c769cd5179">
+				<![CDATA[Content omitted]]>
+			</allUsersWebPart>
+		</file>
+		<file Path="Enterprise Content Management.docx" Url="Enterprise Content Management.docx" />
+		<file Path="Extending Search.docx" Url="Extending Search.docx" />
+	</module>
 </elements>
 ```
 

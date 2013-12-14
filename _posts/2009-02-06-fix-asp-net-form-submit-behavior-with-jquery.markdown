@@ -22,7 +22,6 @@ To fix this, I decided to use jQuery. What we need to have is a way to identify 
 
 ```csharp
 writer.WriteLine("<div class=\"regular_forms\">");
-
 writer.WriteLine("<fieldset class=\"clearfix\" defaultsubmitbutton=\"{0}\">", btnSearch.ClientID);
 
 // form contents inserted here

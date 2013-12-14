@@ -17,30 +17,30 @@ By using transforms you’re able to achieve the same effect anyway. For instanc
 
 ```xml
 <userControl x:Class="TestAnimationTransform.MainPage"
-xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480">
-<userControl.Resources>
-<storyboard x:Name="WaveTop" AutoReverse="True" RepeatBehavior="Forever">
-<doubleAnimationUsingKeyFrames x:Name="WaveAnimationTop" BeginTime="00:00:00" Storyboard.TargetName="Rectangle" Storyboard.TargetProperty="(canvas.top)">
-<easingDoubleKeyFrame KeyTime="00:00:00" Value="50">
-<easingDoubleKeyFrame.EasingFunction>
-<sineEase EasingMode="EaseInOut"/>
-</easingDoubleKeyFrame.EasingFunction>
-</easingDoubleKeyFrame>
-<easingDoubleKeyFrame KeyTime="00:00:10" Value="400">
-<easingDoubleKeyFrame.EasingFunction>
-<sineEase EasingMode="EaseInOut"/>
-</easingDoubleKeyFrame.EasingFunction>
-</easingDoubleKeyFrame>
-</doubleAnimationUsingKeyFrames>
-</storyboard>
-</userControl.Resources>
-<canvas x:Name="LayoutRoot">
-<rectangle x:Name="Rectangle" Fill="Blue" Width="50" Height="50" Canvas.Top="240" Canvas.Left="200">
-</rectangle>
-</canvas>
+ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480">
+ <userControl.Resources>
+  <storyboard x:Name="WaveTop" AutoReverse="True" RepeatBehavior="Forever">
+	<doubleAnimationUsingKeyFrames x:Name="WaveAnimationTop" BeginTime="00:00:00" Storyboard.TargetName="Rectangle" Storyboard.TargetProperty="(canvas.top)">
+		<easingDoubleKeyFrame KeyTime="00:00:00" Value="50">
+			<easingDoubleKeyFrame.EasingFunction>
+			   <sineEase EasingMode="EaseInOut"/>
+		    </easingDoubleKeyFrame.EasingFunction>
+	    </easingDoubleKeyFrame>
+	    <easingDoubleKeyFrame KeyTime="00:00:10" Value="400">
+		   <easingDoubleKeyFrame.EasingFunction>
+		       <sineEase EasingMode="EaseInOut"/>
+	       </easingDoubleKeyFrame.EasingFunction>
+        </easingDoubleKeyFrame>
+    </doubleAnimationUsingKeyFrames>
+  </storyboard>
+ </userControl.Resources>
+ <canvas x:Name="LayoutRoot">
+  <rectangle x:Name="Rectangle" Fill="Blue" Width="50" Height="50" Canvas.Top="240" Canvas.Left="200">
+  </rectangle>
+ </canvas>
 <userControl>
 ```
 
@@ -64,22 +64,22 @@ If I want to apply an animation that jiggles the rectangle back and forth over t
 
 ```xml
 <storyboard x:Name="WaveJiggle" AutoReverse="True" RepeatBehavior="Forever">
-<doubleAnimationUsingKeyFrames x:Name="XAnimation" BeginTime="00:00:00" Storyboard.TargetName="TranslateTransform" Storyboard.TargetProperty="X">
-<easingDoubleKeyFrame KeyTime="00:00:00" Value="20">
-<easingDoubleKeyFrame.EasingFunction>
-<sineEase EasingMode="EaseInOut"/>
-</easingDoubleKeyFrame.EasingFunction>
-</easingDoubleKeyFrame>
-<easingDoubleKeyFrame KeyTime="00:00:01" Value="80">
-<easingDoubleKeyFrame.EasingFunction>
-<sineEase EasingMode="EaseInOut"/>
-</easingDoubleKeyFrame.EasingFunction>
+	<doubleAnimationUsingKeyFrames x:Name="XAnimation" BeginTime="00:00:00" Storyboard.TargetName="TranslateTransform" Storyboard.TargetProperty="X">
+		<easingDoubleKeyFrame KeyTime="00:00:00" Value="20">
+			<easingDoubleKeyFrame.EasingFunction>
+			<sineEase EasingMode="EaseInOut"/>
+		</easingDoubleKeyFrame.EasingFunction>
+	</easingDoubleKeyFrame>
+	<easingDoubleKeyFrame KeyTime="00:00:01" Value="80">
+		<easingDoubleKeyFrame.EasingFunction>
+		<sineEase EasingMode="EaseInOut"/>
+	</easingDoubleKeyFrame.EasingFunction>
 </easingDoubleKeyFrame>
 </doubleAnimationUsingKeyFrames>
 <doubleAnimationUsingKeyFrames x:Name="YAnimation" BeginTime="00:00:00" Storyboard.TargetName="TranslateTransform" Storyboard.TargetProperty="Y">
 <easingDoubleKeyFrame KeyTime="00:00:00" Value="20">
-<easingDoubleKeyFrame.EasingFunction>
-<sineEase EasingMode="EaseInOut"/>
+	<easingDoubleKeyFrame.EasingFunction>
+	<sineEase EasingMode="EaseInOut"/>
 </easingDoubleKeyFrame.EasingFunction>
 </easingDoubleKeyFrame>
 <easingDoubleKeyFrame KeyTime="00:00:01" Value="80">

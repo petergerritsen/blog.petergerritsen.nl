@@ -16,18 +16,23 @@ The new version of SharePoint offers more capabilities in the keyword syntax to 
 While in the previous version you had to resort to FullText SQL queries, a lot of things can now be accomplished with keyword syntax.
 
 For instance if you would like to filter on a date, you could use the following query:
+
 ```
 LastModifiedTime>=01/06/2010
 ```
 
 The actual format of the date depends on your regional settings (I'm using Dutch (nl-NL) in this case).
 
+
 To search within a range of dates you can use the following query syntax:
+
 ```
 LastModifiedTime:28/06/2010..30/06/2010
 ```
 
+
 To exclude items you could use the following syntax:
+
 ```
 LastModifiedTime<>28/06/2010
 ```

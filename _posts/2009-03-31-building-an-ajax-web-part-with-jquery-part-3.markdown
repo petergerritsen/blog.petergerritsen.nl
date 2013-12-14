@@ -40,10 +40,10 @@ Linking it to your input box is very simple. I use the following code:
 
 ```javascript
 $("#bpvorderdate").datepicker({
-showOn: 'button',
-minDate: +1, dateFormat: 'dd/mm/yy',
-buttonImage: '/_layouts/images/calendar.gif',
-buttonImageOnly: true
+	showOn: 'button',
+	minDate: +1, dateFormat: 'dd/mm/yy',
+	buttonImage: '/_layouts/images/calendar.gif',
+	buttonImageOnly: true
 });
 ```
 
@@ -59,36 +59,36 @@ Showing this is very easy. First we create a function that is called when the pa
 
 ```javascript
 function initializeDeleteItemDialog() {
-var doOk= function() {
-var paramsdata = {
-"productId" : $("#bpvremoveitemid").val()
-}
-$.ajax({
-type: "POST", url: "/_layouts/intranet2009/bpvshoppingcart.asmx/DeleteItem",
-data: JSON.stringify(paramsdata),
-contentType: "application/json;charset=utf-8",
-dataType: "json",
-success:rendershoppingcart,
-error: showError
-});
-$("#bpvremoveitemdialog").dialog("close");
-}
-var doCancel = function()
-{
-$("#bpvremoveitemdialog").dialog("close");
-}
-var dialogOpts = {
-modal: true,
-buttons: {"Bewaren": doCancel, "Verwijderen": doOk},
-autoOpen: false
-}
-$("#bpvremoveitemdialog").dialog(dialogOpts);
+	var doOk= function() {
+		var paramsdata = {
+			"productId" : $("#bpvremoveitemid").val()
+		}
+		$.ajax({
+			type: "POST", url: "/_layouts/intranet2009/bpvshoppingcart.asmx/DeleteItem",
+			data: JSON.stringify(paramsdata),
+			contentType: "application/json;charset=utf-8",
+			dataType: "json",
+			success:rendershoppingcart,
+			error: showError
+		});
+		$("#bpvremoveitemdialog").dialog("close");
+	}
+	var doCancel = function()
+	{
+		$("#bpvremoveitemdialog").dialog("close");
+	}
+	var dialogOpts = {
+		modal: true,
+		buttons: {"Bewaren": doCancel, "Verwijderen": doOk},
+		autoOpen: false
+	}
+	$("#bpvremoveitemdialog").dialog(dialogOpts);
 }
 ```
 
 We first specify the code to execute when the user presses the Ok button. In this case we’ll call the DeleteItem method of the shoppingcart web service and then close the dialog. The Cancel button will close the dialog straight away. In the dialog options we specify the buttons with their callback. Then we hook up the dialog to the html element we want to show. The html is written out in the Render method of the web part:
 
-```javascript
+```csharp
 writer.WriteLine(“<div id=\”bpvremoveitemdialog\” title=\”Product verwijderen?\”>”);
 writer.WriteLine(“Weet u zeker dat u dit product uit uw winkelwagen wilt verwijderen?”);
 writer.WriteLine(“<input type=\”hidden\” id=\”bpvremoveitemid\”/>”);
@@ -99,8 +99,8 @@ To open the dialog we just have to call the dialog method again with “open” 
 
 ```javascript
 function removeProduct(element) {
-$("#bpvremoveitemid").val($(element).attr("productid") );
-$("#bpvremoveitemdialog").dialog("open");
+	$("#bpvremoveitemid").val($(element).attr("productid") );
+	$("#bpvremoveitemdialog").dialog("open");
 }
 ```
 
@@ -118,37 +118,37 @@ $.validator.addMethod(
 { return value.match(/^\d\d?\/\d\d?\/\d\d\d\d$/);},
 "Voer een datum in van het formaat dd/mm/yyyy" );
 $("form").validate({
-onsubmit: false,
-onfocusout: false,
-onkeyup: false,
-onclick: false,
-showErrors: showValidationError,
-rules: {
-bpvproductamount: {
-required: true,
-number: true
-},
-bpvproductid: {
-required: true
-},
-bpvorderdate: {
-required: true,
-dutchDate: true
-}
-},
-messages: {
-bpvproductamount: {
-required: "Aantal is een verplicht veld",
-number: "Aantal moet een getal zijn"
-},
-bpvproductid: {
-required: "U heeft geen product geselecteerd" },
-bpvorderdate: {
-required: "Bezorg-/ophaaldatum is een verplicht veld",
-dutchDate: "Bezorg-/ophaaldatum moet in het formaat dd/mm/yyyy zijn"
-}
-}
-});
+	onsubmit: false,
+	onfocusout: false,
+	onkeyup: false,
+	onclick: false,
+	showErrors: showValidationError,
+	rules: {
+		bpvproductamount: {
+			required: true,
+			number: true
+		},
+		bpvproductid: {
+			required: true
+		},
+		bpvorderdate: {
+			required: true,
+			dutchDate: true
+		}
+	},
+	messages: {
+		bpvproductamount: {
+			required: "Aantal is een verplicht veld",
+			number: "Aantal moet een getal zijn"
+		},
+		bpvproductid: {
+			required: "U heeft geen product geselecteerd" },
+			bpvorderdate: {
+				required: "Bezorg-/ophaaldatum is een verplicht veld",
+				dutchDate: "Bezorg-/ophaaldatum moet in het formaat dd/mm/yyyy zijn"
+			}
+		}
+	});
 ```
 
 I only want the validation to occur when I call it on specific elements from code, so we specify false on every event it normally triggers on. When there are errors,  I want to call a showValidationError function that shows the errors in a dialog box. Then we specify the rules and the messages we want to show when the rule isn’t matched. “bpvproductamount” equals the name attribute of the input element.
@@ -158,7 +158,7 @@ To call the validation we use the element method of the validation plugin:
 ```javascript
 if ($("form").validate().element("#txtbpvproductid") && $("form").validate().element("#txtbpvproductamount"))
 {
-// valid, so perfom actions
+	// valid, so perfom actions
 }
 ```
 
@@ -167,15 +167,14 @@ As soon as an element doesn’t pass validation, the method we attached to the s
 ```javascript
 function showValidationError(errorMap, errorList)
 {
-var message = "";
-var i;
-for(i=0; i < errorList.length; i++) {
-message += errorList[i].message + "  
-";
-}
-if (message.length > 0) {
-showMessage(message);
-}
+	var message = "";
+	var i;
+	for(i=0; i < errorList.length; i++) {
+		message += errorList[i].message + " ";
+	}
+	if (message.length > 0) {
+		showMessage(message);
+	}
 }
 ```
 

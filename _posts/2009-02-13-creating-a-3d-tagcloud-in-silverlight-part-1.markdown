@@ -65,8 +65,8 @@ public void Redraw(double xOffset, double yOffset)
     if (alpha < 0)
     alpha = 0;
     btnLink.Foreground = new SolidColorBrush(Color.FromArgb(Convert.ToByte(alpha), 0, 0, ));
-    Canvas.SetLeft(btnLink, centerPoint.X + xOffset – (btnLink.ActualWidth / 2));
-    Canvas.SetTop(btnLink, -centerPoint.Y + yOffset – (btnLink.ActualHeight/ 2));
+    Canvas.SetLeft(btnLink, centerPoint.X + xOffset - (btnLink.ActualWidth / 2));
+    Canvas.SetTop(btnLink, -centerPoint.Y + yOffset - (btnLink.ActualHeight/ 2));
     Canvas.SetZIndex(btnLink, Convert.ToInt32(centerPoint.Z));
 }
 ```
@@ -82,27 +82,27 @@ The following method creates and places the tags in the canvas:
 private void FillTags()
 {
     tagBlocks = new List();
-    string[] tags = new string[] { “Silverlight”,
-    “WPF”,
-    “3D”,
-    “Rotation”,
-    “SharePoint”,
-    “.Net”,
-    “C#”,
-    “Transform”,
-    “Blog”,
-    “TagCloud”,
-    “Tam Tam”,
-    “Axelerate3D”,
-    “MOSS”,
-    “Math”};
+    string[] tags = new string[] { "Silverlight",
+    "WPF",
+    "3D",
+    "Rotation",
+    "SharePoint",
+    ".Net",
+    "C#",
+    "Transform",
+    "Blog",
+    "TagCloud",
+    "Tam Tam",
+    "Axelerate3D",
+    "MOSS",
+    "Math"};
     double radius = RootCanvas.Width / 3;
     int max = tags.Length;
     double phi = 0;
     double theta = 0;
     for (int i = 1; i < max + 1; i++)
     {
-        phi = Math.Acos(-1.0 + (2.0 * i – 1.0) / max);
+        phi = Math.Acos(-1.0 + (2.0 * i - 1.0) / max);
         theta = Math.Sqrt(max * Math.PI) * phi;
         double x = radius * Math.Cos(theta) * Math.Sin(phi);
         double y = radius * Math.Sin(theta) * Math.Sin(phi);
@@ -141,8 +141,8 @@ Here we set the rotation angle to 0 and the rotationaxis to the x-axis. When the
 void LayoutRoot_MouseMove(object sender, MouseEventArgs e)
 {
     Point mouseLocation = e.GetPosition(RootCanvas);
-    double relativeX = mouseLocation.X – (RootCanvas.ActualWidth / 2);
-    double relativeY = mouseLocation.Y – (RootCanvas.ActualHeight / 2);
+    double relativeX = mouseLocation.X - (RootCanvas.ActualWidth / 2);
+    double relativeY = mouseLocation.Y - (RootCanvas.ActualHeight / 2);
     MouseX.Text = relativeX.ToString();
     MouseY.Text = relativeY.ToString();
     double speed = Math.Sqrt(Math.Pow(relativeX, 2) + Math.Pow(relativeY, 2)) / 170;

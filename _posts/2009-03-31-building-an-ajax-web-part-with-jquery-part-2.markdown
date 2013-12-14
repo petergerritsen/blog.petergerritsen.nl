@@ -23,16 +23,16 @@ The code for retreiving the categories looks as follows:
 
 ```javascript
 function showProductCategories() {
-$.getJSON(bpvweburl + "/_layouts/intranet2009/bpv.ashx",
-{type: "categories"},
-function(data)
-{
-var categoriescontainer = $("#bpvcategoriescontainer");
-categoriescontainer.empty();
-var list = categoriescontainer.append($("#bpvcategorytemplate").html());
-var directive = {'a.context[onclick]' : '"showProducts(this);return false;"'};
-list.autoRender( data, directive );
-});
+	$.getJSON(bpvweburl + "/_layouts/intranet2009/bpv.ashx",
+	{type: "categories"},
+	function(data)
+	{
+		var categoriescontainer = $("#bpvcategoriescontainer");
+		categoriescontainer.empty();
+		var list = categoriescontainer.append($("#bpvcategorytemplate").html());
+		var directive = {'a.context[onclick]' : '"showProducts(this);return false;"'};
+		list.autoRender( data, directive );
+	});
 }
 ```
 
@@ -45,39 +45,39 @@ For getting the data from the web service, we’ll use the jQuery.ajax method. T
 ```javascript
 function loadShoppingcart()
 {
-$.ajax({
-type: "POST",
-url: "/_layouts/ecabointranet2009/bpvshoppingcart.asmx/GetItems",
-data: "{}",
-contentType: "application/json; charset=utf-8",
-dataType: "json",
-success: rendershoppingcart,
-error: showError
-});
+	$.ajax({
+		type: "POST",
+		url: "/_layouts/ecabointranet2009/bpvshoppingcart.asmx/GetItems",
+		data: "{}",
+		contentType: "application/json; charset=utf-8",
+		dataType: "json",
+		success: rendershoppingcart,
+		error: showError
+	});
 }
 function rendershoppingcart(msg) {
-var cartcontainer = $("#bpvcartcontent");
-cartcontainer.empty();
-if (msg.d.length > 0)
-{
-var cartitemslist = cartcontainer.append($("#bpvcarttemplate").html());
-var directives = {
-'a.bpvedit[onclick]' : '"editAmount(this); return false;"',
-'a.bpvremove[onclick]' : '"removeProduct(this); return false;"'
-}
-cartitemslist.autoRender( msg.d, directives );
-}
-else
-{
-cartcontainer.append("U heeft nog geen producten in uw winkelwagen");
-}
-$("#bpvcartcontent").effect("highlight", {color: "#ffcf57"}, 700, null);
+	var cartcontainer = $("#bpvcartcontent");
+	cartcontainer.empty();
+	if (msg.d.length > 0)
+	{
+		var cartitemslist = cartcontainer.append($("#bpvcarttemplate").html());
+		var directives = {
+			'a.bpvedit[onclick]' : '"editAmount(this); return false;"',
+			'a.bpvremove[onclick]' : '"removeProduct(this); return false;"'
+		}
+		cartitemslist.autoRender( msg.d, directives );
+	}
+	else
+	{
+		cartcontainer.append("U heeft nog geen producten in uw winkelwagen");
+	}
+	$("#bpvcartcontent").effect("highlight", {color: "#ffcf57"}, 700, null);
 }
 function showError(xhr, status, error)
 {
-var err = eval("(" + xhr.responseText + ")");
-$("#bpverrordialog span.errormessage").html(err.Message);
-$("#bpverrordialog").dialog("open");
+	var err = eval("(" + xhr.responseText + ")");
+	$("#bpverrordialog span.errormessage").html(err.Message);
+	$("#bpverrordialog").dialog("open");
 }
 ```
 
@@ -87,13 +87,13 @@ If we want to pass in parameters with an AJAX call (like the productId when we w
 ```javascript
 var paramsdata = { "productId" : $("#bpvremoveitemid").val() }
 $.ajax({
-type: "POST",
-url: "/_layouts/ecabointranet2009/bpvshoppingcart.asmx/DeleteItem",
-data: JSON.stringify(paramsdata),
-contentType: "application/json; charset=utf-8",
-dataType: "json",
-success: rendershoppingcart,
-error: showError
+	type: "POST",
+	url: "/_layouts/ecabointranet2009/bpvshoppingcart.asmx/DeleteItem",
+	data: JSON.stringify(paramsdata),
+	contentType: "application/json; charset=utf-8",
+	dataType: "json",
+	success: rendershoppingcart,
+	error: showError
 });
 ```
 

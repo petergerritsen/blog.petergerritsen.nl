@@ -19,11 +19,19 @@ Just create an Or statement for tasks assigned to the user and loop through all 
 The resulting query will look like this:
 
 ```xml
-Piet van Tul  
-Region Controllers  
-Accounting department  
+<where>
+	<or>
+		<eq>
+			<fieldRef Name='AssignedTo'/>
+			<value Type='User'>Piet van Tul</value>
+		</eq>
+		<eq>
+			<fieldRef Name='AssignedTo'/>
+			<value Type='User'>Region Controllers</value>
+		</eq>
+	</or>
+<where>
 ```
 
 By using this query in the QueryOverride of a Content Query Web Part you have all the power of a Content Query combined with the power of query generation.
 
-EDIT: My collegue Wouter Lemaire pointed out that you can only specify 2 terms per Or or And element. So the above CAML could give some unexpected results.

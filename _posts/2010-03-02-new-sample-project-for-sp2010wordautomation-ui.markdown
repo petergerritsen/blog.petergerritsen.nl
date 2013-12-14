@@ -27,19 +27,19 @@ The dialog is launched by some javascript that is specified in the CommandUIHand
 
 ```xml
 <commandUIHandler
-Command="SP2010WA_Convert_Button"
-CommandAction="javascript:function convertDocument() {
-Sys.loadScripts(['/_layouts/SP2010WordAutomation.UI/SP2010WordAutomation.UI.js'], function() {
-SP2010WordAutomation.UI.ConvertDocument();
-});
-}
-convertDocument();"
-EnabledScript="javascript:function oneOrMoreEnable() {
-var items = SP.ListOperation.Selection.getSelectedItems();
-var ci = CountDictionary(items);
-return (ci > 0);
-}
-oneOrMoreEnable();" />
+ Command="SP2010WA_Convert_Button"
+ CommandAction="javascript:function convertDocument() {
+	Sys.loadScripts(['/_layouts/SP2010WordAutomation.UI/SP2010WordAutomation.UI.js'], function() {
+		SP2010WordAutomation.UI.ConvertDocument();
+	});
+ }
+ convertDocument();"
+ EnabledScript="javascript:function oneOrMoreEnable() {
+	var items = SP.ListOperation.Selection.getSelectedItems();
+	var ci = CountDictionary(items);
+	return (ci > 0);
+ }
+ oneOrMoreEnable();" />
 ```
 
 I’ve decided to use the beta version of the ASP.Net 4.0 AJAX client library to load the required scriptfile when it is actually needed. While this is not completely necessary in this case, because the amount of script in there is quite little, it could provide a speedboost because the browser won’t load and interpret the script when the page loads.
@@ -51,26 +51,27 @@ The following lists the script that is loaded and called when the button is clic
 ```javascript
 Type.registerNamespace("SP2010WordAutomation.UI");
 SP2010WordAutomation.UI.ConvertDocument = function () {
-var items = SP.ListOperation.Selection.getSelectedItems();
-var selectedItems = '';
-var k;
-for (k in items) {
-selectedItems += '|' + items[k].id;
-}
-var options = {
-url: '/_layouts/SP2010WordAutomation.UI/ConvertDocument.aspx?items=' + selectedItems + '&source;=' + SP.ListOperation.Selection.getSelectedList(),
-title: 'Convert Documents',
-allowMaximize: false,
-showClose: true,
-width: 600,
-height: 480,
-dialogReturnValueCallback: SP2010WordAutomation.UI.ConvertCallback
-};
-SP.UI.ModalDialog.showModalDialog(options);
+	var items = SP.ListOperation.Selection.getSelectedItems();
+	var selectedItems = '';
+	var k;
+	for (k in items) {
+		selectedItems += '|' + items[k].id;
+	}
+
+	var options = {
+		url: '/_layouts/SP2010WordAutomation.UI/ConvertDocument.aspx?items=' + selectedItems + '&source;=' + SP.ListOperation.Selection.getSelectedList(),
+		title: 'Convert Documents',
+		allowMaximize: false,
+		showClose: true,
+		width: 600,
+		height: 480,
+		dialogReturnValueCallback: SP2010WordAutomation.UI.ConvertCallback
+	};
+	SP.UI.ModalDialog.showModalDialog(options);
 }
 SP2010WordAutomation.UI.ConvertCallback = function(result, target) {
-SP.UI.Notify.addNotification(target, false);
-SP.UI.ModalDialog.RefreshPage(result);
+	SP.UI.Notify.addNotification(target, false);
+	SP.UI.ModalDialog.RefreshPage(result);
 }
 ```
 

@@ -30,7 +30,7 @@ protected override void OnInit(EventArgs e)
     if (scriptManager == null)
     {
         scriptManager = new ScriptManager();
-        scriptManager.ID = “ScriptManager1″;
+        scriptManager.ID = "ScriptManager1";
         scriptManager.EnablePartialRendering = true;
         this.Page.Form.Controls.AddAt(0, scriptManager);
     }
@@ -45,12 +45,13 @@ protected override void CreateChildControls()
     //Add fix according to http://msdn2.microsoft.com/en-us/library/bb861877.aspx
     EnsurePanelFix();
 }
+
 private void EnsurePanelFix()
 {
     if (this.Page.Form!= null)
     {
-        String fixupScript = @”
-        _spBodyOnLoadFunctionNames.push(“”_initFormActionAjax”");
+        String fixupScript = @"
+        _spBodyOnLoadFunctionNames.push(""_initFormActionAjax"");
         function _initFormActionAjax()
         {
             if (_spEscapedFormAction == document.forms[0].action)
@@ -66,8 +67,8 @@ private void EnsurePanelFix()
                 RestoreToOriginalFormActionCore();
                 document.forms[0]._initialAction = document.forms[0].action;
             }
-        }”;
-        ScriptManager.RegisterStartupScript(this, typeof(BaseWebPart), “UpdatePanelFixup”, fixupScript, true);
+        }";
+        ScriptManager.RegisterStartupScript(this, typeof(BaseWebPart), "UpdatePanelFixup", fixupScript, true);
     }
 }
 ```
@@ -78,7 +79,7 @@ Because all the content you want to include in an UpdatePanel needs to be added 
 public static void AddLiteral(this UpdatePanel updatePanel, string html)
 {
     Literal lit = new Literal();
-    lit.Text = html + “\r\n”;
+    lit.Text = html + "\r\n";
     updatePanel.ContentTemplateContainer.Controls.Add(lit);
 }
 ```
@@ -86,9 +87,9 @@ public static void AddLiteral(this UpdatePanel updatePanel, string html)
 You can call this method from the CreateChildControls method in your web part like so:
 
 ```csharp
-updatePanel.AddLiteral(“<table><tr>”);
-updatePanel.AddLiteral(“<td></td><td>Ma</td><td>Di</td><td>Wo</td><td>Do</td><td>Vr</td></tr><tr>”);
-updatePanel.AddLiteral(“<td>Ochtend</td><td>”);
+updatePanel.AddLiteral("<table><tr>");
+updatePanel.AddLiteral("<td></td><td>Ma</td><td>Di</td><td>Wo</td><td>Do</td><td>Vr</td></tr><tr>");
+updatePanel.AddLiteral("<td>Ochtend</td><td>");
 ```
 
 To indicate progress you need some form of visual feedback to the user. For this you need to set the ProgressTemplate of the UpdatePanel. For this you need to create a class that implements the ITemplate interface.
@@ -99,7 +100,7 @@ Then you implement the InstantiateIn method to create a template:
 public void ITemplate.InstantiateIn(Control container)
 {
     Label lbl = new Label();
-    lbl.Text = “Progress….”;
+    lbl.Text = "Progress….";
     container.Controls.Add(lbl);
 }
 ```

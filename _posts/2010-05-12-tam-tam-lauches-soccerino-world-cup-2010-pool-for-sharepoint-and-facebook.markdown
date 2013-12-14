@@ -17,21 +17,10 @@ This year we launch Soccerino, available on SharePoint (2007 / 2010) AND Faceboo
 
 UPDATE: 
 We have a resource file available if you want to the application in you own language. Just download the zip-file below with the javascript file with translations, update the text and send the file to us (peterge _at_ tamtam _dot_ nl). At the moment we have the following languages already covered:
-
-
-
 	
   * English (duh)
-
-	
   * Dutch
-
-	
   * German
-
-	
   * Portugese
 
-
 [en.zip](/images/old/2010/05/en.zip)
-

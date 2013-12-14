@@ -45,34 +45,39 @@ We’ll start by building the Generic Handler that returns JSON data for categor
 ```csharp
 public void ProcessRequest(HttpContext context)
 {
-try
-{
-if (string.IsNullOrEmpty(context.Request["type"]))
-throw new ArgumentException("type not specified or null");
-string type = context.Request["type"];
-context.Response.Cache.SetExpires(DateTime.Now.AddSeconds(300));
-context.Response.Cache.SetCacheability(HttpCacheability.Public);
-if (type.Equals("categories", StringComparison.InvariantCultureIgnoreCase))
-{
-StringCollection categories = BPVProductCategory.GetProductCategories();
-DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(StringCollection));
-ser.WriteObject(context.Response.OutputStream, categories);
-}
-    if (type.Equals("products", StringComparison.InvariantCultureIgnoreCase))
-    {
-        if (string.IsNullOrEmpty(context.Request["category"]))
-        throw new ArgumentException("category not specified or null");
-        string category = HttpUtility.UrlDecode(context.Request["category"]);
-        Ecabo.Intranet2009.SharePoint.Diagnostics.Logging.LogMessageFormat("Category: {0}", category);
-        List products = BPVProduct.GetAvailableProducts(category);
-        DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(List));
-        ser.WriteObject(context.Response.OutputStream, products);
-    }
-}
-catch (Exception ex)
-{
-    context.Response.Write(string.Format("ERROR: {0}", ex.Message));
-}
+	try
+	{
+		if (string.IsNullOrEmpty(context.Request["type"]))
+			throw new ArgumentException("type not specified or null");
+		
+		string type = context.Request["type"];
+		context.Response.Cache.SetExpires(DateTime.Now.AddSeconds(300));
+		context.Response.Cache.SetCacheability(HttpCacheability.Public);
+		
+		if (type.Equals("categories", StringComparison.InvariantCultureIgnoreCase))
+		{
+			StringCollection categories = BPVProductCategory.GetProductCategories();
+			DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(StringCollection));
+			ser.WriteObject(context.Response.OutputStream, categories);
+		}
+		
+		if (type.Equals("products", StringComparison.InvariantCultureIgnoreCase))
+		{
+			if (string.IsNullOrEmpty(context.Request["category"]))
+				throw new ArgumentException("category not specified or null");
+			
+			string category = HttpUtility.UrlDecode(context.Request["category"]);
+			Ecabo.Intranet2009.SharePoint.Diagnostics.Logging.LogMessageFormat("Category: {0}", category);
+			List products = BPVProduct.GetAvailableProducts(category);
+			
+			DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(List));
+			ser.WriteObject(context.Response.OutputStream, products);
+		}
+	}
+	catch (Exception ex)
+	{
+		context.Response.Write(string.Format("ERROR: {0}", ex.Message));
+	}
 }
 ```
 
@@ -91,156 +96,163 @@ the methods with the ScriptMethod attribute in which we specify the ResponseForm
 [System.Web.Script.Services.ScriptService]
 public class BPVShoppingCart : System.Web.Services.WebService
 {
-private List ShoppingCart
-{
-get
-{
-if (HttpContext.Current.Session["BPVShoppingCart"] != null)
-{
-return (List)HttpContext.Current.Session["BPVShoppingCart"];
-}
-else
-{
-List shoppingCart = new List();
-HttpContext.Current.Session.Add("BPVShoppingCart", shoppingCart);
-return shoppingCart;
-}
-}
-set
-{
-HttpContext.Current.Session["BPVShoppingCart"] = value;
-}
-}
-[WebMethod(EnableSession = true)]
-[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-public List GetItems()
-{
-try
-{
-return ShoppingCart;
-}
-catch (Exception ex)
-{
-Ecabo.Intranet2009.SharePoint.Diagnostics.Logging.LogException(ex);
-return null;
-}
-}
-[WebMethod(EnableSession = true)]
-[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-public List AddItem(string productName, int productId, string productCode, int amount)
-{
-try
-{
-ShoppingCartItem item = ShoppingCart.Find(p => p.ProductID == productId);
-if (item == null)
-{
-item = new ShoppingCartItem();
-item.Amount = amount;
-item.ProductCode = productCode;
-item.ProductID = productId;
-item.ProductName = productName;
-ShoppingCart.Add(item);
-}
-else
-{
-item.Amount += amount;
-}
-return ShoppingCart;
-}
-catch (Exception ex)
-{
-Ecabo.Intranet2009.SharePoint.Diagnostics.Logging.LogException(ex);
-return null;
-}
-}
-[WebMethod(EnableSession = true)]
-[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-public List DeleteItem(int productId)
-{
-try
-{
-ShoppingCartItem item = ShoppingCart.Find(p => p.ProductID == productId);
-if (item != null)
-{
-ShoppingCart.Remove(item);
-}
-return ShoppingCart;
-}
-catch (Exception ex)
-{
-Ecabo.Intranet2009.SharePoint.Diagnostics.Logging.LogException(ex);
-return null;
-}
-}
-[WebMethod(EnableSession = true)]
-[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-public List ChangeAmount(int productId, int amount)
-{
-try
-{
-if (amount == 0)
-return DeleteItem(productId);
-ShoppingCartItem item = ShoppingCart.Find(p => p.ProductID == productId);
-if (item != null)
-{
-item.Amount = amount;
-}
-return ShoppingCart;
-}
-catch (Exception ex)
-{
-Ecabo.Intranet2009.SharePoint.Diagnostics.Logging.LogException(ex);
-return null;
-}
-}
-[WebMethod(EnableSession = true)]
-[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-public List ClearCart()
-{
-try
-{
-ShoppingCart.Clear();
-return ShoppingCart;
-}
-catch (Exception ex)
-{
-Ecabo.Intranet2009.SharePoint.Diagnostics.Logging.LogException(ex);
-return null;
-}
-}
-[WebMethod(EnableSession = true)]
-[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-public List PlaceOrder(string comments, string deliveryType, string deliveryDate)
-{
-try
-{
-string products = "";
-foreach (ShoppingCartItem item in ShoppingCart)
-{
-products += string.Format("{0} - {1} - {2}\r\n", item.ProductCode, item.Amount, item.ProductName);
-}
-BPVBestelling bestelling = new BPVBestelling();
-bestelling.Comments = comments;
-bestelling.Handling = deliveryType;
-bestelling.HandlingDate = Convert.ToDateTime(deliveryDate, new CultureInfo("nl-NL"));
-bestelling.Title = DateTime.Now.ToString("yyyyMMdd_HHmm") + "_" + SPContext.Current.Web.CurrentUser.Email;
-bestelling.Products = products;
-bestelling.PlacedBy = SPContext.Current.Web.CurrentUser;
-if (BPVBestelling.AddBestelling(bestelling))
-{
-BPVBestelling.SendConfirmationEmail(bestelling, ShoppingCart);
-ShoppingCart.Clear();
-return ShoppingCart;
-}
-else
-throw new Exception("Het is niet mogelijk om uw bestelling te verwerken");
-}
-catch (Exception ex)
-{
-Ecabo.Intranet2009.SharePoint.Diagnostics.Logging.LogException(ex);
-throw new Exception("Het is niet mogelijk om uw bestelling te verwerken", ex);
-}
-}
+	private List ShoppingCart
+	{
+		get
+		{
+			if (HttpContext.Current.Session["BPVShoppingCart"] != null)
+			{
+				return (List)HttpContext.Current.Session["BPVShoppingCart"];
+			}
+			else
+			{
+				List shoppingCart = new List();
+				HttpContext.Current.Session.Add("BPVShoppingCart", shoppingCart);
+				return shoppingCart;
+			}
+		}
+		set
+		{
+			HttpContext.Current.Session["BPVShoppingCart"] = value;
+		}
+	}
+
+	[WebMethod(EnableSession = true)]
+	[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+	public List GetItems()
+	{
+		try
+		{
+			return ShoppingCart;
+		}
+		catch (Exception ex)
+		{
+			Ecabo.Intranet2009.SharePoint.Diagnostics.Logging.LogException(ex);
+			return null;
+		}
+	}
+	
+	[WebMethod(EnableSession = true)]
+	[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+	public List AddItem(string productName, int productId, string productCode, int amount)
+	{
+		try
+		{
+			ShoppingCartItem item = ShoppingCart.Find(p => p.ProductID == productId);
+			if (item == null)
+			{
+				item = new ShoppingCartItem();
+				item.Amount = amount;
+				item.ProductCode = productCode;
+				item.ProductID = productId;
+				item.ProductName = productName;
+				ShoppingCart.Add(item);
+			}
+			else
+			{
+				item.Amount += amount;
+			}
+			return ShoppingCart;
+		}
+		catch (Exception ex)
+		{
+			Ecabo.Intranet2009.SharePoint.Diagnostics.Logging.LogException(ex);
+			return null;
+		}
+	}
+	
+	[WebMethod(EnableSession = true)]
+	[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+	public List DeleteItem(int productId)
+	{
+		try
+		{
+			ShoppingCartItem item = ShoppingCart.Find(p => p.ProductID == productId);
+			if (item != null)
+			{
+				ShoppingCart.Remove(item);
+			}
+			return ShoppingCart;
+		}
+		catch (Exception ex)
+		{
+			Ecabo.Intranet2009.SharePoint.Diagnostics.Logging.LogException(ex);
+			return null;
+		}
+	}
+	
+	[WebMethod(EnableSession = true)]
+	[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+	public List ChangeAmount(int productId, int amount)
+	{
+		try
+		{
+			if (amount == 0)
+			return DeleteItem(productId);
+			ShoppingCartItem item = ShoppingCart.Find(p => p.ProductID == productId);
+			if (item != null)
+			{
+				item.Amount = amount;
+			}
+			return ShoppingCart;
+		}
+		catch (Exception ex)
+		{
+			Ecabo.Intranet2009.SharePoint.Diagnostics.Logging.LogException(ex);
+			return null;
+		}
+	}
+	
+	[WebMethod(EnableSession = true)]
+	[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+	public List ClearCart()
+	{
+		try
+		{
+			ShoppingCart.Clear();
+			return ShoppingCart;
+		}
+		catch (Exception ex)
+		{
+			Ecabo.Intranet2009.SharePoint.Diagnostics.Logging.LogException(ex);
+			return null;
+		}
+	}
+	
+	[WebMethod(EnableSession = true)]
+	[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+	public List PlaceOrder(string comments, string deliveryType, string deliveryDate)
+	{
+		try
+		{
+			string products = "";
+			foreach (ShoppingCartItem item in ShoppingCart)
+			{
+				products += string.Format("{0} - {1} - {2}\r\n", item.ProductCode, item.Amount, item.ProductName);
+			}
+			
+			BPVBestelling bestelling = new BPVBestelling();
+			bestelling.Comments = comments;
+			bestelling.Handling = deliveryType;
+			bestelling.HandlingDate = Convert.ToDateTime(deliveryDate, new CultureInfo("nl-NL"));
+			bestelling.Title = DateTime.Now.ToString("yyyyMMdd_HHmm") + "_" + SPContext.Current.Web.CurrentUser.Email;
+			bestelling.Products = products;
+			bestelling.PlacedBy = SPContext.Current.Web.CurrentUser;
+			if (BPVBestelling.AddBestelling(bestelling))
+			{
+				BPVBestelling.SendConfirmationEmail(bestelling, ShoppingCart);
+				ShoppingCart.Clear();
+				return ShoppingCart;
+			}
+			else
+			throw new Exception("Het is niet mogelijk om uw bestelling te verwerken");
+		}
+		catch (Exception ex)
+		{
+			Ecabo.Intranet2009.SharePoint.Diagnostics.Logging.LogException(ex);
+			throw new Exception("Het is niet mogelijk om uw bestelling te verwerken", ex);
+		}
+	}
 }
 ```
 
@@ -249,11 +261,11 @@ There’s one more thing needed for letting the web service return the data in J
 ```xml
 <?xml version="1.0" standalone="yes"?>
 <configuration>
-<system.web>
-<httpHandlers>
-<add verb="*" path="*.asmx" validate="false" type="System.Web.Script.Services.ScriptHandlerFactory, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"/>
-</httpHandlers>
-<compilation debug="true"/></system.web>
+	<system.web>
+	<httpHandlers>
+		<add verb="*" path="*.asmx" validate="false" type="System.Web.Script.Services.ScriptHandlerFactory, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"/>
+	</httpHandlers>
+	<compilation debug="true"/></system.web>
 </configuration>
 ```
 
