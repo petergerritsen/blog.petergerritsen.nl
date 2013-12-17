@@ -8,12 +8,14 @@ markdown: redcarpet
 rdiscount:
   extensions: [smart]
 
+paginate: 5
+paginate_path: "page/:num"
 
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
 title : Peter Gerritsen’s blog
-tagline: mostly about development
+tagline: about software development
 author :
   name : Peter Gerritsen
   email : mail@petergerritsen.nl
@@ -104,7 +106,7 @@ JB :
   analytics :
     provider : google 
     google : 
-        tracking_id : 'UA-123-12'
+        tracking_id : 'UA-19847311-1'
     getclicky :
       site_id : 
     mixpanel :
