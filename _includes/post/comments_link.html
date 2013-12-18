@@ -1,5 +1,7 @@
 {% if post.disqus_identifier %}
   {% assign disqus_identifier = post.disqus_identifier %}
+{% elsif post.wordpress_id %}  
+  {% assign disqus_identifier = {{post.wordpress_id}} {{site.production_url}}{{ post.url }} %}
 {% elsif page.disqus_identifier %}
   {% assign disqus_identifier = page.disqus_identifier %}
 {% elsif page.wordpress_id %}  
