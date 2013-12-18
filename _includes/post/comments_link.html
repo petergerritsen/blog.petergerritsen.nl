@@ -2,16 +2,16 @@
   {% assign disqus_identifier = post.disqus_identifier %}
   {% assign debug = 'A' %}
 {% elsif post.wordpress_id %}  
-  {% assign disqus_identifier = {{post.wordpress_id}} {{site.production_url}}{{ post.url }} %}
+  {% capture disqus_identifier %}{{post.wordpress_id}} {{site.production_url}}{{ post.url }}{% endcapture %}
   {% assign debug = 'B' %}
 {% elsif page.disqus_identifier %}
   {% assign disqus_identifier = page.disqus_identifier %}
   {% assign debug = 'C' %}
 {% elsif page.wordpress_id %}  
-  {% assign disqus_identifier = {{page.wordpress_id}} {{site.production_url}}{{ page.url }} %}
+  {% capture disqus_identifier %}{{page.wordpress_id}} {{site.production_url}}{{ page.url }}{% endcapture %}
   {% assign debug = 'D' %}
 {{ else }}
-  {% assign disqus_identifier = {{site.production_url}}{{ page.url }} %}	
+  {% capture disqus_identifier %}{{site.production_url}}{{ page.url }}{% endcapture %}
   {% assign debug = 'E' %}
 {% endif %}
 
