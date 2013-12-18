@@ -1,0 +1,44 @@
+		<header class="header">
+            <hgroup>
+                <h1 class="brand-title"><a href="/">{{ site.title }}</a></h1>
+                <h2 class="brand-tagline">{{ site.tagline }}</h2>
+            </hgroup>
+        </header>
+
+        <div id="nav">
+            <div class="pure-menu pure-menu-open">
+                <ul>
+                    <li>
+                       <a href="/about.html">About me</a>
+                    </li>
+                    <li>
+                        <a href="/archive.html">Archive</a>
+                    </li>
+                    <li>
+                        <a href="/categories.html">Categories</a>
+                    </li>
+                    <li>
+                        <a href="/tags.html">Tags</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="sitelinks">
+            <a class="fa-stack fa-lg" href="http://github.com/{{ site.author.github }}/" target="_blank" title="GitHub">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+            </a>
+            <a class="fa-stack fa-lg" href="http://twitter.com/{{ site.author.twitter }}/" target="_blank" title="Twitter">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+            </a>
+            <a class="fa-stack fa-lg" href="http://nl.linkedin.com/in/{{ site.author.linkedin }}/" target="_blank" title="LinkedIn">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+            </a>
+            <a class="fa-stack fa-lg" href="/rss.xml" target="_blank">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse" title="RSS"></i>
+            </a>
+        </div>
