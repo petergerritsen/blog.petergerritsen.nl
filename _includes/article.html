@@ -9,7 +9,7 @@
                             {% include post/date.html %}{{ time }} under {% include post/categories.html %} | 
 							{% if site.disqus_short_name and site.disqus_show_comment_count == true %}
 								{% include post/comments_link.html %}
-							{% endif %}  | 
+							{% endif %} | 
 							{% include post/edit.html %}
                         </p>
                     </header>
@@ -20,9 +20,7 @@
                         </p>
                     </div>
 
-                    <footer class="post-footer">
-                        <i class="fa fa-tags"></i> <a class="post-tag" href="#">3D</a>,<a class="post-tag" href="#">Silverlight</a>
-                    </footer>
+{% if index != true %}
+	{% include post/footer.html %}
+{% endif %}
                 </section>
-
-

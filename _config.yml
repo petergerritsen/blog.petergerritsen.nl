@@ -9,6 +9,9 @@ rdiscount:
 paginate: 5
 paginate_path: "page/:num"
 
+tags_path: /tags.html
+categories_path: /categories/html
+
 production_url: http://blog.petergerritsen.nl
 
 # Themes are encouraged to use these universal variables 

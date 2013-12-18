@@ -1,0 +1,12 @@
+<footer class="post-footer">
+{% unless page.tags == empty %}
+	<i class="fa fa-tags"></i>
+	
+	{% assign tags_list = page.tags %}
+
+      {% for tag in tags_list %} 
+      	<a class="post-tag" href="{{ site.tags_path }}#{{ tag }}-ref">{{ tag }}</a>{% if forloop.last == false %}, {% endif %}
+      {% endfor %}
+	  
+{% endunless %}  
+</footer>
