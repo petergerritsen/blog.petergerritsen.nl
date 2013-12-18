@@ -9,6 +9,8 @@ rdiscount:
 paginate: 5
 paginate_path: "page/:num"
 
+production_url: http://blog.petergerritsen.nl
+
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
@@ -22,11 +24,13 @@ author :
   linkedin : petergerritsen80
   feedburner : feedname
   
-  
+# Disqus  
 disqus_short_name: petergerritsensblog
+disqus_show_comment_count: true
+
+# Google analytics
 google_analytics_tracking_id: UA-19847311-1
 
-production_url: http://blog.petergerritsen.nl
-
+# Github
 github_repo_url: http://github.com/petergerritsen/blog.petergerritsen.nl/
 

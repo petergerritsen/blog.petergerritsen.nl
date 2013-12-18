@@ -3,7 +3,7 @@
 {% if index %}
                         <h2 class="post-title"><a href="{{ post.url }}" itemprop="url">{{ post.title}}</a></h2>
 {% else %}
-                        <h2 class="post-title">{{ post.title}}</h2>
+                        <h2 class="post-title">{{ page.title}}</h2>
 {% endif %}
                         <p class="post-meta">
                             {% include post/date.html %}{{ time }} under {% include post/categories.html %} | 
