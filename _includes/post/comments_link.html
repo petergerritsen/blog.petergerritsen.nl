@@ -10,7 +10,7 @@
 {% elsif page.wordpress_id %}  
   {% capture disqus_identifier %}{{page.wordpress_id}} {{site.production_url}}{{ page.url }}/{% endcapture %}
   {% assign debug = 'D' %}
-{{ else }}
+{% else %}
   {% capture disqus_identifier %}{{site.production_url}}{{ page.url }}/{% endcapture %}
   {% assign debug = 'E' %}
 {% endif %}
