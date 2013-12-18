@@ -1,9 +1,16 @@
 				<section class="post">
                     <header class="post-header">
+{% if index %}
+                        <h2 class="post-title"><a href="{{ post.url }}" itemprop="url">{{ post.title}}</a></h2>
+{% else %}
                         <h2 class="post-title">{{ post.title}}</h2>
-
+{% endif %}
                         <p class="post-meta">
-                            November 20, 2013 under <a class="post-category post-category-dotnet" href="#">.Net</a> <a class="post-category post-category-silverlight" href="#">Silverlight</a> | 12 comments  | <a class="post-edit" href="#">edit post</a>
+                            {% include post/date.html %}{{ time }} under {% include post/categories.html %} | 
+							{% if site.disqus_short_name and site.disqus_show_comment_count == true %}
+								{% include post/comments_link.html %}
+							{% endif %}  | 
+							{% include post/edit.html %}
                         </p>
                     </header>
 
