@@ -18,11 +18,11 @@ When you use the out-of-the box components for searching for people, a generic s
 
 This is especially a problem with the out-of-the-box webpart that shows information about a person:
 
-[![](/images/old/2010/10/Profile-properties-webpart-300x103.png)](/images/old/2010/10/Profile-properties-webpart.png)
+![Profile properties webpart](/images/old/2010/10/Profile-properties-webpart.png)
 
 When you click on one of the values in this webpart, you will be redirected to the people search results page with the value you clicked passed in as the search keyword:
 
-[![](/images/old/2010/10/Profile-search-generic-300x105.png)](/images/old/2010/10/Profile-search-generic.png)
+![Profile search generic](/images/old/2010/10/Profile-search-generic.png)
 
 But this will not give you any results. [This post](http://kgraeme.wordpress.com/2010/07/28/sharepoint-user-profile-custom-properties-keyword-search-problem/) by kgreame outlines the same problems and some of the steps he tried to solve this issue. In the comments to that post, a workaround is mentioned: map the matching crawled properties to the ContentsHidden Managed Property. 
 
@@ -59,7 +59,7 @@ But how do we force SharePoint to use this Ranking Model? I've outlined one of t
 
 So after adding a web part that sets the ranking model we can perform the search again:  
 
-[![](/images/old/2010/10/Profile-search-after-ranking-model-300x139.png)](/images/old/2010/10/Profile-search-after-ranking-model.png)
+![Profile search after ranking model](/images/old/2010/10/Profile-search-after-ranking-model.png)
 
 And bingo, the user with this value in an extra profile property shows up in the search results.
 

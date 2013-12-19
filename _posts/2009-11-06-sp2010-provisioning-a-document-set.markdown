@@ -130,15 +130,15 @@ We see that the page layout for the document set homepage is created in the \_ct
 
 The final Visual Studio solution will look like this:
 
-[![image](/images/old/snipping11.png)](/images/old/snipping10.png)
+![Solution](/images/old/snipping10.png)
 
 After deploying the solution and activating the feature, which is very easy to do with the new SharePoint stuff in Visual Studio (just press ctrl + f5), we can see that the \_cts folder will be created in the site collection:
 
-[![image](/images/old/snipping13.png)](/images/old/snipping12.png)
+![Folder created](/images/old/snipping12.png)
 
 After we add the content type to a document library and create a new item based on the content type we’ll be presented with the following:
 
-[![image](/images/old/snipping15.png)](/images/old/snipping14.png)
+![Document set](/images/old/snipping14.png)
 
 You can download the sample solution here: [DocSetProvisioning.zip (62,88 KB)](/images/old/DocSetProvisioning.zip)
 

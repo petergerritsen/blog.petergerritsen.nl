@@ -11,11 +11,15 @@ layout: default
     </article>
 {% endfor %}
 </div>
-<nav id="pagenavi">
-    {% if paginator.previous_page %}
-        <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' | replace: 'index.html', '' }}" class="prev">Prev</a>
-    {% endif %}
-    {% if paginator.next_page %}
-        <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" class="next">Next</a>
-    {% endif %}    
-</nav>
+<div id="pagenavi" class="pure-g">
+	<div class="pure-u-1-2">
+		{% if paginator.previous_page %}
+		<a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' | replace: 'index.html', '' }}" class="prev">&laquo; Previous</a>
+		{% endif %}
+	</div>
+	<div class="pure-u-1-2 align-right">
+		{% if paginator.next_page %}
+		<a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" class="next">Next &raquo;</a>
+		{% endif %}    
+	</div>
+</div>

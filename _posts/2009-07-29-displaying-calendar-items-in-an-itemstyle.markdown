@@ -16,7 +16,7 @@ categories: SharePoint
 We frequently get the question to display the next _x_ upcoming events in a rollup webpart. A content query web part is very suitable for this, but you will needa custom ItemStyle. Below you will find the xsl to display events in the following
 format:
 
-[![image](/images/old/snipping17.png)](/images/old/snipping16.png)
+![Example style](/images/old/snipping16.png)
 
 The custom itemstyle checks for the difference between all day events, events that span multiple days and checks for start and end times.
 

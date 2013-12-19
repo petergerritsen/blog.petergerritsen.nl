@@ -18,7 +18,7 @@ categories: [SharePoint, JavaScript]
 In [part 1](http://blog.petergerritsen.nl/2009/03/30/building-an-ajax-web-part-with-jquery-part-1/) of this series I explained a bit about the context and goal of creating an AJAX web part without using ASP.Net AJAX. I also showed the steps necessary for creating services that return data in the JSON format. In [part 2](http://blogs.tamtam.nl/peterg/2009/03/31/BuildingAnAJAXWebPartWithJQueryPart2.aspx) I showed you how to call these services from JavaScript and render the HTML for the data. In this last part I’ll show you how to use the jQuery UI and validation plugins.
 
 
-#### jQuery UI
+### jQuery UI
 
 
 The [jQuery UI](http://jqueryui.com/home) plugin provides some useful widgets and effects to use in your jQuery based scripts. It also offers an advanced theme framework, so you don’t have to write all the css by yourself. You can use one of the included theme’s or roll your own with the [ThemeRoller](http://jqueryui.com/themeroller/).
@@ -34,7 +34,7 @@ I’ve decided to use the UI plugin for tree things in my web part:
 
 The datepicker enhances a standard text input box with a datapicker that slides out when the textbox receives focus. It contains different options for specifying the allowed dates, year/month selection and more. When it’s shown it will look like this:
 
-[![image](/images/old/snipping21.png)](/images/old/snipping20.png)
+![Datepicker](/images/old/snipping20.png)
 
 Linking it to your input box is very simple. I use the following code:
 
@@ -53,7 +53,7 @@ In this case, the user has to press a button (in this case an imagebutton) to op
 
 Dialogs are a very useful way to give feedback to the user or asking for confirmation. In my web part I want to show a confirmation dialog when a user presses the delete icon next to a product in the shoppingcart or the “clear shoppingcart” button. The user will be presented with the following dialog:
 
-[![image](/images/old/snipping23.png)](/images/old/snipping22.png)
+![Dialog](/images/old/snipping22.png)
 
 Showing this is very easy. First we create a function that is called when the page is initialized:
 

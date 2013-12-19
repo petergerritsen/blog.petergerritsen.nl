@@ -46,21 +46,21 @@ formats.
 
 In the workflow designer you can add the “Convert Document” action:
 
-[![Workflow Actions](/images/old/snipping1.png)](/images/old/snipping.png)
+![Workflow Actions](/images/old/snipping.png)
 
 The action is inserted into the workflow step where you can specify the url of the output file, select the output format and save options and select a variable for storing the conversion job id (which you can use later to retrieve the status, as the job runs asynchronous):
 
-[![Convert document action](/images/old/snipping3.png)](/images/old/snipping2.png)
+![Convert document action](/images/old/snipping2.png)
 
-[![Save Behaviour](/images/old/snipping5.png)](/images/old/snipping4.png)
+![Save Behaviour](/images/old/snipping4.png)
 
 The job id is also logged into the Workflow History Log (the second entry is from a second workflow action that logs the returned conversion job id variable):
 
-[![image](/images/old/snipping7.png)](/images/old/snipping6.png)
+![Workflow history log](/images/old/snipping6.png)
 
 After the job has run, which can take up to a few minutes (depending on the word automation services settings), the converted  document appears in the library:
 
-[![image](/images/old/snipping9.png)](/images/old/snipping8.png)
+![Document library with converted PDF](/images/old/snipping8.png)
 
 The custom workflow action is one of the first features for Word Automation in SharePoint 2010 I’ve planned to release. Other  features will be a Ribbon and Item context menu extension and more Workflow actions.
 
