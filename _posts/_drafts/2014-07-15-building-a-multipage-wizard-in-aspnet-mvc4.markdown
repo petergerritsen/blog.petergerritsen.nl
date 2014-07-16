@@ -77,7 +77,7 @@ public class WizardContainer {
 
 ``` 
 
-##Controller handling and view
+##View
 
 For each step we'll create a view. The model class of this view will be the class for the step:
 
@@ -127,8 +127,80 @@ For each step we'll create a view. The model class of this view will be the clas
                 </div>
             </div>
 		</div>
+
+		<p>
+            <input type="submit" name="prevBtn" value="Previous" class="cancel" />
+            <input type="submit" id="nextBtn" name="nextBtn" value="Next" class="cancel" />
+        </p>
 	}
 </div>
 ```
+
+As you can see the submit buttons have a class 'cancel', this prevents the unobtrusive javascript validation from going off and blocking the submit action. On the first step the 'Previous' button wouldn't be there offcourse, but this is an example.
+
+##Controller
+
+The controller contains two actions, both called Index with a HttpGet or HttpPost attribute, to handle the requests: 
+
+```csharp
+public class InschrijvingWizardController : Controller {
+	[HttpGet]
+	public ActionResult Index(string step, string id) {
+	    if (!string.IsNullOrEmpty(id))
+	        Session["WizardDataId"] = id;
+	
+	    var data = GetWizardData();
+	    var stepVal = StepCode.NameAndEmail;
+	    if (!string.IsNullOrEmpty(step))
+	        stepVal = (StepCode)Enum.Parse(typeof(StepCode), step);	
+	    
+	    return View(stepVal.ToString(), data.GetCurrentStep(stepVal));
+	}
+	
+	[HttpPost]
+	public ActionResult Index(string step, string nextstep, string prevBtn, string nextBtn, FormCollection formCollection) {
+	    var data = GetWizardData();
+	    var stepVal = (StepCode)Enum.Parse(typeof(StepCode), step);
+	
+	    if (stepVal == StepCode.NameAndEmail) {
+	        TryUpdateModel(data.NameAndEmail);
+	        data.NameAndEmail.RunValidation = true;
+	        nextstep = StepCode.PersonalInterests.ToString();	        
+	    }
+	    if (stepVal == StepCode.PersonalInterests) {
+	        TryUpdateModel(data.PersonalInterests);
+	        data.Reden.RunValidation = true;
+	        if (string.IsNullOrEmpty(nextstep)) {
+                if (!string.IsNullOrEmpty(nextBtn) && string.IsNullOrEmpty(prevBtn))
+                    nextstep = StepCode.NameAndEmail.ToString();
+                else
+                    nextstep = StepCode.Sports.ToString();	            
+	        }
+	    }
+		if (stepVal == StepCode.Sports) {
+	        TryUpdateModel(data.Sports);
+	        data.Reden.RunValidation = true;
+	        if (string.IsNullOrEmpty(nextstep)) {
+                if (!string.IsNullOrEmpty(nextBtn) && string.IsNullOrEmpty(prevBtn))
+                    nextstep = StepCode.PersonalInterests.ToString();
+                else
+                    nextstep = StepCode.Hobbies.ToString();	            
+	        }
+	    }
+		//... extra step handling
+
+		SaveWizardData(data);
+
+        return View(nextstep, data.GetCurrentStep((StepCode)Enum.Parse(typeof(StepCode), nextstep)));
+	}
+}
+
+private AanvraagContainer GetWizardData() {
+            if (Session["InschrijvingWizardDataId"] == null) {
+                return new AanvraagContainer() {
+}
+
+```
+
 
 ##Validation
