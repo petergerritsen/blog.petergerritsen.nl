@@ -3,8 +3,8 @@ author: Peter Gerritsen
 comments: true
 date: 2014-07-15 19:43:11+00:00
 layout: post
-slug: building-a-multipage-wizard-in-aspnet-mvc4
-title: Building a multi-page wizard in ASP.Net MVC4
+slug: building-a-multipage-wizard-in-aspnet-mvc4-part-1
+title: Building a multi-page wizard in ASP.Net MVC4 part 1
 tags:
 - ASP.Net
 - jQuery
@@ -12,10 +12,123 @@ categories: [.Net, JavaScript]
 ---
 
 For a b2b portal for a customer we needed to build a form that would be presented in the form of a multi-page wizard.
-The user needed to be able to navigate through and resume the wizard at a later time without being required to meet all validation rules as long as they don't submit the form.
+The user needed to be able to navigate through and resume the wizard at a later time without being required to meet all validation rules as long as they don't submit the form. This post (and following posts) will outline the steps taken to create such a wizard. The examples are simplified versions and not the real code. 
+
+The example will be a form where the user can provide some basic profile info and interests and some sections in a later step will only be shown when a user has certain interests.  
 
 ##Data storage
 
-##Controller handling
+The data for each step will be stored in a class for each step:
+
+```csharp
+public class NameAndEmailStep : WizardStepBase<StepCode> {
+	
+	[Required]
+	public string FirstName {get;set;}
+	
+	[Required]
+	public string LastName {get;set;}
+	
+	[Required]
+	[Email]
+	public string EmailAddress {get;set;}
+
+}
+
+``` 
+
+As you can see, we will use DataAnnotations to set validation rules for the properties.
+
+The class derives from a generic base class and uses an enum to specify which step it represents:
+
+```csharp
+public abstract class WizardStepBase<T> : ModelBase {
+    public abstract bool IsValid(out List<ValidationResult> validationResults);
+
+    public abstract string StepTitle { get; }
+
+    public bool RunValidation { get; set; }
+
+    public abstract T Step { get; }
+}
+
+public enum StepCode {
+    NameAndEmail,
+    PersonalInterests,
+	Sports,
+	Hobbies
+}
+```
+
+All data step classes will then be used in a container class. This will be serialized and stored in the database when the user navigates through the wizard:
+
+```csharp
+public class WizardContainer {
+	//Steps data
+	
+	public NameAndEmailStep NameAndEmail {get;set;}
+
+	public PersonalInterestsStep PersonalInterests {get;set;}
+
+	public SportsStep Sports {get;set;}
+
+	public HobbiesStep Hobbies {get;set;}
+}
+
+``` 
+
+##Controller handling and view
+
+For each step we'll create a view. The model class of this view will be the class for the step:
+
+```html
+@model WizardExample.NameAndEmailStep
+
+<div>
+
+    <h2>Name and Email</h2>
+
+    @using (Html.BeginForm("Index", "WizardExample", FormMethod.Post, new { id = "wizardstepform" })) {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="step" value="@Model.Step.ToString()" />
+        
+        <div class="errorMessages">
+            <ul data-bind="foreach: ErrorMessages">
+                <li data-bind="text: $data"></li>
+            </ul>
+        </div>
+
+        <div class="content-lines">
+            <div class="editor-line">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Firstname): *
+                </div>
+                <div class="editor-field input300">
+                    @Html.EditorFor(model => model.FirstName)
+                    @Html.ValidationMessageFor(model => model.FirstName)
+                </div>
+            </div>
+            <div class="editor-line">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.LastName): *
+                </div>
+                <div class="editor-field input300">
+                    @Html.EditorFor(model => model.Lastname)
+                    @Html.ValidationMessageFor(model => model.LastName)
+                </div>
+            </div>
+            <div class="editor-line">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.EmailAddress): *
+                </div>
+                <div class="editor-field input100">
+                    @Html.EditorFor(model => model.EmailAddress)
+                    @Html.ValidationMessageFor(model => model.EmailAddress)
+                </div>
+            </div>
+		</div>
+	}
+</div>
+```
 
 ##Validation
