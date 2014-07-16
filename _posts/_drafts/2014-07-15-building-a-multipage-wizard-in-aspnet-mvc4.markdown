@@ -3,8 +3,8 @@ author: Peter Gerritsen
 comments: true
 date: 2014-07-15 19:43:11+00:00
 layout: post
-slug: building-a-multipage-wizard-in-aspnet-mvc4-part-1
-title: Building a multi-page wizard in ASP.Net MVC4 part 1
+slug: building-a-resumable-multipage-wizard-in-aspnet-mvc4-part-1
+title: Building a resumable multi-page wizard in ASP.Net MVC4 part 1
 tags:
 - ASP.Net
 - jQuery
@@ -15,6 +15,8 @@ For a b2b portal for a customer we needed to build a form that would be presente
 The user needed to be able to navigate through and resume the wizard at a later time without being required to meet all validation rules as long as they don't submit the form. This post (and following posts) will outline the steps taken to create such a wizard. The examples are simplified versions and not the real code. 
 
 The example will be a form where the user can provide some basic profile info and interests and some sections in a later step will only be shown when a user has certain interests.  
+
+The mechanism is based on a post by Bipin Joshi: [http://www.dotnetbips.com/articles/9a5fe277-6e7e-43e5-8408-a28ff5be7801.aspx](http://www.dotnetbips.com/articles/9a5fe277-6e7e-43e5-8408-a28ff5be7801.aspx)
 
 ##Data storage
 
@@ -46,9 +48,7 @@ public abstract class WizardStepBase<T> : ModelBase {
     public abstract bool IsValid(out List<ValidationResult> validationResults);
 
     public abstract string StepTitle { get; }
-
-    public bool RunValidation { get; set; }
-
+    
     public abstract T Step { get; }
 }
 
@@ -241,10 +241,14 @@ public class InschrijvingWizardController : Controller {
 
 ```
 
-The controller uses the TryUpdateModel method to update just the data for the current step in the container class. All other data will be left untouched. We have two methods to retrieve and store data (which is done through the PortaalCommunicator. This performs the (de)serialization using the JSON.Net package and retrieves/stores the data through a WCF service in our case. You can easily substitute this with direct database storage or, for instance, a Redis  service. 
+The controller uses the TryUpdateModel (method of the Controller base class)  method to update just the data for the current step in the container class. All other data will be left untouched. We have two methods to retrieve and store data (which is done through the PortaalCommunicator. This performs the (de)serialization using the JSON.Net package and retrieves/stores the data through a WCF service in our case. You can easily substitute this with direct database storage or, for instance, a Redis  service. 
+
+The navigation is determined through the values of *nextStep*, *prevBtn* and *nextBtn*. When *nextStep* has a value, the wizard skips to a specific step, otherwise it checks if the next of previous step is requested.
 
 We now have a basic multi-page wizard, that will store data in between requests. When submitting on the final step page the data is stored and the service is called to process that data.
 
 The wizard doesn't validate the data yet, so we'll add that in the next section.
 
 ##Validation 
+
+Each step class implements the base class WizardData. Validation for each step is performed through the abstract method 'IsValid'. This will return a boolean to indicate if the data is valid and provide a list of ValidationResults.   
