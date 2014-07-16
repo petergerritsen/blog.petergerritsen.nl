@@ -252,3 +252,56 @@ The wizard doesn't validate the data yet, so we'll add that in the next section.
 ##Validation 
 
 Each step class implements the base class WizardData. Validation for each step is performed through the abstract method 'IsValid'. This will return a boolean to indicate if the data is valid and provide a list of ValidationResults.   
+
+An example implementation:
+
+```csharp
+ public override bool IsValid(out List<ValidationResult> validationResults) {
+    var isValid = true;
+
+    var validationContext = new ValidationContext(this, null, null);
+    validationResults = new List<ValidationResult>();
+    isValid = Validator.TryValidateObject(this, validationContext, validationResults, true);
+    if (EenOfMeerdere == "Meerdere" && MeerdereAandeelhouders != null) {
+        int i = 0;
+        var prefix = "MeerdereAandeelhouders[{0}].{1}";
+        foreach (var aandeelhouder in MeerdereAandeelhouders) {
+            var childValidationContext = new ValidationContext(aandeelhouder, null, null);
+            var childValidationResults = new List<ValidationResult>();
+            var isChildValid = Validator.TryValidateObject(aandeelhouder, childValidationContext, childValidationResults, true);
+            if (!isChildValid) {
+                isValid = false;
+                foreach (var vr in childValidationResults) {
+                    validationResults.Add(new ValidationResult(vr.ErrorMessage, vr.MemberNames.Select(x => string.Format(prefix, i, x)).ToList()));
+                }
+            }
+            i++;
+        }
+    }
+
+    return isValid;
+}
+
+```
+
+This will validate the main object, but will also validate a collection of childobjects if necessary. You can also perform custom validation not added through DataAnnotations. 
+
+In the controller actions (both post and get), just before returning the view, we can now call this validation method and add the validations to the modelstate. This will ensure that the *ValidationMessageFor<>* and *ValidationSummary* html helpers in the view will generate the html required to show these messages:
+
+```csharp
+List<ValidationResult> validationResults;
+data.GetCurrentStep(nextStep).IsValid(out validationResults);
+foreach (var result in validationResults) {
+    if (result.MemberNames.Any())
+        ModelState.AddModelError(result.MemberNames.First(), result.ErrorMessage);
+	else 
+		ModelState.AddModelError("", result.ErrorMessage);
+}
+
+```
+
+
+
+
+
+
