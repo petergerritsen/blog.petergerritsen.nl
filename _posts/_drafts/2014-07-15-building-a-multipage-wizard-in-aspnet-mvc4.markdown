@@ -158,7 +158,7 @@ public class InschrijvingWizardController : Controller {
 	}
 	
 	[HttpPost]
-	public ActionResult Index(string step, string nextstep, string prevBtn, string nextBtn, FormCollection formCollection) {
+	public ActionResult Index(string step, string nextstep, string prevBtn, string nextBtn, string submitWizardBtn) {
 	    var data = GetWizardData();
 	    var stepVal = (StepCode)Enum.Parse(typeof(StepCode), step);
 	
@@ -187,20 +187,64 @@ public class InschrijvingWizardController : Controller {
                     nextstep = StepCode.Hobbies.ToString();	            
 	        }
 	    }
-		//... extra step handling
+		if (stepVal == StepCode.Hobbies) {
+	        TryUpdateModel(data.Hobbies);
+	        data.Reden.RunValidation = true;
+	        if (string.IsNullOrEmpty(nextstep)) {
+                if (!string.IsNullOrEmpty(prevBtn))
+                    nextstep = StepCode.Sports.ToString();
+                else if (!string.IsNullOrEmpty(submitWizardBtn)) {
+                     // Store data
+                     SaveWizardData(data);
+					 // Process on server
+				 	PortaalServiceCommunicator.ProcessWizard(Session["WizardDataId"] as string);
+					return RedirectToAction("WizardComplete");
+				}           
+	        }
+	    }
+		
 
 		SaveWizardData(data);
 
         return View(nextstep, data.GetCurrentStep((StepCode)Enum.Parse(typeof(StepCode), nextstep)));
 	}
-}
 
-private AanvraagContainer GetWizardData() {
-            if (Session["InschrijvingWizardDataId"] == null) {
-                return new AanvraagContainer() {
-}
+	public ActionResult WizardComplete(){
+		return View("WizardComplete");	// Basic view
+	}
+
+
+	private WizardContainer GetWizardData() {
+		if (Session["WizardDataId"] == null) {
+	        return new WizardContainer() {
+				NameAndEmail = new NameAndEmail(),
+				PersonalInterests = new PersonalInterests(),
+				Sports = new Sports(),
+				Hobbies = new Hobbies()
+			}
+		} else {
+	        var id = (string)Session["WizardDataId"];
+	        return PortaalServiceCommunicator.GetPortaalData<WizardContainer>(id);
+	    }
+	}
+	
+	private void SaveWizardData(WizardContainer data) {
+	    var id = "";
+	    if (Session["WizardDataId"] != null) {
+	        id = (string)Session["WizardDataId"];
+	    } else {
+	        id = Guid.NewGuid().ToString();
+	        Session["WizardDataId"] = id;
+	    }
+   		PortaalServiceCommunicator.StorePortaalData<WizardContainer>(data, id, DataValueType.Json);
+	}
 
 ```
 
+The controller uses the TryUpdateModel method to update just the data for the current step in the container class. All other data will be left untouched. We have two methods to retrieve and store data (which is done through the PortaalCommunicator. This performs the (de)serialization using the JSON.Net package and retrieves/stores the data through a WCF service in our case. You can easily substitute this with direct database storage or, for instance, a Redis  service. 
 
-##Validation
+We now have a basic multi-page wizard, that will store data in between requests. When submitting on the final step page the data is stored and the service is called to process that data.
+
+The wizard doesn't validate the data yet, so we'll add that in the next section.
+
+##Validation 
