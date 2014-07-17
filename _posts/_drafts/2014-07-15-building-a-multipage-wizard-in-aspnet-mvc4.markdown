@@ -140,7 +140,10 @@ As you can see the submit buttons have a class 'cancel', this prevents the unobt
 
 ##Controller
 
-The controller contains two actions, both called Index with a HttpGet or HttpPost attribute, to handle the requests: 
+The controller contains two actions, both called Index with a HttpGet or HttpPost attribute, to handle the requests. The GET action will accept an *id*  parameter for the wizard, so when this is passed the user will resume an earlier wizard. 
+
+Both the GET and POST actions accept a *step* parameter, which is then used to determine the next step (instead of the previous or next).
+
 
 ```csharp
 public class InschrijvingWizardController : Controller {
@@ -299,6 +302,9 @@ foreach (var result in validationResults) {
 }
 
 ```
+
+By checking if each step is valid we can determine if the form is complete in total and can be submitted for processing.
+
 
 
 
