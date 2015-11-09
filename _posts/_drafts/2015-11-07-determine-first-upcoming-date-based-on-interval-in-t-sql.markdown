@@ -82,7 +82,7 @@ namespace TestDbFunctionsCSharp
         [TestMethod]
         public void TestJaren()
         {
-            using (SqlConnection conn = new SqlConnection("Data Source=ZINLSPDEV;Initial Catalog=Zorginzicht;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False"))
+            using (SqlConnection conn = new SqlConnection("CONNSTRING_HERE"))
             {
                 conn.Open();
 
@@ -96,7 +96,7 @@ namespace TestDbFunctionsCSharp
         [TestMethod]
         public void TestMaanden()
         {
-            using (SqlConnection conn = new SqlConnection("Data Source=ZINLSPDEV;Initial Catalog=Zorginzicht;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False"))
+            using (SqlConnection conn = new SqlConnection("CONNSTRING_HERE"))
             {
                 conn.Open();
 
@@ -112,7 +112,7 @@ namespace TestDbFunctionsCSharp
         [TestMethod]
         public void TestWeken()
         {
-            using (SqlConnection conn = new SqlConnection("Data Source=ZINLSPDEV;Initial Catalog=Zorginzicht;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False"))
+            using (SqlConnection conn = new SqlConnection("CONNSTRING_HERE"))
             {
                 conn.Open();
 
