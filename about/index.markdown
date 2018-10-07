@@ -7,6 +7,6 @@ sharing: false
 
 ![A picture of me](/images/Me.jpg "A picture of me")
 
-I work as a Senior .Net Developer at [Garansys](http://www.garansys.nl) in Utrecht, the Netherlands.
+I work as a freelance developer trough [CloudDev](https://www.clouddev.nl) in the Netherlands.
 
-Apart from (web) application development based on the .Net Framework, I like to dive into other .Net technologies such as Silverlight and try to put some Javascript/jQuery in the mix for the best user experience results.
+I specialize in building .NET solutions on the Microsoft Azure platform.
