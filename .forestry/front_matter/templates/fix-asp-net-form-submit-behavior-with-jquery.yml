@@ -1,7 +1,7 @@
 ---
-label: Fix ASP.Net form submit behavior with jQuery
-hide_body: 
-is_partial: 
+label: Post
+hide_body: false
+is_partial: false
 fields:
 - name: layout
   label: Layout
