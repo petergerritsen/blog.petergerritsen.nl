@@ -25,6 +25,8 @@ We split all resource components up into separate templates, e.g. the ipSecurity
 
 So I decided to use a different solution for creating the URI:
 
-    "variables": {  "ipWhitelistingTemplateUrl": "[replace(deployment().properties.templateLink.uri, '/WebApp-Generic.json?', '/WebApp-IpWhitelisting.json?')]"}
+    "variables": {  
+     "ipWhitelistingTemplateUrl": "[replace(deployment().properties.templateLink.uri, '/WebApp-Generic.json?', '/WebApp-IpWhitelisting.json?')]"
+    }
 
 It's not complicated and you can discuss if this is indeed a better solution. But I think it demonstrates the power of ARM templates. 
