@@ -29,4 +29,4 @@ So I decided to use a different solution for creating the URI:
      "ipWhitelistingTemplateUrl": "[replace(deployment().properties.templateLink.uri, '/WebApp-Generic.json?', '/WebApp-IpWhitelisting.json?')]"
     }
 
-It's not complicated and you can discuss if this is indeed a better solution. But I think it demonstrates the power of ARM templates. 
+It's not complicated and you can discuss if this is indeed a better solution. But I think it demonstrates the different possibilities in ARM templates. 
