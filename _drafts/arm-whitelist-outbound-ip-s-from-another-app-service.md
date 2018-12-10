@@ -4,9 +4,11 @@ layout: post
 comments: true
 author: Peter
 date: 2018-12-10 12:37:21 +0000
-slug: ''
+slug: arm-whitelist-outbound-ips-from-another-app-service
 wordpress_id: ''
-tags: []
+tags:
+- Azure Resource Manager
+- Azure Networking
 categories: []
 
 ---
