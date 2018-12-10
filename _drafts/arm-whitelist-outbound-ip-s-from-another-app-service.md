@@ -25,3 +25,15 @@ _A template doesn't need to deploy a resource_
 So this means you can create a template, that takes a resourceId for an App Service, gets the range of possible outbound IPs and returns it as an array:
 
 <script src="[https://gist.github.com/petergerritsen/cfea06a3936b77d1d1907ca4e2bb4a2f.js](https://gist.github.com/petergerritsen/cfea06a3936b77d1d1907ca4e2bb4a2f.js "https://gist.github.com/petergerritsen/cfea06a3936b77d1d1907ca4e2bb4a2f.js")"></script>
+
+But this doesn't create an object array which we can pass to the template that adds the ranges to an App Service as described in the previous post.
+
+So we create another template that takes an array of strings with the different IP's and returns an array with the object in the required form:
+
+<script src="[https://gist.github.com/petergerritsen/17f68f16411efa5236b95d6c6306bda3.js](https://gist.github.com/petergerritsen/17f68f16411efa5236b95d6c6306bda3.js "https://gist.github.com/petergerritsen/17f68f16411efa5236b95d6c6306bda3.js")"></script>
+
+We can then modify the first template to call this template and instead return the result of that template:
+
+<script src="[https://gist.github.com/petergerritsen/3f5866a19244cb7ddcd7b1b2a917cbe3.js](https://gist.github.com/petergerritsen/3f5866a19244cb7ddcd7b1b2a917cbe3.js "https://gist.github.com/petergerritsen/3f5866a19244cb7ddcd7b1b2a917cbe3.js")"></script>
+
+All that remains now, is to call this template from the main template that deploys the App Service and pass this to the template that actually adds the ranges to the whitelist:
