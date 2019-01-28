@@ -52,3 +52,4 @@ pages:
 - _posts/use-arm-template-as-function-in-other-templates.md
 - _posts/arm-whitelist-outbound-ip-s-from-another-app-service.md
 - _posts/2018-12-05-arm-template-url-for-linkedtemplate-stored-in-blob-storage.md
+- _posts/azure-data-lake-storage-gen2-and-application-insights-continuous-export.md
