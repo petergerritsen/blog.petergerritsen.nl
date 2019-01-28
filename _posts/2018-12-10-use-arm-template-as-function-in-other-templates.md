@@ -8,7 +8,9 @@ slug: arm-create-generic-ip-whitelisting-template
 wordpress_id: ''
 tags:
 - Azure Resource Manager
-categories: []
+- Azure Networking
+categories:
+- Azure
 
 ---
 At my current customer, we're working on securing the services in Azure. One of the requirements includes setting IP-filtering in different App Services.
