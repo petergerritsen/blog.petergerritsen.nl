@@ -3,16 +3,17 @@ title: 'ARM: Whitelist outbound IP''s from another app service '
 layout: post
 comments: true
 author: Peter
-date: 2018-12-10 12:37:21 +0000
+date: 2019-01-28 12:37:21 +0000
 slug: arm-whitelist-outbound-ips-from-another-app-service
 wordpress_id: ''
 tags:
 - Azure Resource Manager
 - Azure Networking
-categories: []
+categories:
+- Azure
 
 ---
-In a [previous post]() I wrote about adding one or more specified ranges of IP addresses to the IP security restrictions of an App Service.
+In a [previous post](/2019/01/28/arm-create-generic-ip-whitelisting-template) I wrote about adding one or more specified ranges of IP addresses to the IP security restrictions of an App Service.
 
 In this post, I would like to take it one step further: add the possible outbound IP addresses of another App Service to the white list.
 
