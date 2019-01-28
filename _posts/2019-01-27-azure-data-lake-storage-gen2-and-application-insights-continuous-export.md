@@ -4,7 +4,7 @@ comments: true
 author: Peter
 title: Azure Data Lake Storage Gen2 and Application Insights continuous export
 date: 2019-01-27 23:00:00 +0000
-slug: ''
+slug: azure-data-lake-storage-gen2-and-application-insights-continuous-export
 wordpress_id: ''
 tags:
 - Azure Data Lake
