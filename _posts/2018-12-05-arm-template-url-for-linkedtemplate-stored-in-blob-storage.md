@@ -6,8 +6,10 @@ author: Peter
 date: 2018-12-05 08:17:26 +0000
 slug: arm-template-url-for-linkedtemplate-stored-in-blob-storage
 wordpress_id: ''
-tags: []
-categories: []
+tags:
+- Azure Resource Manager
+categories:
+- Azure
 
 ---
 At a customer we've set up an Infrastructure-As-Code solution with Azure Resource Manager (ARM) for deploying Azure Resources through a Azure DevOps build and release pipelines.
