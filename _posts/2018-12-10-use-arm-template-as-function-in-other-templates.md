@@ -4,7 +4,7 @@ layout: post
 comments: true
 author: Peter
 date: 2019-01-28 11:59:07 +0000
-slug: ''
+slug: arm-create-generic-ip-whitelisting-template
 wordpress_id: ''
 tags:
 - Azure Resource Manager
