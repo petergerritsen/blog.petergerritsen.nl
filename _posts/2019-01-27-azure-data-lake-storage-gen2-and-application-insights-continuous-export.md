@@ -9,7 +9,8 @@ wordpress_id: ''
 tags:
 - Azure Data Lake
 - Application Insights
-categories: []
+categories:
+- Azure
 
 ---
 Summary: at the moment of writing, you cannot use Data Lake Storage Gen2 storage account as a target for Application Insights continuous export.
