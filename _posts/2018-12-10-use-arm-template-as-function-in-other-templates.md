@@ -3,10 +3,11 @@ title: 'ARM: Create a generic IP whitelisting template'
 layout: post
 comments: true
 author: Peter
-date: 2018-12-10 11:59:07 +0000
+date: 2019-01-28 11:59:07 +0000
 slug: ''
 wordpress_id: ''
-tags: []
+tags:
+- Azure Resource Manager
 categories: []
 
 ---
