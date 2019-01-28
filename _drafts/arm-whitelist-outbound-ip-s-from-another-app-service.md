@@ -40,3 +40,5 @@ We can then modify the first template to call this template and instead return t
 <script src="[https://gist.github.com/petergerritsen/3f5866a19244cb7ddcd7b1b2a917cbe3.js](https://gist.github.com/petergerritsen/3f5866a19244cb7ddcd7b1b2a917cbe3.js "https://gist.github.com/petergerritsen/3f5866a19244cb7ddcd7b1b2a917cbe3.js")"></script>
 
 All that remains now, is to call this template from the main template that deploys the App Service and pass this to the template that actually adds the ranges to the whitelist:
+
+<script src="[https://gist.github.com/petergerritsen/0d2138e721cbaa0c240c436b0ee4b4fd.js](https://gist.github.com/petergerritsen/0d2138e721cbaa0c240c436b0ee4b4fd.js "https://gist.github.com/petergerritsen/0d2138e721cbaa0c240c436b0ee4b4fd.js")"></script>
