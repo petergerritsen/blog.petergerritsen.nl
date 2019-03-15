@@ -1,7 +1,6 @@
 ---
 label: Post
 hide_body: false
-is_partial: false
 fields:
 - name: layout
   label: Layout
@@ -49,7 +48,8 @@ fields:
   hidden: false
   default: ''
 pages:
-- _posts/2019-01-28-arm-whitelist-outbound-ip-s-from-another-app-service.md
-- _posts/2019-01-27-azure-data-lake-storage-gen2-and-application-insights-continuous-export.md
-- _posts/2018-12-05-arm-template-url-for-linkedtemplate-stored-in-blob-storage.md
+- _posts/arm-deployment-error-when-changing-keyvaultsecretname-for-a-certificate.md
 - _posts/2018-12-10-use-arm-template-as-function-in-other-templates.md
+- _posts/2018-12-05-arm-template-url-for-linkedtemplate-stored-in-blob-storage.md
+- _posts/2019-01-27-azure-data-lake-storage-gen2-and-application-insights-continuous-export.md
+- _posts/2019-01-28-arm-whitelist-outbound-ip-s-from-another-app-service.md
