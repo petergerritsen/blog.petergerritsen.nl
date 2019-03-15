@@ -48,6 +48,7 @@ fields:
   hidden: false
   default: ''
 pages:
+- _posts/update-a-certificate-resource-in-azure-after-updating-the-linked-certificate-in-keyvault.md
 - _posts/arm-deployment-error-when-changing-keyvaultsecretname-for-a-certificate.md
 - _posts/2018-12-10-use-arm-template-as-function-in-other-templates.md
 - _posts/2018-12-05-arm-template-url-for-linkedtemplate-stored-in-blob-storage.md
