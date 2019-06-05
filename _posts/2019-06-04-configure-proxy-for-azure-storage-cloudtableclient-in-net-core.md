@@ -20,29 +20,16 @@ After fiddling around for a bit I found the solution for setting it in a .NET co
 
 ```csharp
 public TableStorage(string accountName, string keyValue, IWebProxy proxy)
-
-        {
-
-            _storageAccount =
-
-                new CloudStorageAccount(
-
+{
+	_storageAccount = new CloudStorageAccount(
                     new StorageCredentials(accountName, keyValue), true);
-
-            var storageDelegatingHandler = new StorageDelegatingHandler(proxy);
-
-            _tableClient = _storageAccount.CreateCloudTableClient(new TableClientConfiguration
-
+    var storageDelegatingHandler = new StorageDelegatingHandler(proxy);
+    _tableClient = _storageAccount.CreateCloudTableClient(new TableClientConfiguration
             {
-
-                RestExecutorConfiguration = new RestExecutorConfiguration
-
-                {
-
-                    DelegatingHandler = storageDelegatingHandler
-
-                }
-
+            	RestExecutorConfiguration = new RestExecutorConfiguration
+               	{
+               		DelegatingHandler = storageDelegatingHandler
+               	} 
             });
 
 /// further config
@@ -52,50 +39,50 @@ In the DelegatingHandler you can set the proxy for the HttpClientHandler:
 
 ```csharp
 public class StorageDelegatingHandler : DelegatingHandler
+{
+  private readonly IWebProxy _proxy;
+
+  private bool _firstCall = true;
+
+  public StorageDelegatingHandler() 
+  : base()
+  {
+  }
+
+  public StorageDelegatingHandler(HttpMessageHandler httpMessageHandler)
+  : base(httpMessageHandler)
+  {
+  }
+
+  public StorageDelegatingHandler(IWebProxy proxy)
+  {
+  	_proxy = proxy;
+  }
+
+  protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+  {
+    if (_firstCall && _proxy != null)
     {
-        private readonly IWebProxy _proxy;
-
-        private bool _firstCall = true;
-
-        public StorageDelegatingHandler() 
-            : base()
-        {
-        }
-
-        public StorageDelegatingHandler(HttpMessageHandler httpMessageHandler)
-            : base(httpMessageHandler)
-        {
-        }
-
-        public StorageDelegatingHandler(IWebProxy proxy)
-        {
-            _proxy = proxy;
-        }
-
-        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            if (_firstCall && _proxy != null)
-            {
-                HttpClientHandler inner = (HttpClientHandler)InnerHandler;
-                inner.Proxy = _proxy;
-            }
-
-            _firstCall = false;
-            return base.SendAsync(request, cancellationToken);
-        }
+      HttpClientHandler inner = (HttpClientHandler)InnerHandler;
+      inner.Proxy = _proxy;
     }
+
+    _firstCall = false;
+    return base.SendAsync(request, cancellationToken);
+  }
+}
 ```
 
 Now you can configure the proxy where you're setting up dependency injection:
 
 ```csharp
 public class ProxySettings
-    {
-        public bool Use => !string.IsNullOrWhiteSpace(Address);
+{
+  public bool Use => !string.IsNullOrWhiteSpace(Address);
 
-        public string Address { get; set; }
+  public string Address { get; set; }
 
-        public bool BypassOnLocal { get; set; }
+  public bool BypassOnLocal { get; set; }
 }
 ```
 
@@ -103,13 +90,13 @@ public class ProxySettings
 var proxySettings = Configuration
                 .GetSection(nameof(ProxySettings))
                 .Get<ProxySettings>();
-            IWebProxy proxy = null;
-            if (proxySettings != null && proxySettings.Use)
-            {
-                proxy = new WebProxy(proxySettings.Address, proxySettings.BypassOnLocal);
-                WebRequest.DefaultWebProxy = proxy;
-            }
 
-            services.AddSingleton<IStorage>(new TableStorage(Configuration["StorageAccountName"], Configuration["StorageAccountKey"], proxy));            
+IWebProxy proxy = null;
+if (proxySettings != null && proxySettings.Use)
+{
+	proxy = new WebProxy(proxySettings.Address, proxySettings.BypassOnLocal);
+	WebRequest.DefaultWebProxy = proxy;
+}
+
+services.AddSingleton<IStorage>(new TableStorage(Configuration["StorageAccountName"], Configuration["StorageAccountKey"], proxy));            
 ```
-
