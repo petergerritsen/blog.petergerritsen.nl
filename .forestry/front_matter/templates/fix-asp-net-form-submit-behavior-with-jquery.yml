@@ -1,0 +1,58 @@
+---
+label: Post
+hide_body: false
+fields:
+- name: layout
+  label: Layout
+  type: text
+  hidden: false
+  default: post
+- name: title
+  label: Title
+  type: text
+  hidden: false
+  default: ''
+- name: comments
+  label: Comments
+  type: boolean
+  hidden: false
+  default: true
+- name: author
+  label: Author
+  type: text
+  hidden: false
+  default: Peter
+- name: date
+  label: Date
+  type: datetime
+  hidden: false
+  default: ''
+- name: slug
+  label: Slug
+  type: text
+  hidden: false
+  default: ''
+- name: wordpress_id
+  label: Wordpress id
+  type: text
+  hidden: false
+  default: ''
+- name: tags
+  label: Tags
+  type: tag_list
+  hidden: false
+  default: ''
+- name: categories
+  label: Categories
+  type: tag_list
+  hidden: false
+  default: ''
+pages:
+- _posts/2018-12-05-arm-template-url-for-linkedtemplate-stored-in-blob-storage.md
+- _posts/2018-12-10-use-arm-template-as-function-in-other-templates.md
+- _posts/2019-01-27-azure-data-lake-storage-gen2-and-application-insights-continuous-export.md
+- _posts/2019-01-28-arm-whitelist-outbound-ip-s-from-another-app-service.md
+- _posts/2019-06-04-configure-proxy-for-azure-storage-cloudtableclient-in-net-core.md
+- _posts/2020-02-18-aggregate-queries-in-azure-cosmosdb-with-large-datasets.md
+- _posts/arm-deployment-error-when-changing-keyvaultsecretname-for-a-certificate.md
+- _posts/update-a-certificate-resource-in-azure-after-updating-the-linked-certificate-in-keyvault.md
