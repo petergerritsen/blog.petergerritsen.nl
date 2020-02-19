@@ -17,33 +17,36 @@ One of the services I'm building at one of my customers is an API that provides 
 
 When querying for the total outstanding amount for not payed invoices you can use an aggregate query:
 
-    SELECT SUM(c.OutstandingAmount) AS TotalOutstandingAmount  FROM c WHERE c.Status <> 1
+```sql
+SELECT SUM(c.OutstandingAmount) AS TotalOutstandingAmount  FROM c WHERE c.Status <> 1
+``` 
 
 We executed the query with the following code:
 
-    var feedOptions = new FeedOptions
-    
-    {
-         EnableCrossPartitionQuery = false,
-         PartitionKey = new PartitionKey(partitionKey)
-    };
-    
-     var querySpec = new SqlQuerySpec() 
-     { 
-         QueryText = queryText, 
-         Parameters = new SqlParameterCollection(queryParameters.Select(pair => new SqlParameter(pair.Key, pair.Value))) 
-     };
-     
-     using( var query = _documentClient.Value.CreateDocumentQuery<T>(collectionUri, querySpec, feedOptions).AsDocumentQuery())
-     {
-         var response = await query.ExecuteNextAsync<T>(cancellationToken);
-     } 
-    
-     return response.First();
+```csharp
+var feedOptions = new FeedOptions
+{
+    EnableCrossPartitionQuery = false,
+    PartitionKey = new PartitionKey(partitionKey)
+};
 
-But sometimes this returned an item with an amount of zero where I knew this should not be the case. When I ran the same code against a test database, the issue did not arise.
+var querySpec = new SqlQuerySpec() 
+{ 
+    QueryText = queryText, 
+    Parameters = new SqlParameterCollection(queryParameters.Select(pair => new SqlParameter(pair.Key, pair.Value))) 
+};
 
-So I resorted to Fiddler to help me find the issue.
+using( var query = _documentClient.Value.CreateDocumentQuery<T>(collectionUri, querySpec, feedOptions).AsDocumentQuery())
+{
+    var response = await query.ExecuteNextAsync<T>(cancellationToken);
+} 
+
+return response.First();
+```
+
+But sometimes this returned an item with an amount set to 0 where I knew this should not be the case. When I ran the same code against a test database, the issue did not arise.
+
+So I resorted to Fiddler to help me find the issue between the two queries.
 
 First I tried running the query against the test database:
 
@@ -51,21 +54,24 @@ First I tried running the query against the test database:
 
 And then against the acceptation database:
 
-![](/uploads/CosmosAggregateACC.PNG)As you can see, the latter returns a continuation token in the response. So we should continue asking for results:
+![](/uploads/CosmosAggregateACC.PNG)
 
-    var items = new List<T>();
-    
-    using (var query = _documentClient.Value.CreateDocumentQuery<T>(collectionUri, querySpec, feedOptions)
-    	.AsDocumentQuery())
+As you can see, the latter returns a continuation token in the response through a response header. So this means we should continue asking for results in our code:
+
+```csharp
+var items = new List<T>();
+
+using (var query = _documentClient.Value.CreateDocumentQuery<T>(collectionUri, querySpec, feedOptions).AsDocumentQuery())
+{
+    while (query.HasMoreResults)
     {
-    	while (query.HasMoreResults)
-    	{
-    		var response = await query.ExecuteNextAsync<T>(cancellationToken);
-    		
-    		items.AddRange(response);
-    	}
+        var response = await query.ExecuteNextAsync<T>(cancellationToken);
+        
+        items.AddRange(response);
     }
+}
+
+return items;
+```
     
-    return items;
-    
-Then you can aggregate the returned items by using Linq.
+Then you can create an aggregated result by using Linq to sum up the values of the returned items.

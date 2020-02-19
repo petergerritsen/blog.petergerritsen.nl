@@ -21,18 +21,19 @@ After fiddling around for a bit I found the solution for setting it in a .NET co
 ```csharp
 public TableStorage(string accountName, string keyValue, IWebProxy proxy)
 {
-	_storageAccount = new CloudStorageAccount(
-                    new StorageCredentials(accountName, keyValue), true);
+	_storageAccount = new CloudStorageAccount(new StorageCredentials(accountName, keyValue), true);
     var storageDelegatingHandler = new StorageDelegatingHandler(proxy);
-    _tableClient = _storageAccount.CreateCloudTableClient(new TableClientConfiguration
+    _tableClient = _storageAccount.CreateCloudTableClient(
+        new TableClientConfiguration
+        {
+            RestExecutorConfiguration = new RestExecutorConfiguration
             {
-            	RestExecutorConfiguration = new RestExecutorConfiguration
-               	{
-               		DelegatingHandler = storageDelegatingHandler
-               	} 
-            });
+                DelegatingHandler = storageDelegatingHandler
+            } 
+        });
 
-/// further config
+    /// further config
+}
 ```
 
 In the DelegatingHandler you can set the proxy for the HttpClientHandler:
