@@ -13,10 +13,36 @@ categories:
 - Azure
 
 ---
-One of the services I'm building at one of my customers is an API that provides invoice information for a customer self-service portal. The invoice information is stored (of course) in Azure CosmosDb. Invoices are partitioned by customerid, but hose partitions can still contain a lot of items. 
+One of the services I'm building at one of my customers is an API that provides invoice information for a customer self-service portal. The invoice information is stored (of course) in Azure CosmosDb. Invoices are partitioned by customerid, but those partitions can still contain a lot of items.
 
-When querying for the total outstanding amount for not payed invoices we use an aggregate query:
+When querying for the total outstanding amount for not payed invoices you can use an aggregate query:
 
     SELECT SUM(c.OutstandingAmount) AS TotalOutstandingAmount  FROM c WHERE c.Status <> 1
 
-We execute the query with the following code:
+We executed the query with the following code:
+
+    var feedOptions = new FeedOptions
+    
+    {
+    
+     EnableCrossPartitionQuery = false,
+    
+     PartitionKey = new PartitionKey(partitionKey)
+    
+    };
+    
+     var querySpec = new SqlQuerySpec() { QueryText = queryText, Parameters = new SqlParameterCollection(queryParameters.Select(pair => new SqlParameter(pair.Key, pair.Value))) };using( var query = _documentClient.Value.CreateDocumentQuery<T>(collectionUri, querySpec, feedOptions).AsDocumentQuery())
+    
+    {
+    
+     var response = await query.ExecuteNextAsync<T>(cancellationToken);} 
+    
+    return response.First();
+
+But sometimes this returned an item with an amount of zero where I knew this should not be the case. When I ran the same code against a test database, the issue did not arise.
+
+So I resorted to Fiddler to help me find the issue.
+
+First I tried running the query against the test database:
+
+And then against the acceptation database
