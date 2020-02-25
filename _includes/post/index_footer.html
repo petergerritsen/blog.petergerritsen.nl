@@ -1,0 +1,16 @@
+﻿<footer class="post-footer">
+    {% if site.disqus_short_name and site.disqus_show_comment_count == true %}
+    {% include post/comments_link.html %}
+    {% endif %}
+    &nbsp;|&nbsp; 
+    {% unless post.tags == empty %}
+    <i class="fa fa-tags"></i>
+
+    {% assign tags_list = post.tags %}
+
+    {% for tag in tags_list %}
+    <a class="post-tag" href="{{ site.tags_path }}#{{ tag }}-ref">{{ tag }}</a>{% if forloop.last == false %}, {% endif %}
+    {% endfor %}
+
+    {% endunless %}
+</footer>
