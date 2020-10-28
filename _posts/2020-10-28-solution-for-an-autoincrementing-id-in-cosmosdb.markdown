@@ -42,6 +42,7 @@ This does requires that both documents are stored in the same Logical partition.
 By passing the ETag of the TodoAutonumber document the operation will fail if another update to TodoAutonumber has been done meanwhile. 
 
 We can then use Polly (and Polly.Contrib) to retry the operation if it fails because the Id was already claimed during execution (e.g. by another thread or web service instance).
+I'm using the DecorrelatedJitter method for the back-off period so not all retries run again at approximately the same time. 
 
 <script src="https://gist.github.com/petergerritsen/f12d2a33ed316e8dc8bb616a6fd19ddb.js"></script>
 
@@ -51,7 +52,9 @@ When we now start a batch with 100 tasks at once, in the end all items are creat
 
 ![](/uploads/CosmosDbAutonumberOutput.PNG)
 
- 
+The full sample application can be found [here](https://github.com/petergerritsen/CloudDev.CosmosDb.Autonumber).
+
+The solution isn't battle-tested in high volume applications, but seems to work ok for the application we're building.
 
 
 
