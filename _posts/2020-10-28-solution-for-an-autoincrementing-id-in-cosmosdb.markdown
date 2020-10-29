@@ -21,6 +21,8 @@ In this post I will share a solution I came up with to create such a functionali
 
 I've created a small sample application that will insert multiple Todo items in a collection in parallel.
 
+Please note that for a situation where you have multi region writes enabled, this will require more effort to create a solution that will handle conflict resolution.
+
 First step is to create a document class that contains the last used id.
 
 <script src="https://gist.github.com/petergerritsen/4f5f4084b22ee5c9bc34ee5b81092790.js"></script>
